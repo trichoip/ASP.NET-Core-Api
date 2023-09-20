@@ -1,0 +1,23 @@
+﻿dotnet tool list -g
+
+dotnet tool install -g Microsoft.dotnet-httprepl
+
+httprepl https://localhost:{PORT}
+
+connect https://localhost:{PORT} 
+
+-> ls
+-> cd WeatherForecast   
+-> get
+-> get 1
+-> post -c "{"name":"Hawaii", "isGlutenFree":false}"
+-> put 3 -c  "{"id": 3, "name":"Hawaiian", "isGlutenFree":false}"
+-> delete 3
+
+exit
+
+dotnet user-secrets init
+dotnet user-secrets remove "Movies:ServiceApiKey"
+dotnet user-secrets list
+dotnet user-secrets clear
+C:\Users\choip\AppData\Roaming\Microsoft\UserSecrets
