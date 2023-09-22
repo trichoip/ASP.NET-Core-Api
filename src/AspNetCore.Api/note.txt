@@ -21,3 +21,8 @@ dotnet user-secrets remove "Movies:ServiceApiKey"
 dotnet user-secrets list
 dotnet user-secrets clear
 C:\Users\choip\AppData\Roaming\Microsoft\UserSecrets
+
+ctrl m m để đóng mở region
+Expand -  CTRL+R, CTRL + Num +
+Collapse -  CTRL + R, CTRL + Num -
+xml -  (Ctrl+E, Ctrl+Num+) and (Ctrl+E, Ctrl+Num-).

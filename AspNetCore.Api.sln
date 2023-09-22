@@ -41,6 +41,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.HttpClient", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.CookieAuthentication", "src\AspNetCore.CookieAuthentication\AspNetCore.CookieAuthentication.csproj", "{C60CF05B-B791-4C94-8927-62A31F3AC080}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Cache", "src\AspNetCore.Cache\AspNetCore.Cache.csproj", "{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Sqlite", "src\AspNetCore.Sqlite\AspNetCore.Sqlite.csproj", "{6E439277-4FB0-400C-9731-FDB323EA5D77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.FakeData", "src\AspNetCore.FakeData\AspNetCore.FakeData.csproj", "{C42C811B-06D1-4ECB-98E0-117A7F938190}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.TaskScheduler", "src\AspNetCore.TaskScheduler\AspNetCore.TaskScheduler.csproj", "{AED0EBF5-875C-41EB-B871-EBBA706C4490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +131,22 @@ Global
 		{C60CF05B-B791-4C94-8927-62A31F3AC080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C60CF05B-B791-4C94-8927-62A31F3AC080}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C60CF05B-B791-4C94-8927-62A31F3AC080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E439277-4FB0-400C-9731-FDB323EA5D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E439277-4FB0-400C-9731-FDB323EA5D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E439277-4FB0-400C-9731-FDB323EA5D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E439277-4FB0-400C-9731-FDB323EA5D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C42C811B-06D1-4ECB-98E0-117A7F938190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42C811B-06D1-4ECB-98E0-117A7F938190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42C811B-06D1-4ECB-98E0-117A7F938190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42C811B-06D1-4ECB-98E0-117A7F938190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

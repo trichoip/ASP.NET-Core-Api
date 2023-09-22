@@ -9,10 +9,6 @@ namespace AspNetCore.Mapper.Profiles
     {
         public DriverProfile()
         {
-            // ctrl m m để đóng mở region
-            // Expand -  CTRL+R, CTRL + Num +
-            // Collapse -  CTRL + R, CTRL + Num -
-            // xml -  (Ctrl+E, Ctrl+Num+) and (Ctrl+E, Ctrl+Num-).
             #region Driver, DriverDtom
             // lưu ý: nếu mapper father1 có child1 qua father2 có child2 thì phải cáu hình CreateMap của cả father và child
             // CreateMap<DriverDto, Driver>() chỉ cần vậy là có thể mapper List<DriverDto> sang List<Driver>
