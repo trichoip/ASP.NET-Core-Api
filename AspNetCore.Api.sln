@@ -47,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Sqlite", "src\As
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.FakeData", "src\AspNetCore.FakeData\AspNetCore.FakeData.csproj", "{C42C811B-06D1-4ECB-98E0-117A7F938190}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.TaskScheduler", "src\AspNetCore.TaskScheduler\AspNetCore.TaskScheduler.csproj", "{AED0EBF5-875C-41EB-B871-EBBA706C4490}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.TaskScheduler", "src\AspNetCore.TaskScheduler\AspNetCore.TaskScheduler.csproj", "{AED0EBF5-875C-41EB-B871-EBBA706C4490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Extensions", "src\AspNetCore.Extensions\AspNetCore.Extensions.csproj", "{BE3F0575-AE82-41A3-B3BB-74894D01CE32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AED0EBF5-875C-41EB-B871-EBBA706C4490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3F0575-AE82-41A3-B3BB-74894D01CE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3F0575-AE82-41A3-B3BB-74894D01CE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3F0575-AE82-41A3-B3BB-74894D01CE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3F0575-AE82-41A3-B3BB-74894D01CE32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -35,7 +35,7 @@ namespace AspNetCore.Email.Controllers
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 25;
-            smtp.Credentials = new NetworkCredential("trinmse150418@fpt.edu.vn", "plqjbnbpypnqouiz");
+            smtp.Credentials = new NetworkCredential("developermode549@gmail.com", "bzqkvojsevsthkvp");
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.EnableSsl = true;
 
@@ -77,7 +77,7 @@ namespace AspNetCore.Email.Controllers
             {
                 Host = "smtp.gmail.com",
                 Port = 587,
-                Credentials = new NetworkCredential("trinmse150418@fpt.edu.vn", "plqjbnbpypnqouiz"),
+                Credentials = new NetworkCredential("developermode549@gmail.com", "bzqkvojsevsthkvp"),
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 EnableSsl = true,
 
