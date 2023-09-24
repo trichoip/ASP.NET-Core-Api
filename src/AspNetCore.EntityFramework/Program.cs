@@ -20,7 +20,8 @@ namespace AspNetCore.EntityFramework
 
             builder.Services.AddDbContext<DataContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext"))
-                                  .UseLazyLoadingProxies());  // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
+                                  .UseLazyLoadingProxies() // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
+                                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)); // cấu hình no tracking cho context
 
             var app = builder.Build();
 
