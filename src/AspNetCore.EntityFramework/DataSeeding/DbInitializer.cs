@@ -1,5 +1,6 @@
 ﻿using AspNetCore.EntityFramework.Data;
 using AspNetCore.EntityFramework.Models;
+using Bogus;
 
 namespace AspNetCore.EntityFramework.DataSeeding
 {
@@ -8,45 +9,25 @@ namespace AspNetCore.EntityFramework.DataSeeding
         public static void Initialize(DataContext context)
         {
 
-            var Backpack = new Backpack
-            {
-                Description = "Test Backpack"
-            };
+            var Backpack = new Faker<Backpack>()
+                                .RuleFor(c => c.Description, f => f.Name.JobTitle());
 
-            var Factions = new List<Faction>
-            {
-                new Faction
-                {
-                    Name = "Test Faction 1"
-                },
-                new Faction
-                {
-                    Name = "Test Faction 2"
-                }
-            };
+            var Factions = new Faker<Faction>()
+                                .RuleFor(c => c.Name, f => f.Name.JobTitle());
 
-            var Weapons = new List<Weapon>
-            {
-                new Weapon
-                {
-                    Name = "Test Weapon 1"
-                },
-                new Weapon
-                {
-                    Name = "Test Weapon 2"
-                }
-            };
+            var Weapons = new Faker<Weapon>()
+                                .RuleFor(c => c.Name, f => f.Name.JobTitle());
+
+            var Characters = new Faker<Character>()
+                                .RuleFor(c => c.Name, f => f.Person.UserName)
+                                .RuleFor(c => c.Backpack, Backpack.Generate())
+                                .RuleFor(c => c.Factions, Factions.Generate(20))
+                                .RuleFor(c => c.Weapons, Weapons.Generate(10))
+                                .Generate(2);
 
             if (!context.Characters.Any())
             {
-                context.Characters.Add(new Character
-                {
-                    Name = "Test Character",
-                    Backpack = Backpack,
-                    Factions = Factions,
-                    Weapons = Weapons
-
-                });
+                context.Characters.AddRange(Characters);
 
                 context.SaveChanges();
             }

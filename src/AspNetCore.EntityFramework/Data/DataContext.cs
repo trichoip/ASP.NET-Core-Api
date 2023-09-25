@@ -17,8 +17,7 @@ namespace AspNetCore.EntityFramework.Data
             // cần sữa cái nào thì cấu hình cái đó
             modelBuilder.Entity<Character>(b =>
             {
-                b.Property(_ => _.Name)
-                    .HasColumnType("nvarchar(20)");
+                b.Property(_ => _.Name).HasColumnType("nvarchar(200)");
 
                 // cấu hình AutoInclude sẽ không có ghi vào history migration, cho nên commit thì không có gì thay đổi cả
                 b.Navigation(_ => _.Weapons).AutoInclude();
@@ -29,29 +28,24 @@ namespace AspNetCore.EntityFramework.Data
 
             modelBuilder.Entity<Backpack>(b =>
             {
-                b.Property(_ => _.Description)
-                    .HasColumnType("nvarchar(20)");
+                b.Property(_ => _.Description).HasColumnType("nvarchar(200)");
             });
 
             modelBuilder.Entity<Faction>(b =>
             {
-                b.Property(_ => _.Name)
-                    .HasColumnType("nvarchar(20)");
+                b.Property(_ => _.Name).HasColumnType("nvarchar(200)");
             });
 
             modelBuilder.Entity<Weapon>(b =>
             {
-                b.Property(_ => _.Name)
-                    .HasColumnType("nvarchar(20)");
+                b.Property(_ => _.Name).HasColumnType("nvarchar(200)");
             });
 
             modelBuilder.Entity("CharacterFaction", b =>
             {
-                b.Property("CharactersId")
-                    .HasColumnName("CharacterId");
+                b.Property("CharactersId").HasColumnName("CharacterId");
 
-                b.Property("FactionsId")
-                    .HasColumnName("FactionId");
+                b.Property("FactionsId").HasColumnName("FactionId");
 
                 b.ToTable("CharacterFaction");
             });

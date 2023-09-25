@@ -24,7 +24,7 @@ namespace AspNetCore.Extensions.Repositories
             Context = context;
         }
 
-        public IQueryable<User> Users { get { return Context.UsersSet; } }
+        public IQueryable<User> Users { get { return Context.Users; } }
 
         public Task SaveChanges(CancellationToken cancellationToken)
         {
@@ -99,13 +99,13 @@ namespace AspNetCore.Extensions.Repositories
         public Task<User?> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Context.UsersSet.FindAsync(new object?[] { userId }, cancellationToken).AsTask();
+            return Context.Users.FindAsync(new object?[] { userId }, cancellationToken).AsTask();
         }
 
         public Task<User?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Context.UsersSet.FirstOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken);
+            return Context.Users.FirstOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken);
         }
 
         public Task<Role?> FindRoleAsync(string normalizedRoleName, CancellationToken cancellationToken = default(CancellationToken))

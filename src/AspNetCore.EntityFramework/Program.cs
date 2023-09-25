@@ -1,5 +1,6 @@
 using AspNetCore.EntityFramework.Data;
 using AspNetCore.EntityFramework.DataSeeding;
+using AspNetCore.EntityFramework.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.EntityFramework
@@ -20,9 +21,10 @@ namespace AspNetCore.EntityFramework
 
             builder.Services.AddDbContext<DataContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext"))
-                                  .UseLazyLoadingProxies() // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
-                                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)); // cấu hình no tracking cho context
+                                  //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // cấu hình no tracking cho context
+                                  .UseLazyLoadingProxies()); // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
 
+            builder.Services.AddScoped<IFactionRepository, FactionRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,8 +35,12 @@ namespace AspNetCore.EntityFramework
 
                 using (var scope = app.Services.CreateScope())
                 {
+
                     var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+                    context.Database.EnsureDeleted();
+
                     context.Database.Migrate(); // nếu sử dụng Migrate thì phải có file migrations đầu tiên
+
                     DbInitializer.Initialize(context);
                 }
             }
