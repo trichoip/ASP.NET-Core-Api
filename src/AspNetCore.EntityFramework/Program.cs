@@ -22,6 +22,7 @@ namespace AspNetCore.EntityFramework
             builder.Services.AddDbContext<DataContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext"))
                                   //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // cấu hình no tracking cho context
+                                  // lưu ý: Lazy loading is not supported for detached entities or entities that are loaded with 'AsNoTracking'
                                   .UseLazyLoadingProxies()); // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
 
             builder.Services.AddScoped<IFactionRepository, FactionRepository>();
