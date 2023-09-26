@@ -7,13 +7,21 @@ namespace AspNetCore.HandleError.Middleware
 {
     public class ExceptionHandlingFilterAttribute : ExceptionFilterAttribute
     {
+
+        private readonly ProblemDetailsFactory _factory;
+
+        public ExceptionHandlingFilterAttribute(ProblemDetailsFactory factory)
+        {
+            _factory = factory;
+        }
+
         public override void OnException(ExceptionContext context)
         {
-            var factory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
+            //var _factory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
 
             if (context.Exception is HttpResponseException httpResponseException)
             {
-                var problemDetails = factory.CreateProblemDetails(
+                var problemDetails = _factory.CreateProblemDetails(
                        httpContext: context.HttpContext,
                        statusCode: 403,
                        detail: httpResponseException.Value?.ToString());

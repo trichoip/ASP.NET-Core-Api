@@ -1,0 +1,70 @@
+@using asp.net_core_empty_5._0.Models
+@model Car
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/car/list">back</a>
+    <br>
+
+    <form action="/car/edit" method="post">
+        <input type="hidden" name="Car.Id" value="@Model.Id">
+        Car Fuel : <input type="text" name="Car.Fuel" value="@Model.Fuel"> <br>
+        Car Description: <br> <textarea style="height: 86px; width: 301px;"
+                                        name="Car.Description">@Model.Description</textarea> <br>
+        Car LicensePlates: <input type="text" name="Car.LicensePlates" value="@Model.LicensePlates"> <br>
+        Car Transmission: <input type="text" name="Car.Transmission" value="@Model.Transmission"> <br>
+        Car price : <input type="text" name="Car.Price" value="@Model.Price"> <br>
+        Car YearOfManufacture : <input type="text" name="Car.YearOfManufacture" value="@Model.YearOfManufacture"> <br>
+        Car Model.Id : <input type="text" name="Car.Model.Id" value="@Model.Model.Id"> <br>
+        Car ModelId : <input type="text" name="Car.ModelId" value="@Model.ModelId"> <br>
+        Car AccountSupplier : <input type="text" name="Car.AccountSupplier.Id" value="@Model.AccountSupplier.Id"> <br>
+        <input type="submit" value="Update">
+    </form>
+
+    <br>
+    Car id : @Model.Id
+    <br>
+    Car model : @Model.Model.Name
+    <br>
+    Car brand : @Model.Model.Brand.Name
+    <br>
+    Car Status : @Model.Status
+    <br>
+    car img
+    <br>
+    @foreach (var cImage in Model.CarImages)
+    {
+        <img src="@cImage.Image" alt="" width="50px" height="50px">
+    }
+    <br>
+    car feature
+    <br>
+    @foreach (var cf in Model.CarFeatures)
+    {
+        <img src="@cf.Feature.Icon" alt="" width="50px" height="50px">
+    }
+    <br>
+
+    booking
+    <br>
+    @foreach (var b in Model.Books)
+    {
+        <div>id : @b.Id </div>
+        <div>Price : @b.Price </div>
+        <div>StartDate : @b.StartDate </div>
+        <div>EndDate : @b.EndDate </div>
+        <div>Review : @b.Review?.Content</div>
+    }
+    <br>
+
+</body>
+
+</html>

@@ -11,10 +11,11 @@ namespace AspNetCore.Mysql
             var builder = WebApplication.CreateBuilder(args);
 
             // pomelo mysql
-            var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+            //var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
             builder.Services.AddDbContext<DataContext>(
-                options => options.UseMySql(builder.Configuration.GetConnectionString("DbContextPomelo"), serverVersion)
+                options => options.UseMySql(builder.Configuration.GetConnectionString("DbContextPomelo"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DbContextPomelo")))
                                   .LogTo(Console.WriteLine, LogLevel.Information)
+                                  //.LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
                                   .EnableSensitiveDataLogging()
                                   .EnableDetailedErrors());
 

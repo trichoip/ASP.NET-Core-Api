@@ -10,11 +10,16 @@ namespace AspNetCore.HandleError.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+        private readonly ProblemDetailsFactory _factory;
 
-        public ErrorHandlerMiddleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
+        public ErrorHandlerMiddleware(
+            RequestDelegate next,
+            ILogger<ErrorHandlerMiddleware> logger,
+            ProblemDetailsFactory factory)
         {
             _next = next;
             _logger = logger;
+            _factory = factory;
         }
 
         public async Task Invoke(HttpContext context)
@@ -39,7 +44,7 @@ namespace AspNetCore.HandleError.Middleware
                 var response = context.Response;
                 response.ContentType = MediaTypeNames.Application.Json;
 
-                var factory = context.RequestServices.GetRequiredService<ProblemDetailsFactory>();
+                //var _factory = context.RequestServices.GetRequiredService<ProblemDetailsFactory>();
 
                 switch (error)
                 {
@@ -57,7 +62,7 @@ namespace AspNetCore.HandleError.Middleware
                         break;
                 }
 
-                var problemDetails = factory.CreateProblemDetails(
+                var problemDetails = _factory.CreateProblemDetails(
                       httpContext: context,
                       statusCode: response.StatusCode,
                       detail: error.Message);

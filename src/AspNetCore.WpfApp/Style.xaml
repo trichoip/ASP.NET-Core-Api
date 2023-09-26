@@ -1,0 +1,88 @@
+﻿<Window
+    x:Class="WpfApp.Style"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:trichoip="clr-namespace:WpfApp.ViewModel"
+    Title="Style"
+    Width="800"
+    Height="450"
+    DataContext="{StaticResource tri}"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary Source="StyleResourceDictionary.xaml" />
+    </Window.Resources>
+    <!--<Window.DataContext>
+        <trichoip:ItemViewModel />
+    </Window.DataContext>-->
+    <StackPanel>
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Content" Value="lv2" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Background" Value="red" />
+                </Style>
+                <LinearGradientBrush x:Key="linear" StartPoint="0,0" EndPoint="0.5,1">
+                    <GradientStop Offset="0" Color="#FF84A748" />
+                    <GradientStop Offset="1" Color="#FFEBABCE" />
+                </LinearGradientBrush>
+            </StackPanel.Resources>
+            <Button>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="100" />
+                        <Setter Property="Content" Value="lv1" />
+                        <Setter Property="FontSize" Value="20" />
+                        <Setter Property="Background" Value="Aqua" />
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Background="{StaticResource linear}" />
+        </StackPanel>
+
+        <StackPanel>
+
+            <Button Content="trichoip" />
+        </StackPanel>
+
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style x:Key="Style1_Lv3" TargetType="Button">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Content" Value="lv3" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Background" Value="#FFDDE62F" />
+                </Style>
+                <Style x:Key="Style2_Lv3" TargetType="Button">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Content" Value="lv3" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Background" Value="Purple" />
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Content" Value="lv3" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Background" Value="LightCyan" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Style="{StaticResource ResourceKey=Style1_Lv3}" />
+            <Button Style="{StaticResource Style2_Lv3}" />
+            <Button />
+        </StackPanel>
+
+        <StackPanel>
+            <Button Style="{StaticResource ResourceKey=Style1_Lv4}" />
+            <Button Style="{StaticResource Style2_Lv4}" />
+        </StackPanel>
+
+        <StackPanel>
+            <Button Style="{StaticResource ResourceKey=Style1_Lv5}" />
+            <Button Style="{StaticResource Style2_Lv5}" />
+        </StackPanel>
+    </StackPanel>
+</Window>

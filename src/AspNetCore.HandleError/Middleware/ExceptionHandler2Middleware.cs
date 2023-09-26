@@ -9,11 +9,16 @@ public class ExceptionHandler2Middleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger _logger;
+    private readonly IProblemDetailsService _problemDetailsService;
 
-    public ExceptionHandler2Middleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
+    public ExceptionHandler2Middleware(
+        RequestDelegate next,
+        ILogger<ErrorHandlerMiddleware> logger,
+        IProblemDetailsService problemDetailsService)
     {
         _next = next;
         _logger = logger;
+        _problemDetailsService = problemDetailsService;
     }
 
     public async Task Invoke(HttpContext context)
@@ -37,6 +42,7 @@ public class ExceptionHandler2Middleware
 
             context.Response.ContentType = MediaTypeNames.Application.Json;
 
+            // có thể nhùng DI IProblemDetailsService vào đây nhứ ở ctor
             if (context.RequestServices.GetService<IProblemDetailsService>() is { } problemDetailsService)
             {
                 var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();

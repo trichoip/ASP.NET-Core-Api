@@ -43,6 +43,8 @@ namespace AspNetCore.HandleError
             // còn return throw new ... thì nó đưa tất cả thông tin vào ProblemDetails json
             // và gồm cả field extension exception rất dài
             // nếu không muốn nó đưa ra extension exception thì thêm app.UseExceptionHandler();
+            // nếu dùng IProblemDetailsService thì cần phải có AddProblemDetails()
+            // còn nếu dùng ProblemDetailsFactory thì không cần AddProblemDetails()
             builder.Services.AddProblemDetails(options =>
                     options.CustomizeProblemDetails = context =>
                     {

@@ -1,0 +1,123 @@
+nếu muốn áp dụng migrations cho database first thì có 2 cách:
+- đầu tiên là chạy lệnh `dotnet ef migrations add init` để tạo bản migrations đầu tiên
+- cách 1: 
+    + chạy dotnet ef migrations script để lấy data của table __EFMigrationsHistory trong bản script
+    + sau đó ghi data table __EFMigrationsHistory từ script vào table trên database
+- cách 2: sau khi tạo bản migrations đầu tiên  thì xóa file migrations đầu tiên đó là xong, lưu ý chỉ xóa file migrations còn file ModelSnapshot thì không xóa
+
+- 2 cách trên dùng khi lần đầu database first scaffold, sau khi áp dụng 1 trong 2 cách thì từ lần 2 thì migrations bth như migrations add , update
+
+get-help entityframework
+dotnet tool install --global dotnet-ef --version 6.0.18 (global)
+
+dotnet ef database drop --force
+dotnet ef migrations list
+dotnet ef migrations remove (xóa migrations mới nhất)
+dotnet ef migrations script
+dotnet ef migrations add <tên migration>
+dotnet ef database update
+
+rollback
+dotnet ef database update [tên migration trước đó]
+dotnet ef database update 0
+
+dotnet ef migrations add
+dotnet ef migrations list
+dotnet ef migrations script
+dotnet ef dbcontext info
+dotnet ef dbcontext scaffold
+dotnet ef database drop
+dotnet ef database update
+
+_context.Database.EnsureCreated();
+
+==========================================================================================================================================
+
+Microsoft.EntityFrameworkCore.SqlServer
+        =>  DbContext , DbSet, crud database, linq database ,  làm việc với cơ sở dữ liệu SQL Server 
+        =>  _context.Database.EnsureCreated();
+
+Microsoft.EntityFrameworkCore.Tools
+        =>  Dùng package manager console thì phải có Microsoft.EntityFrameworkCore.Tools mới sài được các lệnh của EF Core trong package manager console
+        =>  sử dụng các lệnh dòng lệnh (command-line) để tạo cơ sở dữ liệu, tạo migration, update database, rollback database,
+        =>   tạo và áp dụng các phiên bản của các bản cập nhật (migrations), tạo các lớp đại diện cho các đối tượng trong cơ sở dữ liệu (code generation),
+
+Microsoft.EntityFrameworkCore.Design
+        => dùng terminal thì phải có Microsoft.EntityFrameworkCore.Design mới sài được các lệnh của EF Core
+        =>   sử dụng các lệnh dòng lệnh (command-line) để tạo cơ sở dữ liệu, tạo migration, update database, rollback database,
+        =>   tạo và áp dụng các phiên bản của các bản cập nhật (migrations), tạo các lớp đại diện cho các đối tượng trong cơ sở dữ liệu (code generation),
+
+        - lưu ý: khi dùng terminal dotnet ef  thì phải có tool dotnet-ef (dotnet tool install --global dotnet-ef) mới sài được các lệnh của EF Core trong terminal
+                 và trong project mà muốn thao tác migrations lên database thì  phải có  EntityFrameworkCore.Design
+
+==========================================================================================================================================
+dotnet tool list -g
+dotnet tool uninstall <name> -g
+dotnet nuget locals all -l
+dotnet nuget locals all --clear
+
+========================================================================================================================================================================================
+package manager console ef core
+
+Add-Migration <tên migration>
+Update-Database
+Drop-Database -Confirm
+Drop-Database
+
+Add-Migration
+Bundle-Migration
+Drop-Database
+Get-DbContext
+Get-Migration
+Optimize-DbContext
+Remove-Migration
+Scaffold-DbContext
+Script-DbContext
+Script-Migration
+Update-Database
+
+Install-Package Microsoft.EntityFrameworkCore.Tools
+Update-Package Microsoft.EntityFrameworkCore.Tools
+Get-Help about_EntityFrameworkCore
+
+========================================================================================================================================================================================
+
+dotnet ef dbcontext scaffold "Server=(local);uid=sa;pwd=12345;database=CoursewareOnlineAssignment;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer --output-dir Models
+dotnet ef dbcontext scaffold "server =(local); database = FUFlowerBouquetManagement;uid=sa;pwd=12345;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer --output-dir DataAccess
+
+dotnet add package Microsoft.Extensions.Configuration --version 6.0.0
+dotnet add package Microsoft.Extensions.Configuration.Json --version 6.0.0
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.18
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.18
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 6.0.18
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.18">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.18" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.18">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+	</ItemGroup>
+
+========================================================================================================================================================================================
+
+generate code crud
+- yêu cầu phải có ConnectionStrings
+- nếu không cấu hình dbcontext trong DI thì phải có ConnectionStrings chuỗi kết nối trong OnConfiguring trong class dbcontext
+- nếu có cấu hình dbcontext trong DI thì không cần ConnectionStrings chuỗi kết nối trong OnConfiguring trong class dbcontext
+
+- migrations ở project class library thì:
+- nếu trong class dbcontext có cấu hình connectString thì dotnet ef migrations add bth
+- nếu trong class dbcontext không cấu hình connectString thì có 2 cách:
+- trước tiên là trong Program.cs của project Api phải cấu hình DI DBcontext sau add reference project classLibary chứa class dbcontext  
+- cách 1: dùng package manager console để thao tác ef core 
+- cách 2: truy cập terminal ra folder góc chứa project Api và project classLibary, sau đó thêm  --project và  --startup-project ở cuối cấu lệnh ef core 
+
+ví dụ: dotnet ef migrations add init --project "EStore.ClassLibary" --startup-project "EStore.Api"
+
