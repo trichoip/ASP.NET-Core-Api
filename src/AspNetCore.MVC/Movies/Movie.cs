@@ -1,10 +1,9 @@
-﻿using asp.net_core_empty_5._0.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace asp.net_core_empty_5._0.Movies
+namespace AspNetCore.MVC.Movies
 {
     public class Movie
     {

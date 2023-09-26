@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace asp.net_core_empty_5._0.Repositories.RepoBase
+namespace AspNetCore.MVC.Repositories.RepoBase
 {
     public interface RepositoryBase<T>
     {

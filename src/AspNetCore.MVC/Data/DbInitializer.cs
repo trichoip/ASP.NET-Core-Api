@@ -1,7 +1,7 @@
-﻿using asp.net_core_empty_5._0.Models;
+﻿using AspNetCore.MVC.Models;
 using System.Linq;
 
-namespace asp.net_core_empty_5._0.Data
+namespace AspNetCore.MVC.Data
 {
     public class DbInitializer
     {

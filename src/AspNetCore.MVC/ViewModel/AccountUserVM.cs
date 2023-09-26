@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace asp.net_core_empty_5._0.ViewModel
+namespace AspNetCore.MVC.ViewModel
 {
     public class AccountUserVM
     {

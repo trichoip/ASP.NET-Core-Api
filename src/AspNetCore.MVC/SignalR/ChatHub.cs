@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using asp.net_core_empty_5._0.Models;
+using AspNetCore.MVC.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace asp.net_core_empty_5._0.SignalR
+namespace AspNetCore.MVC.SignalR
 {
     public class ChatHub : Hub
     {
@@ -30,7 +30,7 @@ namespace asp.net_core_empty_5._0.SignalR
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
             await base.OnConnectedAsync();
         }
-        public override async Task OnDisconnectedAsync(Exception? exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
             await base.OnDisconnectedAsync(exception);
         }

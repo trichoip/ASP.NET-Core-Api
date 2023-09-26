@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using asp.net_core_empty_5._0.Models;
+using AspNetCore.MVC.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace asp.net_core_empty_5._0.Repositories.RepoBase.Impl
+namespace AspNetCore.MVC.Repositories.RepoBase.Impl
 {
     public class RepositoryBaseImpl<T> : RepositoryBase<T> where T : class
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace asp.net_core_empty_5._0.SignalR
+namespace AspNetCore.MVC.SignalR
 {
     public interface IChatClient
     {

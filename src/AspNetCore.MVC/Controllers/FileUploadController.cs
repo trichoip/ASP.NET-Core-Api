@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
     public class FileUploadController : Controller
     {

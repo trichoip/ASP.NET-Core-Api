@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace asp.net_core_empty_5._0.Repositories.ServiceBase
+namespace AspNetCore.MVC.Repositories.ServiceBase
 {
     public interface ServiceBase<T>
     {

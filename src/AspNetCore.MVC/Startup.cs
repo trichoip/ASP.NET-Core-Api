@@ -1,6 +1,6 @@
 using System;
-using asp.net_core_empty_5._0.Models;
-using asp.net_core_empty_5._0.SignalR;
+using AspNetCore.MVC.Models;
+using AspNetCore.MVC.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace asp.net_core_empty_5._0
+namespace AspNetCore.MVC
 {
     public class Startup
     {

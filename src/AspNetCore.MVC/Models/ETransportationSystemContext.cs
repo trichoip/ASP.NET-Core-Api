@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 #nullable disable
 
-namespace asp.net_core_empty_5._0.Models
+namespace AspNetCore.MVC.Models
 {
     public partial class ETransportationSystemContext : DbContext
     {

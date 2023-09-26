@@ -1,12 +1,12 @@
-﻿using asp.net_core_empty_5._0.Models;
-using asp.net_core_empty_5._0.Movies;
+﻿using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Movies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
     public class TagHelperController : Controller
     {

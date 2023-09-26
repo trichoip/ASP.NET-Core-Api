@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using asp.net_core_empty_5._0.Models;
-using asp.net_core_empty_5._0.Repositories.ServiceBase;
-using asp.net_core_empty_5._0.Repositories.ServiceBase.Impl;
-using asp.net_core_empty_5._0.ViewModel;
+﻿using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Repositories.ServiceBase;
+using AspNetCore.MVC.Repositories.ServiceBase.Impl;
+using AspNetCore.MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
     public class SessionController : Controller
     {

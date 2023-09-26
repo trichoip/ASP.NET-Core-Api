@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
     public class FeatureController : Controller
     {

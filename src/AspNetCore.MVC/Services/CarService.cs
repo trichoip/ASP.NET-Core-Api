@@ -1,11 +1,9 @@
-using System;
+using AspNetCore.MVC.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using asp.net_core_empty_5._0.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace asp.net_core_empty_5._0.Services
+namespace AspNetCore.MVC.Services
 {
     public class CarService
     {
@@ -14,11 +12,6 @@ namespace asp.net_core_empty_5._0.Services
         public CarService()
         {
             _context = new ETransportationSystemContext();
-        }
-
-        public void Add(Car car)
-        {
-
         }
 
         public void Delete(int id)
@@ -123,9 +116,5 @@ namespace asp.net_core_empty_5._0.Services
             //_context.SaveChanges();
         }
 
-        public void Save(Car car)
-        {
-
-        }
     }
 }

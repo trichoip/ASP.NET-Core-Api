@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace asp.net_core_empty_5._0.Paging
+namespace AspNetCore.MVC.Paging
 {
     public class PaginatedList<T> : List<T>
     {
@@ -16,7 +16,7 @@ namespace asp.net_core_empty_5._0.Paging
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
-            this.AddRange(items);
+            AddRange(items);
         }
 
         public bool HasPreviousPage => PageIndex > 1;

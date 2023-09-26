@@ -1,6 +1,6 @@
-﻿using asp.net_core_empty_5._0.Models;
+﻿using AspNetCore.MVC.Models;
 
-namespace asp.net_core_empty_5._0.Repositories.ServiceBase
+namespace AspNetCore.MVC.Repositories.ServiceBase
 {
     public interface AccountService : ServiceBase<Account>
     {

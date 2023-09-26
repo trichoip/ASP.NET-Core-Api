@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace asp.net_core_empty_5._0.SignalR
+namespace AspNetCore.MVC.SignalR
 {
     public class StronglyTypedChatHub : Hub<IChatClient>
     {

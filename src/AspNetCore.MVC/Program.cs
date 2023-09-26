@@ -1,10 +1,10 @@
-using asp.net_core_empty_5._0.Data;
-using asp.net_core_empty_5._0.Models;
+using AspNetCore.MVC.Data;
+using AspNetCore.MVC.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace asp.net_core_empty_5._0
+namespace AspNetCore.MVC
 {
     public class Program
     {

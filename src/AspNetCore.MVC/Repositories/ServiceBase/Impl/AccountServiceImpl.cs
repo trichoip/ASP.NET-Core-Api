@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using asp.net_core_empty_5._0.Models;
-using asp.net_core_empty_5._0.Repositories.RepoBase;
-using asp.net_core_empty_5._0.Repositories.RepoBase.Impl;
+﻿using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Repositories.RepoBase;
+using AspNetCore.MVC.Repositories.RepoBase.Impl;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace asp.net_core_empty_5._0.Repositories.ServiceBase.Impl
+namespace AspNetCore.MVC.Repositories.ServiceBase.Impl
 {
     public class AccountServiceImpl : ServiceBaseImpl<Account>, AccountService
     {
@@ -25,6 +25,7 @@ namespace asp.net_core_empty_5._0.Repositories.ServiceBase.Impl
 
             return _accountRepository.FindByUsernameAndPassword(username, password);
         }
+
         public override void Add(Account entity) => base.Add(entity);
         public override void Delete(int id) => base.Delete(id);
         public override List<Account> GetAll() => _accountRepository.GetAll().Include(a => a.DrivingLicense).ToList();

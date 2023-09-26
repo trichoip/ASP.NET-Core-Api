@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using AspNetCore.MVC.Repositories.RepoBase;
+using AspNetCore.MVC.Repositories.RepoBase.Impl;
+using System.Collections.Generic;
 using System.Linq;
-using asp.net_core_empty_5._0.Repositories.RepoBase;
-using asp.net_core_empty_5._0.Repositories.RepoBase.Impl;
 
-namespace asp.net_core_empty_5._0.Repositories.ServiceBase.Impl
+namespace AspNetCore.MVC.Repositories.ServiceBase.Impl
 {
     public class ServiceBaseImpl<T> : ServiceBase<T> where T : class
     {

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using asp.net_core_empty_5._0.SignalR;
+using AspNetCore.MVC.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
     public class SignalRController : Controller
     {

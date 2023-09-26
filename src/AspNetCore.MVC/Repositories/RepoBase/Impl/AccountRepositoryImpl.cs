@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using asp.net_core_empty_5._0.Models;
+﻿using AspNetCore.MVC.Models;
+using System.Linq;
 
-namespace asp.net_core_empty_5._0.Repositories.RepoBase.Impl
+namespace AspNetCore.MVC.Repositories.RepoBase.Impl
 {
     public class AccountRepositoryImpl : RepositoryBaseImpl<Account>, AccountRepository
     {

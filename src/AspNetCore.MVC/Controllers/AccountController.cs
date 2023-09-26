@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using asp.net_core_empty_5._0.Models;
-using asp.net_core_empty_5._0.Paging;
-using asp.net_core_empty_5._0.ViewModel;
+using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Paging;
+using AspNetCore.MVC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
 
     public class AccountController : Controller
@@ -92,7 +92,7 @@ namespace asp.net_core_empty_5._0.Controllers
             Cars = _context.Cars.ToList();
 
             // paging - sort - filter
-            NameSort = String.IsNullOrEmpty(SortField) ? "name_desc" : "";
+            NameSort = string.IsNullOrEmpty(SortField) ? "name_desc" : "";
             BirthDateSort = SortField == "birthDate" ? "birthDate_desc" : "birthDate";
             IdSort = SortField == "id" ? "id_desc" : "id";
 
@@ -109,7 +109,7 @@ namespace asp.net_core_empty_5._0.Controllers
             IQueryable<Account> AccountsIQ = from s in _context.Accounts select s;
 
             // search
-            if (!String.IsNullOrEmpty(SearchString))
+            if (!string.IsNullOrEmpty(SearchString))
             {
                 AccountsIQ = AccountsIQ.Where(s => s.Name.Contains(SearchString));
             }
@@ -245,7 +245,7 @@ namespace asp.net_core_empty_5._0.Controllers
             // Deleted: Thực thể đã được đánh dấu để xóa. Phương SaveChangespháp đưa ra một DELETEtuyên bố.
             // Detached: Thực thể không được theo dõi bởi bối cảnh cơ sở dữ liệu.
             var accountToUpdate = await _context.Accounts.FindAsync(AccountBinding.Id);
-            if (await TryUpdateModelAsync<Account>(accountToUpdate, "AccountBinding", s => s.Id, s => s.Balance))
+            if (await TryUpdateModelAsync(accountToUpdate, "AccountBinding", s => s.Id, s => s.Balance))
             {
                 //_context.Accounts.Add(accountToUpdate);
                 //await _context.SaveChangesAsync();

@@ -1,5 +1,5 @@
-using asp.net_core_empty_5._0.Models;
-using asp.net_core_empty_5._0.Services;
+using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace asp.net_core_empty_5._0.Controllers
+namespace AspNetCore.MVC.Controllers
 {
 
     public class CarController : Controller
