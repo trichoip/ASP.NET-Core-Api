@@ -1,5 +1,5 @@
 using System;
-using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Data;
 using AspNetCore.MVC.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

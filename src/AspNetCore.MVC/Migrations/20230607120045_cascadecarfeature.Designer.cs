@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Data;
 
 namespace asp.net_core_empty_5._0.Migrations
 {

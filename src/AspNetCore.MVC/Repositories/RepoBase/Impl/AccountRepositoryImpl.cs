@@ -1,4 +1,5 @@
-﻿using AspNetCore.MVC.Models;
+﻿using AspNetCore.MVC.Data;
+using AspNetCore.MVC.Models;
 using System.Linq;
 
 namespace AspNetCore.MVC.Repositories.RepoBase.Impl

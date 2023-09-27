@@ -1,12 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using AspNetCore.MVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 #nullable disable
 
-namespace AspNetCore.MVC.Models
+namespace AspNetCore.MVC.Data
 {
     public partial class ETransportationSystemContext : DbContext
     {

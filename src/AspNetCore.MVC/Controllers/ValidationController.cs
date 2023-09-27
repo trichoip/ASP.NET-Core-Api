@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using AspNetCore.MVC.Data;
 using AspNetCore.MVC.Models;
 using AspNetCore.MVC.Movies;
 using Microsoft.AspNetCore.Mvc;

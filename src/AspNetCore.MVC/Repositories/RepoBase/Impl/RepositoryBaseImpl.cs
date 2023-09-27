@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.MVC.Repositories.RepoBase.Impl

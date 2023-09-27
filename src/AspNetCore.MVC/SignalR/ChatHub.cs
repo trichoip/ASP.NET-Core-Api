@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AspNetCore.MVC.Models;
+using AspNetCore.MVC.Data;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 

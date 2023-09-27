@@ -1,5 +1,4 @@
-﻿using AspNetCore.MVC.Models;
-using System.Linq;
+﻿using System.Linq;
 
 namespace AspNetCore.MVC.Data
 {
