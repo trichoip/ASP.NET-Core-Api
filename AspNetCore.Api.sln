@@ -55,7 +55,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.IdentityWeb", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.MVC", "src\AspNetCore.MVC\AspNetCore.MVC.csproj", "{681693CB-1668-4EAE-95C0-FDB980B2F4AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.RepositoryPattern", "src\AspNetCore.RepositoryPattern\AspNetCore.RepositoryPattern.csproj", "{CC2E022C-98FD-4F3C-BBF4-A078CA3369D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.RepositoryPattern", "src\AspNetCore.RepositoryPattern\AspNetCore.RepositoryPattern.csproj", "{CC2E022C-98FD-4F3C-BBF4-A078CA3369D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.CleanArchitecture", "src\AspNetCore.CleanArchitecture\AspNetCore.CleanArchitecture.csproj", "{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,10 @@ Global
 		{CC2E022C-98FD-4F3C-BBF4-A078CA3369D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC2E022C-98FD-4F3C-BBF4-A078CA3369D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC2E022C-98FD-4F3C-BBF4-A078CA3369D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
