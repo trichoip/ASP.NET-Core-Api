@@ -1,4 +1,4 @@
-nếu muốn áp dụng migrations cho database first thì có 2 cách:
++ nếu muốn áp dụng migrations cho database first thì có 2 cách:
 - đầu tiên là chạy lệnh `dotnet ef migrations add init` để tạo bản migrations đầu tiên
 - cách 1: 
     + chạy dotnet ef migrations script để lấy data của table __EFMigrationsHistory trong bản script
@@ -31,6 +31,121 @@ dotnet ef database update
 
 _context.Database.EnsureCreated();
 
+==========================================================================================================================================
+- ví dụ như solution có foldel là src và trong folder src có 2 project là Infrastructure và Api:
++ solution
+	+ src: 
+		+ Infrastructure
+		+ Api
+
+- ở folder src thì mở terminal ra và thực hiện lệnh dotnet ef migrations add init thì sẽ không thực hiện được migrations vì ở folder src nó không biết chọn project nào để thực hiện migrations
+- nếu muốn thực hiện migrations ở folder src thì phải thêm --project hoặc --startup-project hay cả 2 ở cuối lệnh ef core
+- ví dụ: dotnet ef migrations add init16  --project EBookStore.WebApi --startup-project EBookStore.WebApi
+- nếu chỉ thêm --project thì mặc định  --startup-project sẽ là --project, còn nếu chỉ thêm --startup-project thì mặc định --project sẽ là --startup-project
+- --project: là thư mục project mà mình muốn thực hiện migrations, 
+	+ Lưu ý: --project phụ thuộc vào project chứa class DBContext hoặc MigrationsAssembly, nếu cấu hình MigrationsAssembly ở project nào thì --project phải là project đó, nếu không thì sẽ bị lỗi như -> Your target project 'EBookStore.WebApi' doesn't match your migrations assembly 'EBookStore.Infrastructure'
+- --startup-project: là thư mục project khi build là lấy được ConnectStrings và kết nối được với database,
+	+ Lưu ý: 
+	    - --startup-project phụ thuộc vào project có ConnectStrings hoặc --startup-project có project con có cấu hình connectStrings, vì khi  --startup-project build thì nó lấy đuọc connectStrings của project con
+		- --startup-project phải cùng cấp với --project (ý là cùng cấp với project MigrationsAssembly) hoặc lớn hơp --project, không được nhỏ hơn --project
+		- nếu --startup-project là lấy được ConnectStrings ở project nào thì nó áp dụng Migrations đó cho --project
+
+- lưu ý: class DContext ở project nào thì khi cấu hình ConnectStrings mặc định MigrationsAssembly sẽ là project đó
+	+ cấu hình ConnectStrings ở project nào thì mặc định MigrationsAssembly vẫn là project chứa class DBContext đó
+	+ ví dụ: class ApplicationDbContext ở project Infrastructure mà cáu hình ConnectStrings ở project WebApi bằng DI DBcontext thì thì mặc định MigrationsAssembly là project Infrastructure chứ không phải là WebApi
+
+* lưu ý nếu cấu hình MigrationsAssembly ở project nào thì khi thực hiện lệnh ở terminal hay PMC thì: --project phải là project đó,và --startup-project phải cùng cấp với --project (project MigrationsAssembly) hoặc lớn hơn --project (project MigrationsAssembly), không được nhỏ hơn --project (project MigrationsAssembly)
+	-> ví dụ: như project WebApi là cha của Infrastructure và Infrastructure là cha của Application và Application là cha Domain, 
+	-> nếu cấu hình MigrationsAssembly là EBookStore.Domain thì --startup-project phải là EBookStore.Domain hoặc EBookStore.Application hoặc EBookStore.Infrastructure hoặc EBookStore.WebApi
+	-> nếu cấu hình MigrationsAssembly là EBookStore.Infrastructure thì --startup-project phải là EBookStore.Infrastructure hoặc EBookStore.WebApi chứ không được là EBookStore.Domain hoặc EBookStore.Application
+	-> nếu cấu hình MigrationsAssembly là EBookStore.WebApi thì --startup-project phải là EBookStore.WebApi chứ không được là EBookStore.Infrastructure hoặc nhỏ hơn
+	-> lưu ý thêm: 
+		- nếu trong Infrastructure mà không cấu hình ConnectStrings mà cấu hình ConnectStrings ở WebApi bằng DI AddDbcontext 
+		- thì khi thực hiện lệnh ở terminal hay PMC thì --startup-project phải là EBookStore.WebApi chứ không được là EBookStore.Infrastructure nếu không sẽ bị lỗi Unable to create a...
+		- vì nó không lấy được ConnectStrings để kết nối với database
+
+- Terminal dotnet ef core: 
++ chọn project nào thì khi thực hiện migrations thì nó sẽ thực hiện ở project đó
++ nếu chọn project EBookStore.WebApi thì khi thực hiện migrations thì nó thực hiện lệnh giống như khi ở thư mục src thực hiện 
+- src: -> 'dotnet ef migrations add init --project EBookStore.WebApi --startup-project EBookStore.WebApi'
+
+- Package Manager Console: thực hiện lệnh là ở trong thư mục góc của tất cả project trong solution -> folder src
++ khi chọn default project EBookStore.WebApi thì nó là -> --project EBookStore.WebApi
++ khi chọn startup project EBookStore.WebApi thì nó là -> --startup-project EBookStore.WebApi
++ khi chọn default project EBookStore.Infrastructure và startup project EBookStore.WebApi thì nó là -> --project EBookStore.Infrastructure --startup-project EBookStore.WebApi
++ không như terminal nếu mình chọn project nào thì nó tự cấu hình --project và --startup-project, 
++ còn ở package manager console thì nó phụ thuộc vào default project mà mình chọn ở trên góc bên phải của package manager console và startup project mà mình chọn ở Set as Startup Projects ở bên phải debug
+
+- cấu hình ConnectStrings: trong OnConfiguring:
+	+ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			TH1: optionsBuilder.UseSqlServer("Server=.;Database=EBookStore;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+			TH2: optionsBuilder.UseSqlServer("Server=.;Database=EBookStore;Trusted_Connection=True;MultipleActiveResultSets=true",
+							builder => builder.MigrationsAssembly("EBookStore.WebApi"));
+		}
+- cấu hình ConnectStrings: trong DI services.AddDbContext:
+	+ services.AddDbContext<ApplicationDbContext>(options =>
+		{
+			TH1: options.UseSqlServer("Server=.;Database=EBookStore;Trusted_Connection=True;MultipleActiveResultSets=true");
+
+			TH2: options.UseSqlServer("Server=.;Database=EBookStore;Trusted_Connection=True;MultipleActiveResultSets=true",
+							builder => builder.MigrationsAssembly("EBookStore.WebApi"));
+		});
+
+- không có file Dbcontext thì sẽ bị lỗi:
+	-> No DbContext was found in assembly 'EBookStore.Infrastructure'. Ensure that you're using the correct assembly and that the type is neither abstract nor generic.
+		+ lỗi này do không có class DContext ở project 
+
+- không cấu hình OnConfiguring và DI services.AddDbContext thì khi thực hiện migrations thì sẽ bị lỗi:
+	-> Unable to create an object of type 'ApplicationDbContext'. For the different patterns supported at design time
+		+ lỗi này do không có kết nối với database, là không kết nối được với ConnectionStrings ở OnConfiguring hay DI services.AddDbContext
+		+ nếu muốn thao tác được migrations thì phải có kết nối với database thông qua ConnectionStrings ở OnConfiguring trong class ApplicationDbContext hoặc ở DI services.AddDbContext
+
+- nếu 2 project liên kết với nhau thì nếu project A có class Dbcontext thì project B cũng nhận được class Dbcontext của project A
+	+ ví dụ: project Infrastructure có class ApplicationDbContext thì project Api cũng nhận được class ApplicationDbContext của project Infrastructure
+	+ nếu project Infrastructure có cấu hình DI services.AddDbContext thì project Api cũng nhận được DI services.AddDbContext của project Infrastructure
+	+ nếu project Infrastructure có cấu hình OnConfiguring thì project Api cũng nhận được OnConfiguring của project Infrastructure
+
+- nếu --startup-project khi build lấy được connectStrings mà --project không đúng với MigrationsAssembly thì sẽ bị lỗi:
+	-> nếu không cáu hình MigrationsAssembly thì --project có MigrationsAssembly là project chứa class ApplicationDbContext
+	-> còn nếu cấu hình MigrationsAssembly là project khác thì --project phải là project đó thì mới đúng
+	-> Erorr: Your target project 'EBookStore.WebApi' doesn't match your migrations assembly 'EBookStore.Infrastructure'. 
+		Either change your target project or change your migrations assembly.
+	-> do MigrationsAssembly là project Infrastructure mà --project là project WebApi nên nó báo lỗi
+	-> lưu ý là lỗi này chỉ xuất hiện khi có ConnectionStrings vì nếu không có ConnectionStrings thì bị lỗi  ->  Unable to create an....(ở trên có nói)
+
+- project WebApi Add ProjectReference Infrastructure (WebApi là cha còn Infrastructure là con của WebApi) và class ApplicationDbContext nằm ở project Infrastructure:
+	+ cấu hình OnConfiguring trong class ApplicationDbContext ở project Infrastructure:
+		++ Terminal:
+			* khi thực hiện terminal migrations ở project Infrastructure thì nó sẽ thực hiện được và nó thực hiện lệnh giống như khi ở thư mục src thực hiện lệnh như:
+			  ->  (src: dotnet ef migrations add init16  --project EBookStore.Infrastructure --startup-project EBookStore.Infrastructure) , 
+			  -> như đã nói ở trên thì không cấu hình MigrationsAssembly thì mặc định là --project Infrastructure, còn --startup-project khi build thì nó build Infrastructure thì cũng lấy được connectStrings
+			  -> nếu đổi --startup-project sang EBookStore.WebApi thì vẫn được vì khi build EBookStore.WebApi thì nó cũng lấy được connectStrings vì Infrastructure là con của WebApi
+			* khi thực terminal migrations ở project WebApi thì nó sẽ bị lỗi:
+			  -> Your target project 'EBookStore.WebApi' doesn't match your migrations assembly 'EBookStore.Infrastructure'
+			  -> vì mặc định MigrationsAssembly là project Infrastructure, nên khi thực hiện terminal migrations ở project WebApi thì nó sẽ không thực hiện được
+			  -> vì khi thực hiện terminal migrations ở project WebApi thì --project là project WebApi, còn --startup-project là project WebApi
+			  -> như trên đã nói --project phụ thuôc vào MigrationsAssembly, còn --startup-project không bị lỗi do nó --startup-project WebApi lớn hơn MigrationsAssembly Infrastructure
+			* nếu muốn terminal migrations ở ở project WebApi thì:
+			  -> cấu hình MigrationsAssembly như TH2 ở trên là EBookStore.WebApi
+			  -> khi thực hiện lệnh thì --project là WebApi nó trùng với MigrationsAssembly và --startup-project là WebApi mà WebApi là cha của Infrastructure nên khi build nó lấy được connectStrings
+			  -> lưu ý: nếu đổi MigrationsAssembly sang EBookStore.WebApi thì khi thực hiện terminal migrations ở project Infrastructure thì nó sẽ bị lỗi
+			  -> vì --startup-project là Infrastructure như đã nói ở trên thì khi cấu hình MigrationsAssembly là WebApi thì --statup-project phải là WebApi hoặc lớn hơn WebApi mà Infrastructure là con của WebApi nên bị lỗi
+		++ Package Manager Console:
+			* tương tự như terminal, nó giúp mình chọn --proejct và --startup-project dễ hơn terminal
+	
+	+ cấu hình DI services.AddDbContext ở project WebApi:
+		++ Terminal: 
+			* khi thực hiện terminal migrations ở project Infrastructure khi sẽ bi lỗi: Unable to create an object...
+			  -> vì khi thực hiện terminal migrations ở project Infrastructure thì --project là Infrastructure, còn --startup-project là Infrastructure
+			  -> --startup-project là Infrastructure mà trong project Infrastructure không có lấy được connectStrings
+			  -> để fix thì cấu hình --startup-project là WebApi vì WebApi có cấu hình connectStrings
+			* khi thực terminal migrations ở project WebApi thì nó sẽ bị lỗi: Your target project 'EBookStore.WebApi' doesn't match your migrations assembly 'EBookStore.Infrastructure'
+		      -> vì khi thực hiện terminal migrations ở project WebApi thì --project là WebApi, còn --startup-project là WebApi mà MigrationsAssembly là Infrastructure nên bị lỗi
+			  -> --startup-project ở đây không bị lỗi vì WebApi trên MigrationsAssembly Infrastructure và nó lấy được connectStrings
+		++ Package Manager Console:
+			* tương tự như terminal, nó giúp mình chọn --proejct và --startup-project dễ hơn terminal
 ==========================================================================================================================================
 
 Microsoft.EntityFrameworkCore.SqlServer
@@ -111,13 +226,4 @@ generate code crud
 - yêu cầu phải có ConnectionStrings
 - nếu không cấu hình dbcontext trong DI thì phải có ConnectionStrings chuỗi kết nối trong OnConfiguring trong class dbcontext
 - nếu có cấu hình dbcontext trong DI thì không cần ConnectionStrings chuỗi kết nối trong OnConfiguring trong class dbcontext
-
-- migrations ở project class library thì:
-- nếu trong class dbcontext có cấu hình connectString thì dotnet ef migrations add bth
-- nếu trong class dbcontext không cấu hình connectString thì có 2 cách:
-- trước tiên là trong Program.cs của project Api phải cấu hình DI DBcontext sau add reference project classLibary chứa class dbcontext  
-- cách 1: dùng package manager console để thao tác ef core 
-- cách 2: truy cập terminal ra folder góc chứa project Api và project classLibary, sau đó thêm  --project và  --startup-project ở cuối cấu lệnh ef core 
-
-ví dụ: dotnet ef migrations add init --project "EStore.ClassLibary" --startup-project "EStore.Api"
 
