@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace AspNetCore.HandleError.Middleware
+namespace AspNetCore.HandleError.Filters
 {
     public class ExceptionHandlingFilterAttribute : ExceptionFilterAttribute
     {

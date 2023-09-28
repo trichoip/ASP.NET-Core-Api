@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net.Mime;
 
-namespace AspNetCore.HandleError.Middleware
+namespace AspNetCore.HandleError.Extensions
 {
     public static class ErrorHandlingExtensions
     {

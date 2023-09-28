@@ -1,14 +1,17 @@
 using AspNetCore.EntityFramework.Data;
-using AspNetCore.EntityFramework.DataSeeding;
+using AspNetCore.EntityFramework.Data.Interceptors;
 using AspNetCore.EntityFramework.Repositories;
+using AspNetCore.EntityFramework.SeedData;
+using AspNetCore.EntityFramework.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AspNetCore.EntityFramework
 {
     public class Program
     {
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +22,20 @@ namespace AspNetCore.EntityFramework
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<DataContext>(
-                options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext"))
-                                  //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // cấu hình no tracking cho context
-                                  // lưu ý: Lazy loading is not supported for detached entities or entities that are loaded with 'AsNoTracking'
-                                  .UseLazyLoadingProxies()); // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
+            builder.Services.AddDbContext<DataContext>((sp, options) =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext"), builder =>
+                {
+                    builder.MigrationsAssembly(typeof(DataContext).Assembly.FullName); // default là project chứa DbContext
+                    options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+                })
+                  //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // cấu hình no tracking cho context
+                  // lưu ý: Lazy loading is not supported for detached entities or entities that are loaded with 'AsNoTracking'
+                  .UseLazyLoadingProxies()); // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+            builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+            builder.Services.AddScoped<ApplicationDbContextInitialiser>();
 
             builder.Services.AddScoped<IFactionRepository, FactionRepository>();
             var app = builder.Build();
@@ -36,13 +48,35 @@ namespace AspNetCore.EntityFramework
 
                 using (var scope = app.Services.CreateScope())
                 {
+                    try
+                    {
+                        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+                        var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
 
-                    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-                    context.Database.EnsureDeleted();
+                        //if (context.Database.IsSqlServer())
+                        //{
+                        //    await context.Database.MigrateAsync();
+                        //}
 
-                    context.Database.Migrate(); // nếu sử dụng Migrate thì phải có file migrations đầu tiên
+                        await context.Database.EnsureDeletedAsync();
+                        await context.Database.MigrateAsync(); // nếu sử dụng Migrate thì phải có file migrations đầu tiên
 
-                    DbInitializer.Initialize(context);
+                        // Seed the database
+                        // cách 1: tạo object
+                        await DbInitializer.Initialize(context);
+                        // cách 2 đọc file json
+                        await StoreContextSeed.SeedAsync(context, logger);
+                        // cách 3: dùng extension method // cách này cần builder.Services.AddScoped<ApplicationDbContextInitialiser>();
+                        await app.InitialiseDatabaseAsync();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var loggerProgram = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                        loggerProgram.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+                        throw;
+                    }
                 }
             }
 

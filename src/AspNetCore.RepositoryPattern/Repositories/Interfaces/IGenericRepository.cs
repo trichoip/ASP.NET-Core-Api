@@ -4,6 +4,7 @@ namespace AspNetCore.RepositoryPattern.Repositories.Interfaces;
 
 public interface IGenericRepository<T> where T : class
 {
+    IQueryable<T> Entities { get; }
     Task<T> FindByIdAsync(int id);
     Task<T> FindByIdAsync(object?[] index);
     Task<IEnumerable<T>> FindAllAsync();

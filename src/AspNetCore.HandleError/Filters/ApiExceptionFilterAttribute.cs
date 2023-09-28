@@ -1,18 +1,23 @@
 ﻿using AspNetCore.HandleError.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace AspNetCore.HandleError.Middleware;
+namespace AspNetCore.HandleError.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {
 
     private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
     private readonly ILogger _logger;
+    private readonly ProblemDetailsFactory _factory;
 
-    public ApiExceptionFilterAttribute(ILogger<ApiExceptionFilterAttribute> logger)
+    public ApiExceptionFilterAttribute(
+        ILogger<ApiExceptionFilterAttribute> logger,
+        ProblemDetailsFactory factory)
     {
         _logger = logger;
+        _factory = factory;
 
         // Register known exception types and handlers.
         _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>

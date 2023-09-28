@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace AspNetCore.Mapper.Mappings
+namespace AspNetCore.Mapper.Profiles
 {
     public class EmployeeProfile : Profile
     {

@@ -1,6 +1,8 @@
-﻿namespace AspNetCore.EntityFramework.Models
+﻿using AspNetCore.EntityFramework.Entities.Common;
+
+namespace AspNetCore.EntityFramework.Entities
 {
-    public class Character
+    public class Character : BaseAuditableEntity
     {
         public int Id { get; set; }
 
@@ -10,7 +12,7 @@
         // one to one
         public virtual Backpack Backpack { get; set; }
 
-        // many to one
+        // one to many
         public virtual List<Weapon> Weapons { get; set; }
 
         // many to many

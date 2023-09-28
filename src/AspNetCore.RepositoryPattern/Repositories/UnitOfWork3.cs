@@ -64,4 +64,9 @@ public class UnitOfWork3 : IUnitOfWork
         GC.SuppressFinalize(this);
     }
 
+    public IGenericRepository<T> Repository<T>() where T : class
+    {
+        throw new NotImplementedException();
+    }
+
 }

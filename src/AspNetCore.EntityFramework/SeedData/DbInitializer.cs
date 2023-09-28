@@ -1,12 +1,13 @@
 ﻿using AspNetCore.EntityFramework.Data;
-using AspNetCore.EntityFramework.Models;
+using AspNetCore.EntityFramework.Entities;
 using Bogus;
+using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.EntityFramework.DataSeeding
+namespace AspNetCore.EntityFramework.SeedData
 {
     public class DbInitializer
     {
-        public static void Initialize(DataContext context)
+        public static async Task Initialize(DataContext context)
         {
 
             var Backpack = new Faker<Backpack>()
@@ -21,15 +22,15 @@ namespace AspNetCore.EntityFramework.DataSeeding
             var Characters = new Faker<Character>()
                                 .RuleFor(c => c.Name, f => f.Person.UserName)
                                 .RuleFor(c => c.Backpack, Backpack.Generate())
-                                .RuleFor(c => c.Factions, Factions.Generate(20))
-                                .RuleFor(c => c.Weapons, Weapons.Generate(10))
+                                .RuleFor(c => c.Factions, Factions.Generate(2))
+                                .RuleFor(c => c.Weapons, Weapons.Generate(2))
                                 .Generate(2);
 
-            if (!context.Characters.Any())
+            if (!await context.Characters.AnyAsync())
             {
-                context.Characters.AddRange(Characters);
+                await context.Characters.AddRangeAsync(Characters);
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
         }

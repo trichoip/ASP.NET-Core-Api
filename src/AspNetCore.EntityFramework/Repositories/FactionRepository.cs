@@ -1,5 +1,5 @@
 ﻿using AspNetCore.EntityFramework.Data;
-using AspNetCore.EntityFramework.Models;
+using AspNetCore.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

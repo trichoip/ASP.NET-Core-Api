@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Common.Mappings
+namespace AspNetCore.Mapper.Mappings
 {
     public interface IMapFrom<T>
     {

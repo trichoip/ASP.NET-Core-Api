@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using AspNetCore.EntityFramework.Entities.Common;
+using System.Text.Json.Serialization;
 
-namespace AspNetCore.EntityFramework.Models
+namespace AspNetCore.EntityFramework.Entities
 {
-    public class Weapon
+    public class Weapon : BaseAuditableEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

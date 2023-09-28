@@ -1,4 +1,6 @@
 using AspNetCore.HandleError.Exceptions;
+using AspNetCore.HandleError.Extensions;
+using AspNetCore.HandleError.Filters;
 using AspNetCore.HandleError.Middleware;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net.Mime;
@@ -62,6 +64,7 @@ namespace AspNetCore.HandleError
                 app.UseExceptionHandler();
 
                 #region Handle error cach 4
+                app.UseException();
                 // 2 cách dưới giống nhau, chọn 1 trong 2
                 // nếu áp dụng cả 2 thì nó sẽ vào cái 2 trước nếu trong (2) không xữ lý exception thì nó sẽ vào cái (1)
                 app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.ConfigureExceptionHandler()); // (1)

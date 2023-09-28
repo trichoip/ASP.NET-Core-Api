@@ -1,6 +1,6 @@
 ﻿using AspNetCore.RepositoryPattern.Data;
 using AspNetCore.RepositoryPattern.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace AspNetCore.RepositoryPattern.Repositories;
 
@@ -8,6 +8,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly DataContext _context;
     private bool disposed = false;
+    private Hashtable _repositories;
 
     public UnitOfWork(DataContext context)
     {
@@ -26,22 +27,33 @@ public class UnitOfWork : IUnitOfWork
 
     public IWeaponRepository Weapons { get; private set; }
 
+    public IGenericRepository<T> Repository<T>() where T : class
+    {
+        if (_repositories == null) _repositories = new Hashtable();
+
+        var type = typeof(T).Name;
+
+        if (!_repositories.ContainsKey(type))
+        {
+            var repositoryType = typeof(GenericRepository<>);
+
+            var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
+
+            _repositories.Add(type, repositoryInstance);
+        }
+
+        return (IGenericRepository<T>)_repositories[type];
+    }
+
     public async Task CommitAsync()
     {
         await _context.SaveChangesAsync();
     }
 
-    public async Task RollbackAsync()
+    public Task RollbackAsync()
     {
-        foreach (var entry in _context.ChangeTracker.Entries())
-        {
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                    entry.State = EntityState.Detached;
-                    break;
-            }
-        }
+        _context.ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
+        return Task.CompletedTask;
     }
 
     protected virtual void Dispose(bool disposing)

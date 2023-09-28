@@ -1,5 +1,5 @@
 ﻿using AspNetCore.EntityFramework.Data;
-using AspNetCore.EntityFramework.Models;
+using AspNetCore.EntityFramework.Entities;
 using AspNetCore.EntityFramework.Repositories;
 using Bogus;
 using Microsoft.AspNetCore.Mvc;
