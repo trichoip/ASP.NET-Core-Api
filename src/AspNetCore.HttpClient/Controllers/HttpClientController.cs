@@ -116,6 +116,10 @@ namespace AspNetCore.HttpClient.Controllers
                 IsComplete = (bool)x["isComplete"]
             }).ToList();
 
+            //var data = await response.Content.ReadAsStringAsync();
+            //dynamic temp1 = JObject.Parse(data);
+            //items = temp1.value?.ToObject<IList<TodoItem>>() ?? Array.Empty<TodoItem>();
+
             dynamic temp = JObject.Parse(jsonArray[0].ToString());
             var todo = new TodoItem
             {
