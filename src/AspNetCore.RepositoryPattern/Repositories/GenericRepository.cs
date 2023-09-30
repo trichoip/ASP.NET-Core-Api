@@ -1,4 +1,5 @@
 ﻿using AspNetCore.RepositoryPattern.Data;
+using AspNetCore.RepositoryPattern.Helpers;
 using AspNetCore.RepositoryPattern.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -32,11 +33,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public virtual async Task<IEnumerable<T>> FindAllAsync()
     {
         return await dbSet.ToListAsync();
-    }
-
-    public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
-    {
-        return await dbSet.Where(expression).ToListAsync();
     }
 
     public virtual async Task<T?> FindByIdAsync(int id)
@@ -73,9 +69,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await context.SaveChangesAsync();
     }
 
+    public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
+    {
+        return await dbSet.Where(expression).ToListAsync();
+    }
+
     public async Task<IEnumerable<T>> FindAsync(
         Expression<Func<T, bool>>? expression = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null,
         string? includes = null)
     {
         IQueryable<T> query = dbSet;
@@ -84,6 +86,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         {
             query = query.Where(expression);
         }
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
         if (includes != null)
         {
             foreach (var include in includes.Split(",", StringSplitOptions.RemoveEmptyEntries))
@@ -91,18 +99,27 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
                 query = query.Include(include);
             }
         }
+
         if (orderBy != null)
         {
             query = orderBy(query);
         }
 
         return await query.ToListAsync();
-
     }
 
-    public async Task<T?> FindOneAsync(Expression<Func<T, bool>> expression, string? includes = null)
+    public async Task<T?> FindOneAsync(
+        Expression<Func<T, bool>> expression,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null,
+        string? includes = null)
     {
         IQueryable<T> query = dbSet;
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
         if (includes != null)
         {
             foreach (var include in includes.Split(",", StringSplitOptions.RemoveEmptyEntries))
@@ -112,5 +129,34 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
 
         return await query.FirstOrDefaultAsync(expression);
+    }
+
+    public async Task<(int, PaginatedList<T>)> FindAsync(
+        int pageIndex = 0,
+        int pageSize = 10,
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        var paginatedList = await PaginatedList<T>.CreateAsync(query, pageIndex, pageSize);
+
+        return (pageSize, paginatedList);
     }
 }

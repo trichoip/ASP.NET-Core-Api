@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.Api.Helper
+﻿namespace AspNetCore.Api.Helpers
 {
     public class DateRange : IParsable<DateRange>
     {

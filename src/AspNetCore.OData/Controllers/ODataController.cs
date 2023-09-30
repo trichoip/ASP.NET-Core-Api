@@ -43,7 +43,6 @@ namespace AspNetCore.OData.Controllers
         [EnableQuery]
         public IActionResult ToList(string? select)
         {
-
             // nếu là tolist thì nó sẽ returrn query hết tất cả properties sau đó lọc theo điều kiện của OData
             // xem log là rõ
             // cho nên nếu lọc properties trong query thì không được tolist() mà phải dùng AsQueryable() hoặc Dbset<>

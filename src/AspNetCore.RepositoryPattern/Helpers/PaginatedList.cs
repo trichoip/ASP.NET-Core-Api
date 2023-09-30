@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.Api.Helpers;
+namespace AspNetCore.RepositoryPattern.Helpers;
 
 public class PaginatedList<T> : List<T>
 {
@@ -17,7 +17,6 @@ public class PaginatedList<T> : List<T>
         TotalCount = count;
         AddRange(items);
     }
-
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
     {
         var count = await source.CountAsync();

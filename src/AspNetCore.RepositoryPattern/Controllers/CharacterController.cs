@@ -2,6 +2,7 @@
 using AspNetCore.RepositoryPattern.Repositories.Interfaces;
 using Bogus;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.RepositoryPattern.Controllers;
 [Route("api/[controller]/[action]")]
@@ -21,6 +22,24 @@ public class CharacterController : ControllerBase
         _characterRepository = characterRepository;
         _backpackRepository = backpackRepository;
 
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> DemoIGenericRepository()
+    {
+        var a = await _characterRepository.FindAsync(c => c.Id == 2);
+        var a2 = await _characterRepository.FindAsync(
+            null,
+            c => c.OrderByDescending(c => c.Id),
+            c => c.Include(c => c.Backpack));
+
+        var a3 = await _characterRepository.FindAsync(
+            2, 1,
+           null,
+           c => c.OrderByDescending(c => c.Id),
+           c => c.Include(c => c.Backpack));
+
+        return Ok(new { a, a2, a3.Item2 });
     }
 
     [HttpGet]
