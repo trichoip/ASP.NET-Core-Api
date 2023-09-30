@@ -7,7 +7,7 @@ namespace AspNetCore.EntityFramework.SeedData;
 
 public static class InitialiserExtensions
 {
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
+    public static async Task UseInitialiseDatabaseAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
@@ -39,7 +39,16 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
+            //_context.Database.IsSqlServer();
+            //if (_context.Database.ProviderName == typeof(SqlServerOptionsExtension)!.Assembly.GetName().Name)
+            //{
+            //    await _context.Database.EnsureDeletedAsync();
+            //    await _context.Database.MigrateAsync();
+            //}
+
+            await _context.Database.EnsureDeletedAsync();
             await _context.Database.MigrateAsync();
+
         }
         catch (Exception ex)
         {

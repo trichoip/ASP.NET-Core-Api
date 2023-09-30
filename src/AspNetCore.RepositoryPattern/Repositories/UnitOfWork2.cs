@@ -8,45 +8,45 @@ public class UnitOfWork2 : IUnitOfWork
 {
     private readonly DataContext _context;
     private bool disposed = false;
-    private ICharacterRepository characters;
-    private IBackpackRepository backpacks;
-    private IFactionRepository factions;
-    private IWeaponRepository weapons;
+    private ICharacterRepository _characterRepository;
+    private IBackpackRepository _backpackRepository;
+    private IFactionRepository _factionRepository;
+    private IWeaponRepository _weaponRepository;
 
     public UnitOfWork2(DataContext context)
     {
         _context = context;
     }
 
-    public ICharacterRepository Characters
+    public ICharacterRepository CharacterRepository
     {
         get
         {
-            return characters ??= new CharacterRepository(_context);
+            return _characterRepository ??= new CharacterRepository(_context);
         }
     }
 
-    public IBackpackRepository Backpacks
+    public IBackpackRepository BackpackRepository
     {
         get
         {
-            return backpacks ??= new BackpackRepository(_context);
+            return _backpackRepository ??= new BackpackRepository(_context);
         }
     }
 
-    public IFactionRepository Factions
+    public IFactionRepository FactionRepository
     {
         get
         {
-            return factions ??= new FactionRepository(_context);
+            return _factionRepository ??= new FactionRepository(_context);
         }
     }
 
-    public IWeaponRepository Weapons
+    public IWeaponRepository WeaponRepository
     {
         get
         {
-            return weapons ??= new WeaponRepository(_context);
+            return _weaponRepository ??= new WeaponRepository(_context);
         }
     }
 
@@ -55,7 +55,7 @@ public class UnitOfWork2 : IUnitOfWork
         await _context.SaveChangesAsync();
     }
 
-    public async Task RollbackAsync()
+    public Task RollbackAsync()
     {
         foreach (var entry in _context.ChangeTracker.Entries())
         {
@@ -66,6 +66,7 @@ public class UnitOfWork2 : IUnitOfWork
                     break;
             }
         }
+        return Task.CompletedTask;
     }
 
     protected virtual void Dispose(bool disposing)

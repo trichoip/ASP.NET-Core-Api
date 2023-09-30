@@ -58,6 +58,12 @@ namespace AspNetCore.EntityFramework
                         //    await context.Database.MigrateAsync();
                         //}
 
+                        //if (context.Database.ProviderName == typeof(SqlServerOptionsExtension)!.Assembly.GetName().Name)
+                        //{
+                        //    await context.Database.EnsureDeletedAsync();
+                        //    await context.Database.MigrateAsync();
+                        //}
+
                         await context.Database.EnsureDeletedAsync();
                         await context.Database.MigrateAsync(); // nếu sử dụng Migrate thì phải có file migrations đầu tiên
 
@@ -67,7 +73,7 @@ namespace AspNetCore.EntityFramework
                         // cách 2 đọc file json
                         await StoreContextSeed.SeedAsync(context, logger);
                         // cách 3: dùng extension method // cách này cần builder.Services.AddScoped<ApplicationDbContextInitialiser>();
-                        await app.InitialiseDatabaseAsync();
+                        await app.UseInitialiseDatabaseAsync();
 
                     }
                     catch (Exception ex)

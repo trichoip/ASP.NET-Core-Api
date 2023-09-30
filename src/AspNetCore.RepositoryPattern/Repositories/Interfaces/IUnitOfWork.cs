@@ -3,10 +3,10 @@
 public interface IUnitOfWork : IDisposable
 {
     IGenericRepository<T> Repository<T>() where T : class;
-    IBackpackRepository Backpacks { get; }
-    ICharacterRepository Characters { get; }
-    IFactionRepository Factions { get; }
-    IWeaponRepository Weapons { get; }
+    IBackpackRepository BackpackRepository { get; }
+    ICharacterRepository CharacterRepository { get; }
+    IFactionRepository FactionRepository { get; }
+    IWeaponRepository WeaponRepository { get; }
 
     Task CommitAsync();
     Task RollbackAsync();

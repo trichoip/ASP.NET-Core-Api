@@ -44,16 +44,16 @@ public class CharacterController : ControllerBase
 
         // nếu áp dụng _unitOfWork thì nó áp dụng 1 transaction cho tất cả các repository
         // ví dụ như nếu có 1 repository bị lỗi thì tất cả các repository khác cũng rollback
-        // như bên dưới thì khi save Characters lúc nào cũng thành công
-        // còn khi save Backpacks thì chỉ thành công lần đầu tiên , còn lần 2 thì bị lỗi
+        // như bên dưới thì khi save CharacterRepository lúc nào cũng thành công
+        // còn khi save BackpackRepository thì chỉ thành công lần đầu tiên , còn lần 2 thì bị lỗi
         // thì khi save lần đầu thì nó sẽ save thành công cả 2 và lưu được data trên db
-        // còn khi save lần 2 thì nó save thành công Characters nhưng thất bại save Backpacks,
-        // vì Characters và Backpacks đều chung 1 dbcontext nên nó chung 1 transaction, mà khi transaction lỗi thì nó sẽ rollback lại kể cả khi save Characters thành công
-        // test hàm này chạy 2 lần là biết, lần đầu sẽ save được cả Characters và Backpacks lên db
-        // còn lần 2 thì không có data nào được save lên db vì Backpacks lỗi, nó rollback lại cả Characters
+        // còn khi save lần 2 thì nó save thành công CharacterRepository nhưng thất bại save BackpackRepository,
+        // vì CharacterRepository và BackpackRepository đều chung 1 dbcontext nên nó chung 1 transaction, mà khi transaction lỗi thì nó sẽ rollback lại kể cả khi save CharacterRepository thành công
+        // test hàm này chạy 2 lần là biết, lần đầu sẽ save được cả CharacterRepository và BackpackRepository lên db
+        // còn lần 2 thì không có data nào được save lên db vì BackpackRepository lỗi, nó rollback lại cả CharacterRepository
 
-        await _unitOfWork.Characters.CreateRangeAsync(Characters);
-        await _unitOfWork.Backpacks.CreateAsync(Backpack2);
+        await _unitOfWork.CharacterRepository.CreateRangeAsync(Characters);
+        await _unitOfWork.BackpackRepository.CreateAsync(Backpack2);
 
         await _unitOfWork.CommitAsync();
 

@@ -68,9 +68,17 @@ namespace AspNetCore.FakeData.Controllers
         [HttpGet]
         public IActionResult AutoBogus()
         {
-            var customer = AutoFaker.Generate<Customer>();
+            var entities = AutoFaker.Generate<Customer>(1, configure =>
+            {
+                configure.WithTreeDepth(2); // nen test lai la hieu
+                configure.WithRepeatCount(2); // generate 2 child
+                configure.WithRecursiveDepth(1); // nen la 1
 
-            return Ok(customer);
+                configure.WithSkip<Customer>(a => a.Id);
+                configure.WithSkip<Address>(a => a.Id);
+            });
+
+            return Ok(entities);
         }
 
         [HttpGet]
@@ -90,11 +98,15 @@ namespace AspNetCore.FakeData.Controllers
         public string Email { get; set; }
         public string Bio { get; set; }
         public Address Address { get; set; }
+        public IList<Address> Addresss { get; set; }
     }
     public class Address
     {
+        public int Id { get; set; }
         public string Line1 { get; set; }
         public string Line2 { get; set; }
         public string PinCode { get; set; }
+
+        public Customer Customer { get; set; }
     }
 }

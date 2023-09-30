@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCore.Extensions.Extensions
@@ -10,6 +11,7 @@ namespace AspNetCore.Extensions.Extensions
             services.AddAutoMapper();
             services.AddMediator();
             services.AddValidators();
+            services.AddInitialiseDatabase();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)
@@ -70,6 +72,19 @@ namespace AspNetCore.Extensions.Extensions
             //           options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             //       }));
 
+        }
+
+        public static void AddInitialiseDatabase(this IServiceCollection services)
+        {
+            //services.AddScoped<ApplicationDbContextInitialiser>();
+        }
+
+        public static async Task UseInitialiseDatabaseAsync(this WebApplication app)
+        {
+            //using var scope = app.Services.CreateScope();
+            //var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+            //await initialiser.InitialiseAsync();
+            //await initialiser.SeedAsync();
         }
     }
 }

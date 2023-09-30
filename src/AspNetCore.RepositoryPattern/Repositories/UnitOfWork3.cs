@@ -9,23 +9,23 @@ public class UnitOfWork3 : IUnitOfWork
     private readonly DataContext _context;
     private bool disposed = false;
 
-    public ICharacterRepository Characters { get; private set; }
-    public IBackpackRepository Backpacks { get; private set; }
-    public IFactionRepository Factions { get; private set; }
-    public IWeaponRepository Weapons { get; private set; }
+    public ICharacterRepository CharacterRepository { get; private set; }
+    public IBackpackRepository BackpackRepository { get; private set; }
+    public IFactionRepository FactionRepository { get; private set; }
+    public IWeaponRepository WeaponRepository { get; private set; }
 
     public UnitOfWork3(
         DataContext context,
-        ICharacterRepository Characters,
-        IBackpackRepository Backpacks,
-        IFactionRepository Factions,
-        IWeaponRepository Weapons)
+        ICharacterRepository characterRepository,
+        IBackpackRepository backpackRepository,
+        IFactionRepository factionRepository,
+        IWeaponRepository weaponRepository)
     {
         _context = context;
-        this.Characters = Characters;
-        this.Backpacks = Backpacks;
-        this.Factions = Factions;
-        this.Weapons = Weapons;
+        CharacterRepository = characterRepository;
+        BackpackRepository = backpackRepository;
+        FactionRepository = factionRepository;
+        WeaponRepository = weaponRepository;
     }
 
     public async Task CommitAsync()
@@ -33,7 +33,7 @@ public class UnitOfWork3 : IUnitOfWork
         await _context.SaveChangesAsync();
     }
 
-    public async Task RollbackAsync()
+    public Task RollbackAsync()
     {
         foreach (var entry in _context.ChangeTracker.Entries())
         {
@@ -44,6 +44,7 @@ public class UnitOfWork3 : IUnitOfWork
                     break;
             }
         }
+        return Task.CompletedTask;
     }
 
     protected virtual void Dispose(bool disposing)

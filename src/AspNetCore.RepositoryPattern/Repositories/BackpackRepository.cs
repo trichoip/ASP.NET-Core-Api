@@ -13,7 +13,7 @@ public class BackpackRepository : GenericRepository<Backpack>, IBackpackReposito
         context = _context;
     }
 
-    public async Task<Backpack> FindByUsernameAndPassword(string username, string password)
+    public async Task<Backpack?> FindByUsernameAndPassword(string username, string password)
     {
         return await FindOneAsync(c => c.Description == username);
     }
@@ -21,8 +21,8 @@ public class BackpackRepository : GenericRepository<Backpack>, IBackpackReposito
     // nếu muốn overide thì sửa lại cái này còn nếu không thì xóa đi hoặc để là base.function(entity);
     public override Task<IEnumerable<Backpack>> FindAsync(Expression<Func<Backpack, bool>> expression) => base.FindAsync(expression);
 
-    public override Task<Backpack> FindByIdAsync(int id) => base.FindByIdAsync(id);
+    public override Task<Backpack?> FindByIdAsync(int id) => base.FindByIdAsync(id);
 
-    public override Task<Backpack> FindByIdAsync(object?[] index) => base.FindByIdAsync(index);
+    public override Task<Backpack?> FindByIdAsync(object?[] index) => base.FindByIdAsync(index);
 
 }

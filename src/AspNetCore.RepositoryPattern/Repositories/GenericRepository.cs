@@ -39,30 +39,33 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await dbSet.Where(expression).ToListAsync();
     }
 
-    public virtual async Task<T> FindByIdAsync(int id)
+    public virtual async Task<T?> FindByIdAsync(int id)
     {
         return await dbSet.FindAsync(id);
     }
 
-    public virtual async Task<T> FindByIdAsync(object?[] index)
+    public virtual async Task<T?> FindByIdAsync(object?[] index)
     {
         return await dbSet.FindAsync(index);
     }
 
-    public virtual async Task RemoveAsync(T entity)
+    public virtual Task RemoveAsync(T entity)
     {
         dbSet.Remove(entity);
+        return Task.CompletedTask;
     }
 
-    public virtual async Task RemoveRangeAsync(IEnumerable<T> entities)
+    public virtual Task RemoveRangeAsync(IEnumerable<T> entities)
     {
         dbSet.RemoveRange(entities);
+        return Task.CompletedTask;
     }
 
-    public virtual async Task UpdateAsync(T entity)
+    public virtual Task UpdateAsync(T entity)
     {
         //dbSet.Attach(entity);
         dbSet.Update(entity);
+        return Task.CompletedTask;
     }
 
     public async Task SaveChangesAsync()
@@ -70,7 +73,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includes = null)
+    public async Task<IEnumerable<T>> FindAsync(
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        string? includes = null)
     {
         IQueryable<T> query = dbSet;
 
@@ -94,7 +100,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     }
 
-    public async Task<T> FindOneAsync(Expression<Func<T, bool>> expression, string includes = null)
+    public async Task<T?> FindOneAsync(Expression<Func<T, bool>> expression, string? includes = null)
     {
         IQueryable<T> query = dbSet;
         if (includes != null)

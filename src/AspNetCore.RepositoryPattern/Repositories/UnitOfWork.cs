@@ -13,19 +13,19 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(DataContext context)
     {
         _context = context;
-        Characters = new CharacterRepository(_context);
-        Backpacks = new BackpackRepository(_context);
-        Factions = new FactionRepository(_context);
-        Weapons = new WeaponRepository(_context);
+        CharacterRepository = new CharacterRepository(_context);
+        BackpackRepository = new BackpackRepository(_context);
+        FactionRepository = new FactionRepository(_context);
+        WeaponRepository = new WeaponRepository(_context);
     }
 
-    public ICharacterRepository Characters { get; private set; }
+    public ICharacterRepository CharacterRepository { get; private set; }
 
-    public IBackpackRepository Backpacks { get; private set; }
+    public IBackpackRepository BackpackRepository { get; private set; }
 
-    public IFactionRepository Factions { get; private set; }
+    public IFactionRepository FactionRepository { get; private set; }
 
-    public IWeaponRepository Weapons { get; private set; }
+    public IWeaponRepository WeaponRepository { get; private set; }
 
     public IGenericRepository<T> Repository<T>() where T : class
     {

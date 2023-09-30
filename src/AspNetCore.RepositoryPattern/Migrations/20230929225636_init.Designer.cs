@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspNetCore.RepositoryPattern.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230926143414_init")]
+    [Migration("20230929225636_init")]
     partial class init
     {
         /// <inheritdoc />

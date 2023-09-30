@@ -53,6 +53,8 @@ namespace AspNetCore.OData
             using (var scope = app.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<MyWorldDbContext>();
+                context.Database.EnsureDeleted();
+                context.Database.Migrate();
                 DbInitializer.Initialize(context);
             }
 
