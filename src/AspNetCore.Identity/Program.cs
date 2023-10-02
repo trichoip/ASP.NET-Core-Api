@@ -1,5 +1,6 @@
 
 using AspNetCore.Identity.Data;
+using AspNetCore.Identity.Data.SeedData;
 using AspNetCore.Identity.Email;
 using AspNetCore.Identity.Extensions;
 using AspNetCore.Identity.Models;
@@ -22,7 +23,7 @@ namespace AspNetCore.Identity;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,7 @@ public class Program
         #region AddIdentity
         // Microsoft.AspNetCore.Identity.UI
         //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        //     .AddRoles<ApplicationRole>()
         //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
         builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -68,6 +70,7 @@ public class Program
             options.User.RequireUniqueEmail = false;  // Email là duy nhất
 
         }).AddEntityFrameworkStores<ApplicationDbContext>()
+          //.AddDefaultUI()
           .AddDefaultTokenProviders();
         #endregion
 
@@ -140,6 +143,7 @@ public class Program
                            o.ValidationInterval = TimeSpan.FromSeconds(40));
         #endregion
 
+        #region AddAuthentication
         // keyword: OAuth2 api, api profile 
         builder.Services.AddAuthentication(options =>
            {
@@ -877,9 +881,10 @@ public class Program
 
                #endregion
            });
+        #endregion
 
         builder.Services.AddTransient<IEmailSender, EmailSender>();
-
+        builder.Services.AddScoped<ApplicationDbContextInitialiser>();
         builder.Services.AddDataProtection()
                   .PersistKeysToFileSystem(new DirectoryInfo(@"bin\debug\configuration"))
                   .ProtectKeysWithDpapi()
@@ -920,7 +925,7 @@ public class Program
             });
             #endregion
         }
-
+        await app.UseInitialiseDatabaseAsync();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 

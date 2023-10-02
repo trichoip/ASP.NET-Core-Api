@@ -78,6 +78,9 @@ namespace AspNetCore.FakeData.Controllers
                 configure.WithSkip<Address>(a => a.Id);
             });
 
+            //.RuleFor(c => c.OrderDetails, f => orderDetails.Generate(5)) // đúng 
+            //.RuleFor(c => c.OrderDetails, orderDetails.Generate(5)) // sai, phải có f => 
+
             return Ok(entities);
         }
 

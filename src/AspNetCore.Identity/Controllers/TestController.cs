@@ -244,56 +244,6 @@ namespace AspNetCore.Identity.Controllers
             return Ok(new { data });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login()
-        {
-            var adminRole = await _roleManager.FindByNameAsync("Admin");
-            if (adminRole == null)
-            {
-                await _roleManager.CreateAsync(new ApplicationRole() { Name = "Admin" });
-            }
-            var userRole = await _roleManager.FindByNameAsync("User");
-            if (userRole == null)
-            {
-                await _roleManager.CreateAsync(new ApplicationRole() { Name = "User" });
-            }
-
-            string username = "admin";
-            string password = "aA123456!";
-
-            var user = await _userManager.FindByNameAsync(username);
-
-            if (user == null)
-            {
-                var applicationUser = new ApplicationUser() { UserName = username, Email = "trinmse150418@fpt.edu.vn", EmailConfirmed = true, PhoneNumber = "0123456789" };
-                var resultCreate = await _userManager.CreateAsync(applicationUser, password);
-
-                if (!resultCreate.Succeeded)
-                {
-                    foreach (var error in resultCreate.Errors)
-                    {
-                        ModelState.AddModelError(error.Code, error.Description);
-                    }
-                    return ValidationProblem(detail: "password not validate!", modelStateDictionary: ModelState);
-                }
-            }
-
-            // chay lan dau
-            //user = await _userManager.FindByNameAsync(username);
-            //await _userManager.AddToRoleAsync(user, "Admin");
-            //await _userManager.AddToRoleAsync(user, "User");
-            //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Country, "HCM"));
-
-            var result = await _signInManager.PasswordSignInAsync(username, password, false, false);
-            if (!result.Succeeded)
-            {
-                return Problem(detail: "Invalid login attempt.", statusCode: StatusCodes.Status400BadRequest);
-
-            }
-
-            return Ok("login test success!");
-        }
-
         // login google client js
         [HttpPost]
         public async Task<IActionResult> Get(Token token)

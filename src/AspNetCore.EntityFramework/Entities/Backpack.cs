@@ -12,6 +12,7 @@ namespace AspNetCore.EntityFramework.Entities
         // ví dụ như Character Nemo thì CharacterId hoặc NemoId 
         public int NemoId { get; set; }
         [JsonIgnore]
+        //[ForeignKey("NemoId")]
         public virtual Character Nemo { get; set; }
     }
 }

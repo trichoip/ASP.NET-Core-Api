@@ -6,6 +6,7 @@ namespace AspNetCore.Identity.DTOs
     public sealed class LoginRequest
     {
         [EmailAddress]
+        [DefaultValue("developermode549@gmail.com")]
         public required string Email { get; init; }
 
         [DefaultValue("aA123456!")]

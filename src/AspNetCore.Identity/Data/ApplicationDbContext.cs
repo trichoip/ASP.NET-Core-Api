@@ -28,7 +28,7 @@ namespace AspNetCore.Identity.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // muốn sữa cái gì bắt buộc phải gọi hàm này trước
+            base.OnModelCreating(modelBuilder); // identity có build modelBuilder trước rùi nên phải gọi base để lấy modelBuilder của identity về, vào IdentityDbContext xem là rõ
 
             // Bỏ tiền tố AspNet của các bảng: mặc định các bảng trong IdentityDbContext có
             // tên với tiền tố AspNet như: AspNetUserRoles, AspNetUser ...

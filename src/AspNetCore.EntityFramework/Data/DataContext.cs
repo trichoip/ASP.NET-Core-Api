@@ -37,6 +37,49 @@ namespace AspNetCore.EntityFramework.Data
                 b.Navigation(_ => _.Backpack).AutoInclude();
                 b.Navigation(_ => _.Factions).AutoInclude();
 
+                #region one to many
+                //// nếu trong class Father có cấu hình ICollection<Child> và trong class Child có cấu hình object Father
+                //// thì nên áp dụng c1 -> không nên áp dụng c2 hoặc c3 vì sẽ không include được ICollection<Child>
+                //b.HasMany(_ => _.Weapons).WithOne(_ => _.Nemo); // c1
+
+                //// nếu trong class Father không cấu hình ICollection<Child> và trong class Child có cấu hình object Father
+                //// thì nên áp dụng c2  -> c1 và c3 không áp dụng được
+                //b.HasMany<Weapon>().WithOne(_ => _.Nemo); // c2
+
+                //// nếu trong class Father không cấu hình ICollection<Child> và trong class Child không cấu hình object Father
+                //// thì áp dụng c3
+                //b.HasMany<Weapon>().WithOne(); // c3
+
+                // lưu ý: trong class Child tên property FK phải là tên class + Id, ví dụ: class Father thì tên property FK là FatherId hoặc PropertiesFatherId -> vào class Backpack sẽ rõ
+                // nếu không đúng cấu trúc thì kể cả không cấu hình relateionship trong OnModelCreating mà để ef tự tạo hay có cấu hình relateionship mà không có HasForeignKey thì nó sẽ tự động tạo ra FK với tên là tên class + Id
+                // nếu c1 và c2 mà tên property FK mà không đúng cấu trúc ClassFatherId hoặc PropertiesFatherId
+                // thì có thể áp dung [ForeignKey("NemoId")] trên object Father trong class Child -> vào class Backpack sẽ rõ
+                // hoặc cấu hình .HasForeignKey(_ => _.NemoId); 
+                // nếu c3 mà tên property FK mà không đúng cấu trúc ClassFatherId (không có PropertiesFatherId vì nó không cấu hình object Father )
+                // thì chỉ có thể áp dụng .HasForeignKey(_ => _.NemoId); như bên dưới 
+
+                //b.HasMany(_ => _.Weapons).WithOne(_ => _.Nemo).HasForeignKey(_ => _.CharacterId);
+                //b.HasMany<Weapon>().WithOne(_ => _.Nemo).HasForeignKey(_ => _.CharacterId);
+                //b.HasMany<Weapon>().WithOne().HasForeignKey(_ => _.CharacterId);
+
+                #endregion
+
+                #region one to one
+                //b.HasOne(_ => _.Backpack).WithOne(_ => _.Nemo).HasForeignKey<Backpack>(_ => _.NemoId);
+                //b.HasOne<Backpack>().WithOne().HasForeignKey<Backpack>(_ => _.NemoId);
+                #endregion
+
+                #region  many to many
+                //b.HasMany<Faction>().WithMany().UsingEntity(_ => _.ToTable("CharacterFaction"));
+                //b.HasMany(_ => _.Factions).WithMany(_ => _.Characters)
+                //.UsingEntity(_ =>
+                //{
+                //    _.ToTable("CharacterFaction");
+                //    _.Property("CharactersId").HasColumnName("CharacterId");
+                //    _.Property("FactionsId").HasColumnName("FactionId");
+                //}); 
+                #endregion
+
             });
 
             modelBuilder.Entity<Backpack>(b =>
