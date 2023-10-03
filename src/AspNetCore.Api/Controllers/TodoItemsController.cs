@@ -1,4 +1,5 @@
-﻿using AspNetCore.Api.Models;
+﻿
+using AspNetCore.Api.Models;
 using AspNetCore.Api.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +8,11 @@ namespace AspNetCore.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsDTOController : ControllerBase
+    public class TodoItemsController : ControllerBase
     {
         private readonly TodoContext _context;
 
-        public TodoItemsDTOController(TodoContext context)
+        public TodoItemsController(TodoContext context)
         {
             _context = context;
         }
