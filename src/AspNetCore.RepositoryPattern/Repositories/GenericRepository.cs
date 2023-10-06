@@ -159,4 +159,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
         return (pageSize, paginatedList);
     }
+
+    public async Task<bool> ExistsByAsync(Expression<Func<T, bool>>? expression = null)
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+        return await query.AnyAsync();
+    }
 }

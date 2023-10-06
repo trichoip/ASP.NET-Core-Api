@@ -10,6 +10,8 @@ public interface IGenericRepository<T> where T : class
     Task<T?> FindByIdAsync(object?[] index);
     Task<IEnumerable<T>> FindAllAsync();
 
+    Task<bool> ExistsByAsync(Expression<Func<T, bool>>? expression = null);
+
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression);
 
     Task<IEnumerable<T>> FindAsync(
