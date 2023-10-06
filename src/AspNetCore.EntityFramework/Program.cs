@@ -5,6 +5,7 @@ using AspNetCore.EntityFramework.SeedData;
 using AspNetCore.EntityFramework.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace AspNetCore.EntityFramework
 {
@@ -18,6 +19,11 @@ namespace AspNetCore.EntityFramework
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            //builder.Services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            //});
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

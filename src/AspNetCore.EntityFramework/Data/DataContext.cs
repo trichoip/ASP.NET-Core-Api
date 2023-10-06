@@ -32,6 +32,9 @@ namespace AspNetCore.EntityFramework.Data
             // cần sữa cái nào thì cấu hình cái đó
             modelBuilder.Entity<Character>(b =>
             {
+                //b.Property(_=>_.Status).HasConversion<string>(); // cách 2 convert enum sang string  khi lưu lên db
+                //b.Property(_ => _.Status).HasConversion(new EnumToStringConverter<OrderStatus>()); // cách 3 convert enum sang string  khi lưu lên db
+
                 // cấu hình AutoInclude sẽ không có ghi vào history migration, cho nên commit thì không có gì thay đổi cả
                 b.Navigation(_ => _.Weapons).AutoInclude();
                 b.Navigation(_ => _.Backpack).AutoInclude();

@@ -9,6 +9,10 @@ namespace AspNetCore.EntityFramework.Entities
         //[Column(TypeName = "nvarchar(30)")]
         public string? Name { get; set; }
 
+        //[Column(TypeName = "nvarchar(24)")] // convert enum sang string khi lưu lên db, đây là cách 1 , cách 2 3 xem trong dbcontext
+        //[EnumDataType(typeof(OrderStatus), ErrorMessage = "enum not found")] // enum validation, nếu có thì nhập sai sẽ báo lỗi, không có nhập cái gì cũng nhận được
+        //public OrderStatus Status { get; set; }
+
         // one to one
         public virtual Backpack Backpack { get; set; }
 
