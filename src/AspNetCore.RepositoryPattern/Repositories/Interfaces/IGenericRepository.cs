@@ -1,4 +1,5 @@
 ﻿using AspNetCore.RepositoryPattern.Helpers;
+using AutoMapper;
 using System.Linq.Expressions;
 
 namespace AspNetCore.RepositoryPattern.Repositories.Interfaces;
@@ -22,10 +23,18 @@ public interface IGenericRepository<T> where T : class
 
     Task<(int, PaginatedList<T>)> FindAsync(
         int pageIndex = 0,
-        int pageSize = 10,
+        int pageSize = 0,
         Expression<Func<T, bool>>? expression = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         Func<IQueryable<T>, IQueryable<T>>? includeFunc = null);
+
+    Task<PaginatedList<TDto>> FindWithPaginationAsync<TDto>(
+        IMapper mapper,
+        int pageIndex = 0,
+        int pageSize = 0,
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null) where TDto : class;
 
     Task<T?> FindOneAsync(
         Expression<Func<T, bool>> expression,

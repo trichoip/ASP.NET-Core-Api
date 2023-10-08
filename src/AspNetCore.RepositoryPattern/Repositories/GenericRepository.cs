@@ -1,6 +1,8 @@
 ﻿using AspNetCore.RepositoryPattern.Data;
 using AspNetCore.RepositoryPattern.Helpers;
 using AspNetCore.RepositoryPattern.Repositories.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -133,7 +135,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<(int, PaginatedList<T>)> FindAsync(
         int pageIndex = 0,
-        int pageSize = 10,
+        int pageSize = 0,
         Expression<Func<T, bool>>? expression = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
@@ -170,4 +172,40 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
         return await query.AnyAsync();
     }
+
+    public async Task<PaginatedList<TDto>> FindWithPaginationAsync<TDto>(
+         IMapper mapper,
+         int pageIndex = 0,
+         int pageSize = 0,
+         Expression<Func<T, bool>>? expression = null,
+         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+         Func<IQueryable<T>, IQueryable<T>>? includeFunc = null) where TDto : class
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        var paginatedList = await query.ProjectTo<TDto>(mapper.ConfigurationProvider).PaginatedListAsync(pageIndex, pageSize);
+        return paginatedList;
+    }
+}
+
+public static class MappingExtensions
+{
+    public static Task<PaginatedList<TDestination>> PaginatedListAsync<TDestination>(
+        this IQueryable<TDestination> queryable, int pageNumber, int pageSize) where TDestination : class
+      => PaginatedList<TDestination>.CreateAsync(queryable.AsNoTracking(), pageNumber, pageSize);
 }
