@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Identity.Helpers;
 using AspNetCore.Identity.Models;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
@@ -248,14 +249,23 @@ namespace AspNetCore.Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> Get(Token token)
         {
+            string TokenInfoEndpoint = "https://oauth2.googleapis.com/tokeninfo";
+            var client = new HttpClient();
+            var response = await client.PostAsync($"{TokenInfoEndpoint}?id_token={token.token}", null);
+            var responseContent = await response.Content.ReadFromJsonAsync<IDictionary<string, object>>();
 
-            return Ok(token);
+            GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(token.token);
+            return Ok(new { token, payload, responseContent });
         }
 
         // login google client html
         [HttpPost]
-        public async Task<IActionResult> Get2([FromForm] string credential)
+        public async Task<IActionResult> Get22([FromForm] string credential)
         {
+            string TokenInfoEndpoint = "https://oauth2.googleapis.com/tokeninfo";
+            var client = new HttpClient();
+            var response = await client.PostAsync($"{TokenInfoEndpoint}?id_token={credential}", null);
+            var responseContent = await response.Content.ReadFromJsonAsync<IDictionary<string, object>>();
 
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadToken(credential);
@@ -265,7 +275,8 @@ namespace AspNetCore.Identity.Controllers
             var claim = tokenS.Claims.Select(c => new { c.Issuer, c.OriginalIssuer, c.Type, c.Value });
             var claim2 = jwtSecurityToken.Claims.Select(c => new { c.Issuer, c.OriginalIssuer, c.Type, c.Value });
 
-            return Ok(new { credential, claim, claim2 });
+            GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(credential);
+            return Ok(new { credential, claim, claim2, payload, responseContent });
         }
 
         [HttpGet]
@@ -306,6 +317,7 @@ namespace AspNetCore.Identity.Controllers
         {
             string AuthorizationEndpoint = "https://accounts.google.com/o/oauth2/v2/auth";
             string TokenEndpoint = "https://oauth2.googleapis.com/token";
+            string TokenInfoEndpoint = "https://oauth2.googleapis.com/tokeninfo";
             string UserInformationEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
 
             var client = new HttpClient();
@@ -327,6 +339,16 @@ namespace AspNetCore.Identity.Controllers
             var id_token = responseContent["id_token"]?.ToString();
             var scope = responseContent["scope"]?.ToString();
 
+            response = await client.PostAsync($"{TokenInfoEndpoint}?id_token={id_token}", null);
+            responseContent = await response.Content.ReadFromJsonAsync<IDictionary<string, object>>();
+
+            //GoogleJsonWebSignature.ValidationSettings settings = new GoogleJsonWebSignature.ValidationSettings
+            //{
+            //    Audience = new[] { "748375698529-ul7shovile6hhu77ucj6snib9gqec3hc.apps.googleusercontent.com" }
+            //};
+            //GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(id_token, settings);
+            GoogleJsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(id_token);
+
             client.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "Anything");
             client.DefaultRequestHeaders.Add(HeaderNames.Authorization, $"Bearer {access_token}");
             response = await client.GetAsync(UserInformationEndpoint);
@@ -340,7 +362,8 @@ namespace AspNetCore.Identity.Controllers
             var jsonToken = handler.ReadToken(id_token);
             var tokenS = jsonToken as JwtSecurityToken;
             var jwtSecurityToken = handler.ReadJwtToken(id_token);
-            return Ok(new { id_token, tokenS, jwtSecurityToken, user });
+
+            return Ok(new { id_token, tokenS, jwtSecurityToken, user, responseContent, payload });
         }
 
         [HttpGet]

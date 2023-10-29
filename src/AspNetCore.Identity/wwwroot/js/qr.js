@@ -2,7 +2,7 @@
 function handleCredentialResponse(response) {
     console.log(response)
     console.log("Encoded JWT ID token: " + response.credential);
-    console.log(jwt_decode(response.credential))
+    console.log(jwtDecode(response.credential))
 
     const responsePayload = decodeJwtResponse(response.credential);
     console.log("ID: " + responsePayload.sub);
@@ -30,17 +30,17 @@ function handleCredentialResponse(response) {
     });
 }
 
-window.onload = function () {
-    google.accounts.id.initialize({
-        client_id: "303534488692-v5rbq96al7glj6jprkee3omtdbg3866g.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-    });
-    google.accounts.id.renderButton(
-        document.getElementById("buttonDiv"),
-        { theme: "outline", size: "large" }  // customization attributes
-    );
-    google.accounts.id.prompt(); // also display the One Tap dialog
-}
+//window.onload = function () {
+//    google.accounts.id.initialize({
+//        client_id: "748375698529-ul7shovile6hhu77ucj6snib9gqec3hc.apps.googleusercontent.com",
+//        callback: handleCredentialResponse
+//    });
+//    google.accounts.id.renderButton(
+//        document.getElementById("buttonDiv"),
+//        { theme: "outline", size: "large" }  // customization attributes
+//    );
+//    google.accounts.id.prompt(); // also display the One Tap dialog
+//}
 
 function decodeJwtResponse(token) {
     var base64Url = token.split('.')[1];
@@ -54,6 +54,7 @@ function decodeJwtResponse(token) {
 
 const button = document.getElementById('signout_button');
 button.onclick = () => {
+    console.log('Signed out');
     google.accounts.id.disableAutoSelect();
 }
 

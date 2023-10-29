@@ -29,6 +29,7 @@
 		<!--<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />-->
 		<!--<PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="6.0.0" />-->
 
+		<PackageReference Include="Google.Apis.Auth" Version="1.62.1" />
 	</ItemGroup>
 
 </Project>

@@ -239,8 +239,8 @@ public class Program
                //googleOptions.ClaimActions.MapJsonKey(ClaimTypes.Email, "email", "string");
 
                //googleOptions.ClaimActions.MapJsonKey(ClaimTypes.GivenName, "given_name", "string");
-               //googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
-               //googleOptions.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
+               googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+               googleOptions.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
                //googleOptions.AuthorizationEndpoint += "?prompt=consent"; // hack để lấy refresh token
 
                //googleOptions.Scope.Add("https://www.googleapis.com/auth/user.birthday.read");
@@ -928,7 +928,7 @@ public class Program
         await app.UseInitialiseDatabaseAsync();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
+        app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
         app.UseAuthentication();
         app.UseAuthorization();
 

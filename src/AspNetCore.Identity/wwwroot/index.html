@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="https://accounts.google.com/gsi/client"></script>
-    <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+    <script src="https://unpkg.com/jwt-decode@4.0.0/build/cjs/index.js"></script>
     <script src="js/qr.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/@atlaskit/reduced-ui-pack@7.0.0/dist/bundle.css" media="all">
@@ -22,18 +22,18 @@
         data-context="signup,signin,use" <br />
         data-nonce=""<br />
         data-callback="handleCredentialResponse" -> chuyển response data vào hàm callback<br />
-        data-login_uri="https://localhost:7217/api/test/get2" -> chuyển credential vào api -> lưu ý: api phải là method POST và contentype là form và
+        data-login_uri="https://localhost:7217/api/test/get22" -> chuyển credential vào api -> lưu ý: api phải là method POST và contentype là form và
         properties name là string credential<br />
         data-auto_select="true" -> khi chỉ có 1 tk thì tự động chọn<br />
         data-close_on_tap_outside="false" -> false thì khi bấm ra ngoài popup thì popup không tắt còn true thì popup vẫn tăt<br />
     </div>
 
     <div id="g_id_onload"
-         data-client_id="303534488692-v5rbq96al7glj6jprkee3omtdbg3866g.apps.googleusercontent.com"
+         data-client_id="748375698529-ul7shovile6hhu77ucj6snib9gqec3hc.apps.googleusercontent.com"
          data-context="signup"
          data-ux_mode="popup"
          data-nonce=""
-         data-login_uri="https://localhost:7217/api/test/get2"
+         data-login_uri="https://localhost:7217/api/test/get22"
          data-auto_select="true"
          data-auto_prompt="true"
          data-cancel_on_tap_outside="false"
