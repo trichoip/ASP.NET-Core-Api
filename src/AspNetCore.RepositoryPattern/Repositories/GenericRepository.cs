@@ -47,13 +47,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await dbSet.FindAsync(index);
     }
 
-    public virtual Task RemoveAsync(T entity)
+    public virtual Task DeleteAsync(T entity)
     {
         dbSet.Remove(entity);
         return Task.CompletedTask;
     }
 
-    public virtual Task RemoveRangeAsync(IEnumerable<T> entities)
+    public virtual Task DeleteRangeAsync(IEnumerable<T> entities)
     {
         dbSet.RemoveRange(entities);
         return Task.CompletedTask;
@@ -197,15 +197,72 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         {
             query = orderBy(query);
         }
-
+        //mapper.ProjectTo<TDto>(query);
         var paginatedList = await query.ProjectTo<TDto>(mapper.ConfigurationProvider).PaginatedListAsync(pageIndex, pageSize);
         return paginatedList;
     }
-}
 
-public static class MappingExtensions
-{
-    public static Task<PaginatedList<TDestination>> PaginatedListAsync<TDestination>(
-        this IQueryable<TDestination> queryable, int pageNumber, int pageSize) where TDestination : class
-      => PaginatedList<TDestination>.CreateAsync(queryable.AsNoTracking(), pageNumber, pageSize);
+    public async Task<IEnumerable<T>> FindAsync(
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return await query.ToListAsync();
+    }
+
+    public Task<IQueryable<T>> FindToIQueryableAsync(
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return Task.FromResult(query);
+    }
+
+    public async Task<T?> FindByAsync(
+        Expression<Func<T, bool>> expression,
+        Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
+    {
+        IQueryable<T> query = dbSet;
+
+        if (includeFunc != null)
+        {
+            query = includeFunc(query);
+        }
+
+        return await query.FirstOrDefaultAsync(expression);
+    }
 }

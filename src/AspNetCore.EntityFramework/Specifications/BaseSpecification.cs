@@ -1,49 +1,32 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace AspNetCore.EntityFramework.Specifications
 {
     public class BaseSpecification<T> : ISpecifications<T>
     {
-        public Expression<Func<T, bool>> Criteria { get; }
-        public BaseSpecification()
-        {
-
-        }
-        public BaseSpecification(Expression<Func<T, bool>> Criteria)
+        public Expression<Func<T, bool>>? Criteria { get; }
+        public BaseSpecification(Expression<Func<T, bool>>? Criteria)
         {
             this.Criteria = Criteria;
         }
-        public List<Expression<Func<T, object>>> Includes { get; }
-        = new List<Expression<Func<T, object>>>();
 
-        public Expression<Func<T, object>> OrderBy { get; private set; }
+        public List<Expression<Func<IQueryable<T>, IIncludableQueryable<T, object>>>> Includes { get; } = new();
 
-        public Expression<Func<T, object>> OrderByDescending { get; private set; }
+        public Func<IQueryable<T>, IOrderedQueryable<T>>? OrderBy { get; private set; }
 
-        public int Take { get; private set; }
-
-        public int Skip { get; private set; }
-
-        public bool isPagingEnabled { get; private set; }
-
-        protected void AddInclude(Expression<Func<T, object>> includeExpression)
+        protected void AddInclude(Expression<Func<IQueryable<T>, IIncludableQueryable<T, object>>> includeExpression)
         {
             Includes.Add(includeExpression);
         }
 
         public void AddOrderBy(Expression<Func<T, object>> OrderByexpression)
         {
-            OrderBy = OrderByexpression;
+            OrderBy = a => a.OrderBy(OrderByexpression);
         }
         public void AddOrderByDecending(Expression<Func<T, object>> OrderByDecending)
         {
-            OrderByDescending = OrderByDecending;
-        }
-        public void ApplyPagging(int take, int skip)
-        {
-            Take = take;
-            //Skip = skip;
-            isPagingEnabled = true;
+            OrderBy = a => a.OrderByDescending(OrderByDecending);
         }
     }
 }

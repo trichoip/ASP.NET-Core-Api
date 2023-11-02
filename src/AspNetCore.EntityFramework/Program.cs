@@ -5,7 +5,6 @@ using AspNetCore.EntityFramework.SeedData;
 using AspNetCore.EntityFramework.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Text.Json.Serialization;
 
 namespace AspNetCore.EntityFramework
 {
@@ -33,7 +32,8 @@ namespace AspNetCore.EntityFramework
                 {
                     builder.MigrationsAssembly(typeof(DataContext).Assembly.FullName); // default là project chứa DbContext
                     options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-                })
+                }).EnableSensitiveDataLogging()
+                  .EnableDetailedErrors()
                   //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // cấu hình no tracking cho context
                   // lưu ý: Lazy loading is not supported for detached entities or entities that are loaded with 'AsNoTracking'
                   .UseLazyLoadingProxies()); // cấu hình lazy loading (Microsoft.EntityFrameworkCore.Proxies) - property relationship phai co virtual

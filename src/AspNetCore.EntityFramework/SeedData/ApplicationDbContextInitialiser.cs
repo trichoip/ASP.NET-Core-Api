@@ -11,8 +11,17 @@ public static class InitialiserExtensions
     {
         using var scope = app.Services.CreateScope();
         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-        await initialiser.InitialiseAsync();
-        await initialiser.SeedAsync();
+        if (app.Environment.IsDevelopment())
+        {
+            await initialiser.DeletedDatabaseAsync();
+            await initialiser.MigrateAsync();
+            await initialiser.SeedAsync();
+        }
+
+        if (app.Environment.IsProduction())
+        {
+            await initialiser.MigrateAsync();
+        }
     }
 }
 
@@ -28,7 +37,7 @@ public class ApplicationDbContextInitialiser
         _context = context;
     }
 
-    public async Task InitialiseAsync()
+    public async Task MigrateAsync()
     {
         try
         {
@@ -42,6 +51,19 @@ public class ApplicationDbContextInitialiser
             await _context.Database.EnsureDeletedAsync();
             await _context.Database.MigrateAsync();
 
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while initialising the database.");
+            throw;
+        }
+    }
+
+    public async Task DeletedDatabaseAsync()
+    {
+        try
+        {
+            await _context.Database.EnsureDeletedAsync();
         }
         catch (Exception ex)
         {

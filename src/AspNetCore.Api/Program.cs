@@ -1,5 +1,7 @@
 using AspNetCore.Api.Models;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -49,6 +51,20 @@ namespace AspNetCore.Api
             {
                 // ........
             });
+
+            builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>()
+                    .AddScoped((IServiceProvider it) =>
+                        it.GetRequiredService<IUrlHelperFactory>().GetUrlHelper(it.GetRequiredService<IActionContextAccessor>().ActionContext!));
+
+            //builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            //builder.Services.AddScoped<IUrlHelper>(services =>
+            //{
+            //    var actionContextAccessor = services.GetService<IActionContextAccessor>();
+            //    return new UrlHelper(actionContextAccessor.ActionContext);
+
+            //    //var factory = services.GetService<IUrlHelperFactory>();
+            //    //return factory?.GetUrlHelper(actionContextAccessor.ActionContext);
+            //});
 
             var app = builder.Build();
 

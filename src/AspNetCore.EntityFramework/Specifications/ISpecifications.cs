@@ -1,15 +1,12 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace AspNetCore.EntityFramework.Specifications
 {
     public interface ISpecifications<T>
     {
-        Expression<Func<T, bool>> Criteria { get; }
-        List<Expression<Func<T, object>>> Includes { get; }
-        Expression<Func<T, object>> OrderBy { get; }
-        Expression<Func<T, object>> OrderByDescending { get; }
-        int Take { get; }
-        int Skip { get; }
-        bool isPagingEnabled { get; }
+        Expression<Func<T, bool>>? Criteria { get; }
+        List<Expression<Func<IQueryable<T>, IIncludableQueryable<T, object>>>> Includes { get; }
+        Func<IQueryable<T>, IOrderedQueryable<T>>? OrderBy { get; }
     }
 }

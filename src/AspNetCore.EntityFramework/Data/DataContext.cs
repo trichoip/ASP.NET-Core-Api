@@ -32,6 +32,7 @@ namespace AspNetCore.EntityFramework.Data
             // cần sữa cái nào thì cấu hình cái đó
             modelBuilder.Entity<Character>(b =>
             {
+                //b.Property(_=>_.Status).HasConversion<string>().HasMaxLength(20);
                 //b.Property(_=>_.Status).HasConversion<string>(); // cách 2 convert enum sang string  khi lưu lên db
                 //b.Property(_ => _.Status).HasConversion(new EnumToStringConverter<OrderStatus>()); // cách 3 convert enum sang string  khi lưu lên db
 

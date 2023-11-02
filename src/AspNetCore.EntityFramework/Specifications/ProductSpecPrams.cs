@@ -1,4 +1,6 @@
-﻿namespace AspNetCore.EntityFramework.Specifications
+﻿using System.ComponentModel;
+
+namespace AspNetCore.EntityFramework.Specifications
 {
     public class ProductSpecPrams
     {
@@ -10,11 +12,12 @@
             get => _pageSize;
             set => _pageSize = value > MaxPageSize ? MaxPageSize : value;
         }
-        public int? brandId { get; set; }
-        public int? typeId { get; set; }
-        public string sort { get; set; }
+        public int? categoryId { get; set; }
+
+        [DefaultValue("averageRating,desc")]
+        public string? sort { get; set; }
         public string _search;
-        public string Search
+        public string? Search
         {
             get => _search;
             set => _search = value.ToLower();

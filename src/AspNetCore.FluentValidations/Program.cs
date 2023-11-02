@@ -1,6 +1,5 @@
-using FluentValidation.AspNetCore;
-using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using System.Reflection;
+using AspNetCore.FluentValidations.Extensions;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
 namespace AspNetCore.FluentValidations
 {
@@ -10,10 +9,17 @@ namespace AspNetCore.FluentValidations
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                // ValidatorOptions.Global.PropertyNameResolver = CamelCasePropertyNameResolver.ResolvePropertyName;
+                // này chỉ áp dụng fiel liên quan đến fluent còn field nào k liên quan thì nó không camel case 
+                // cho nên phải thêm bên dưới để không liên quan đến fluent thì vẫn camel case
+                options.ModelMetadataDetailsProviders.Add(new SystemTextJsonValidationMetadataProvider());
+            });
 
-            builder.Services.AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
-            builder.Services.AddFluentValidationRulesToSwagger();
+            builder.Services.AddValidators();
+            //builder.Services.AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+            //builder.Services.AddFluentValidationRulesToSwagger();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

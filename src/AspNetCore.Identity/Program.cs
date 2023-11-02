@@ -69,8 +69,11 @@ public class Program
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             options.User.RequireUniqueEmail = false;  // Email là duy nhất
 
+            //options.Stores.ProtectPersonalData = true;
+
         }).AddEntityFrameworkStores<ApplicationDbContext>()
           //.AddDefaultUI()
+          //.AddPersonalDataProtection<LookupProtector, KeyRing>()
           .AddDefaultTokenProviders();
         #endregion
 

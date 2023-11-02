@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace AspNetCore.JwtSecurity.Extensions
 {
-    public static class JwtBearerEventsExtensions
+    public static class JwtBearerOptionsExtensions
     {
         public static void HandleEvents(this JwtBearerOptions options)
         {
@@ -27,6 +27,7 @@ namespace AspNetCore.JwtSecurity.Extensions
                     context.Response.StatusCode = statusCode;
                     await context.Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
 
+                    //throw new ForbiddenAccessException();
                 },
 
                 OnChallenge = async context =>
@@ -45,6 +46,8 @@ namespace AspNetCore.JwtSecurity.Extensions
                     var actionContext = new ActionContext(httpContext, routeData, new ActionDescriptor());
                     var result = new ObjectResult(problemDetails) { StatusCode = statusCode };
                     await result.ExecuteResultAsync(actionContext);
+
+                    //throw new UnauthorizedAccessException("You are not authorized to access this resource");
 
                 },
 

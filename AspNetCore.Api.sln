@@ -57,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.MVC", "src\AspNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.RepositoryPattern", "src\AspNetCore.RepositoryPattern\AspNetCore.RepositoryPattern.csproj", "{CC2E022C-98FD-4F3C-BBF4-A078CA3369D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.CleanArchitecture", "src\AspNetCore.CleanArchitecture\AspNetCore.CleanArchitecture.csproj", "{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.CleanArchitecture", "src\AspNetCore.CleanArchitecture\AspNetCore.CleanArchitecture.csproj", "{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

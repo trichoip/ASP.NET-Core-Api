@@ -2,9 +2,9 @@
 {
     public interface IAuditableEntity : IEntity
     {
-        string? CreatedBy { get; set; }
-        DateTimeOffset? CreatedAt { get; set; }
-        string? ModifiedBy { get; set; }
-        DateTimeOffset? ModifiedAt { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
+        public string? ModifiedBy { get; set; }
+        public DateTimeOffset? ModifiedAt { get; set; }
     }
 }

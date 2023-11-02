@@ -119,6 +119,7 @@ namespace AspNetCore.HandleError
             //app.UseMiddleware<ExceptionHandler2Middleware>();
             #endregion
 
+            app.UseExceptionApplication();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
