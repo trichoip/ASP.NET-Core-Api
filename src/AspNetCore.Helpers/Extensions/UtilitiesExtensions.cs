@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Globalization;
 
-namespace AspNetCore.Api.Extensions;
+namespace AspNetCore.Helpers.Extensions;
 public static class UtilitiesExtensions
 {
 

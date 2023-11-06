@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.Api.Helpers.Interfaces;
+﻿namespace AspNetCore.Helpers.Helpers.Interfaces;
 
 public interface IResult<T>
 {

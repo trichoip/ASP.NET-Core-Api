@@ -1,7 +1,7 @@
 ﻿using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.Api.Extensions;
+namespace AspNetCore.Helpers.Extensions;
 
 public static class MappingExtensions
 {

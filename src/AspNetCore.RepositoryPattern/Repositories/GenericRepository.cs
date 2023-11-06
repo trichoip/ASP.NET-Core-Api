@@ -1,5 +1,5 @@
-﻿using AspNetCore.RepositoryPattern.Data;
-using AspNetCore.RepositoryPattern.Helpers;
+﻿using AspNetCore.Helpers.Helpers;
+using AspNetCore.RepositoryPattern.Data;
 using AspNetCore.RepositoryPattern.Repositories.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -198,8 +198,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = orderBy(query);
         }
         //mapper.ProjectTo<TDto>(query);
-        var paginatedList = await query.ProjectTo<TDto>(mapper.ConfigurationProvider).PaginatedListAsync(pageIndex, pageSize);
-        return paginatedList;
+        return await query.ProjectTo<TDto>(mapper.ConfigurationProvider).PaginatedListAsync(pageIndex, pageSize);
     }
 
     public async Task<IEnumerable<T>> FindAsync(
@@ -264,5 +263,58 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
 
         return await query.FirstOrDefaultAsync(expression);
+    }
+
+    public async Task<TDTO?> FindByAsync<TDTO>(
+        AutoMapper.IConfigurationProvider configuration,
+        Expression<Func<T, bool>> expression) where TDTO : class
+    {
+        IQueryable<T> query = dbSet;
+
+        query = query.Where(expression);
+
+        return await query.ProjectTo<TDTO>(configuration).FirstOrDefaultAsync();
+    }
+
+    public async Task<IList<TDTO>> FindAsync<TDTO>(
+        AutoMapper.IConfigurationProvider configuration,
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null) where TDTO : class
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return await query.ProjectTo<TDTO>(configuration).ToListAsync();
+    }
+
+    public async Task<PaginatedList<TDTO>> FindAsync<TDTO>(
+        AutoMapper.IConfigurationProvider configuration,
+        int pageIndex,
+        int pageSize,
+        Expression<Func<T, bool>>? expression = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null) where TDTO : class
+    {
+        IQueryable<T> query = dbSet;
+
+        if (expression != null)
+        {
+            query = query.Where(expression);
+        }
+
+        if (orderBy != null)
+        {
+            query = orderBy(query);
+        }
+
+        return await query.ProjectTo<TDTO>(configuration).PaginatedListAsync(pageIndex, pageSize);
     }
 }

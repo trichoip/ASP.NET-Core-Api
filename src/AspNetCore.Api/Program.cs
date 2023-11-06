@@ -80,6 +80,8 @@ namespace AspNetCore.Api
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            //app.UseMiddleware<PerformanceMiddleware>();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 
-namespace AspNetCore.Api.Extensions;
+namespace AspNetCore.Helpers.Extensions;
 
 [EditorBrowsable(EditorBrowsableState.Never)]
 public static class CollectionExtensions

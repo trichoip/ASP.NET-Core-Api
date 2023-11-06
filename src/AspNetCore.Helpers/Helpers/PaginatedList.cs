@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.Api.Helpers;
+namespace AspNetCore.Helpers.Helpers;
 
 public class PaginatedList<T> : List<T> where T : class
 {

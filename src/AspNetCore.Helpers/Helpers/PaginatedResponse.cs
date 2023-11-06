@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.Api.Helpers;
+﻿namespace AspNetCore.Helpers.Helpers;
 public class PaginatedResponse<T> where T : class
 {
     public int Page { get; }
@@ -27,5 +27,10 @@ public static class PaginatedResponseExtensions
     public static PaginatedResponse<T> ToPaginatedResponse<T>(this PaginatedList<T> source) where T : class
     {
         return new PaginatedResponse<T>(source);
+    }
+
+    public static Task<PaginatedResponse<T>> ToPaginatedResponseAsync<T>(this PaginatedList<T> source) where T : class
+    {
+        return Task.FromResult(new PaginatedResponse<T>(source));
     }
 }
