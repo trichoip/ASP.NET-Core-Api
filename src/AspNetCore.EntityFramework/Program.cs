@@ -28,9 +28,25 @@ namespace AspNetCore.EntityFramework
             builder.Services.AddDbContext<DataContext>((sp, options) =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext"), builder =>
                 {
-                    builder.MigrationsAssembly(typeof(DataContext).Assembly.FullName); // default là project chứa DbContext
-                    options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-                }).EnableSensitiveDataLogging()
+                    // default là project chứa DbContext
+                    builder.MigrationsAssembly(typeof(DataContext).Assembly.FullName);
+
+                    // áp dụng global SplitQuery 
+                    // https://learn.microsoft.com/vi-vn/ef/core/querying/single-split-queries
+                    // khi entity có quan hệ 1-n thì sẽ split query
+                    // ví dụ như entity father có list children thì sẽ split query ra 2 câu query riêng biệt để tránh duplicate data
+                    // 1 câu query lấy father, 1 câu query lấy list children
+                    // nếu child có father thì nó không có split query mà nó sẽ join vào câu query lấy child
+                    // split query chỉ áp dụng cho list child, bất kỳ list child hoặc trong child có list child nữa thì nó sẽ split query
+                    // nếu không muốn split query thì có thể dùng .AsSingleQuery() trong câu query
+                    // SplitQuery chi áp dụng cho include hoặc select child (chủ yếu select của ProjectTo automapper)
+                    // không áp dụng cho load lazy
+                    builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+
+                }).AddInterceptors(sp.GetServices<ISaveChangesInterceptor>())
+                  //.LogTo(Console.WriteLine, new[] { RelationalEventId.CommandExecuted }) // log sql command   
+                  //.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+                  .EnableSensitiveDataLogging()
                   .EnableDetailedErrors()
                   //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking) // cấu hình no tracking cho context
                   // lưu ý: Lazy loading is not supported for detached entities or entities that are loaded with 'AsNoTracking'
