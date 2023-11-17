@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using AspNetCore.Helpers.Extensions;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace AspNetCore.EntityFramework.Specifications
 {
     public class BaseSpecification<T> : ISpecifications<T>
     {
-        public Expression<Func<T, bool>>? Criteria { get; }
+        public Expression<Func<T, bool>>? Criteria { get; set; }
         public BaseSpecification(Expression<Func<T, bool>>? Criteria)
         {
             this.Criteria = Criteria;
@@ -27,6 +28,11 @@ namespace AspNetCore.EntityFramework.Specifications
         public void AddOrderByDecending(Expression<Func<T, object>> OrderByDecending)
         {
             OrderBy = a => a.OrderByDescending(OrderByDecending);
+        }
+
+        public void AddFilter(Expression<Func<T, bool>> expression)
+        {
+            Criteria = Criteria.AndAlso(expression);
         }
     }
 }

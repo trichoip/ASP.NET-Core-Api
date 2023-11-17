@@ -41,6 +41,13 @@ namespace AspNetCore.EntityFramework
                     // nếu không muốn split query thì có thể dùng .AsSingleQuery() trong câu query
                     // SplitQuery chi áp dụng cho include hoặc select child (chủ yếu select của ProjectTo automapper)
                     // không áp dụng cho load lazy
+
+                    // lưu ý: khi 1 query mà bị tách thì nếu có order by thì nếu field order by có gía trị giống nhau
+                    // thì nhớ then order by field nào có giá trị duy nhất (id,..)
+                    // ví dụ như 1 hotel có nhiều image nếu order by ReviewCount mà ReviewCount thì lại có value giống nhau
+                    // thì khi query tách ra làm 2 thì query đầu vẫn đúng thứ tự record còn query 2 thì ngẫu nhiễn mỗi lần query
+                    // cho nên nếu data là hotel 1 2 3 mà query 2 lấy images của hotel 2 5 6 thì get hotels thì chỉ có hotel 2 là có images
+                    // cho nên nếu field order by có gía trị giống nhau thì nhớ then order by field nào có giá trị duy nhất (id,..)
                     builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
 
                 }).AddInterceptors(sp.GetServices<ISaveChangesInterceptor>())
