@@ -20,12 +20,12 @@ public class PaginatedList<T> : List<T> where T : class
         AddRange(items);
     }
 
-    public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
+    public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, CancellationToken cancellationToken = default)
     {
         pageIndex = pageIndex < 1 ? 1 : pageIndex;
         pageSize = pageSize < 1 ? 10 : pageSize;
-        var count = await source.CountAsync();
-        var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+        var count = await source.CountAsync(cancellationToken);
+        var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
         return new PaginatedList<T>(items, count, pageIndex, pageSize);
     }
 }
@@ -33,8 +33,8 @@ public class PaginatedList<T> : List<T> where T : class
 public static class PaginatedListExtensions
 {
     public static Task<PaginatedList<TDestination>> PaginatedListAsync<TDestination>(
-        this IQueryable<TDestination> queryable, int pageIndex, int pageSize) where TDestination : class
-      => PaginatedList<TDestination>.CreateAsync(queryable.AsNoTracking(), pageIndex, pageSize);
+        this IQueryable<TDestination> queryable, int pageIndex, int pageSize, CancellationToken cancellationToken = default) where TDestination : class
+      => PaginatedList<TDestination>.CreateAsync(queryable.AsNoTracking(), pageIndex, pageSize, cancellationToken);
 
     public static PaginatedList<U> MapTo<T, U>(this PaginatedList<T> source, Func<T, U> converter)
         where U : class
