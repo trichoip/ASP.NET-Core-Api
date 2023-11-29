@@ -65,12 +65,8 @@ namespace AspNetCore.CleanArchitecture.Project.Demo.Infrastructure.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
-               options.UseMySQL(connectionString!,
-                   builder =>
-                   {
-                       builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
-                       options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-                   }));
+               options.UseMySQL(connectionString!, builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
+                      .AddInterceptors(sp.GetServices<ISaveChangesInterceptor>()));
 
         }
 
