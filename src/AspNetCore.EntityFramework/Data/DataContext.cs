@@ -28,6 +28,7 @@ namespace AspNetCore.EntityFramework.Data
             // giúp lấy được các cấu hình trong các class : IEntityTypeConfiguration mà không cần phải cấu hình vào OnModelCreating
             // nếu không có thì phải thêm cấu hình như -> modelBuilder.ApplyConfiguration(new CharacterConfiguration());
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
 
             // cần sữa cái nào thì cấu hình cái đó
             modelBuilder.Entity<Character>(b =>

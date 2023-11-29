@@ -1,4 +1,4 @@
-﻿using AspNetCore.EntityFramework.Entities.Common;
+﻿using AspNetCore.EntityFramework.Common;
 using System.Text.Json.Serialization;
 
 namespace AspNetCore.EntityFramework.Entities

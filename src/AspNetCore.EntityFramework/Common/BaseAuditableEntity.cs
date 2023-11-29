@@ -1,6 +1,6 @@
-﻿using AspNetCore.EntityFramework.Entities.Common.Interfaces;
+﻿using AspNetCore.EntityFramework.Common.Interfaces;
 
-namespace AspNetCore.EntityFramework.Entities.Common
+namespace AspNetCore.EntityFramework.Common
 {
     public abstract class BaseAuditableEntity : BaseEntity, IAuditableEntity
     {

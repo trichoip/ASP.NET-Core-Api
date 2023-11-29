@@ -1,4 +1,4 @@
-﻿using AspNetCore.EntityFramework.Entities.Common;
+﻿using AspNetCore.EntityFramework.Common;
 
 namespace AspNetCore.EntityFramework.Entities
 {

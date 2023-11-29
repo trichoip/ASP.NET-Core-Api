@@ -1,5 +1,4 @@
-﻿using AspNetCore.Helpers.Extensions;
-using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace AspNetCore.EntityFramework.Specifications
@@ -32,7 +31,7 @@ namespace AspNetCore.EntityFramework.Specifications
 
         public void AddFilter(Expression<Func<T, bool>> expression)
         {
-            Criteria = Criteria.AndAlso(expression);
+            //Criteria = Criteria.AndAlso(expression);
         }
     }
 }

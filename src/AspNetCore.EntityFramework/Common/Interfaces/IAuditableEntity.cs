@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.EntityFramework.Entities.Common.Interfaces
+﻿namespace AspNetCore.EntityFramework.Common.Interfaces
 {
     public interface IAuditableEntity : IEntity
     {

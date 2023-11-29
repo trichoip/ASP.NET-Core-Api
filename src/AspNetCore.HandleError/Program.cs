@@ -28,7 +28,7 @@ namespace AspNetCore.HandleError
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddTransient<ExceptionHandlingMiddleware>();
             builder.Services.AddControllers(options =>
             {
                 #region Handle error cach 2
@@ -64,6 +64,7 @@ namespace AspNetCore.HandleError
                 app.UseExceptionHandler();
 
                 #region Handle error cach 4
+                app.UseExceptionApplication();
                 app.UseException();
                 // 2 cách dưới giống nhau, chọn 1 trong 2
                 // nếu áp dụng cả 2 thì nó sẽ vào cái 2 trước nếu trong (2) không xữ lý exception thì nó sẽ vào cái (1)
@@ -115,11 +116,11 @@ namespace AspNetCore.HandleError
             }
 
             #region Handle error cach 3
-            app.UseMiddleware<ErrorHandlerMiddleware>();
+            //app.UseMiddleware<ErrorHandlerMiddleware>();
             //app.UseMiddleware<ExceptionHandler2Middleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             #endregion
 
-            app.UseExceptionApplication();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

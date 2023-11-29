@@ -17,37 +17,20 @@ public static class DependencyInjection
             exceptionHandlerApp.Run(async context =>
             {
                 var _factory = context.RequestServices.GetRequiredService<ProblemDetailsFactory>();
-                context.Response.ContentType = MediaTypeNames.Application.Json;
                 var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
                 var exception = exceptionHandlerFeature?.Error;
 
-                switch (exception)
+                context.Response.ContentType = MediaTypeNames.Application.Json;
+                context.Response.StatusCode = exception switch
                 {
-                    case BadRequestException e:
-                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                        break;
-                    case ValidationBadRequestException e:
-                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                        break;
-                    case ConflictException e:
-                        context.Response.StatusCode = StatusCodes.Status409Conflict;
-                        break;
-                    case ForbiddenAccessException e:
-                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                        break;
-                    case NotFoundException e:
-                        context.Response.StatusCode = StatusCodes.Status404NotFound;
-                        break;
-                    case UnauthorizedAccessException e:
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        break;
-                    case AppException e:
-                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                        break;
-                    default:
-                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                        break;
-                }
+                    BadRequestException => StatusCodes.Status400BadRequest,
+                    NotFoundException => StatusCodes.Status404NotFound,
+                    ConflictException => StatusCodes.Status409Conflict,
+                    ForbiddenAccessException => StatusCodes.Status403Forbidden,
+                    UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
+                    ValidationBadRequestException => StatusCodes.Status422UnprocessableEntity,
+                    _ => StatusCodes.Status500InternalServerError
+                };
 
                 var problemDetails = _factory.CreateProblemDetails(
                              httpContext: context,
@@ -55,13 +38,13 @@ public static class DependencyInjection
                              detail: exception?.Message);
                 var result = JsonSerializer.Serialize(problemDetails);
 
-                if (exception is ValidationBadRequestException badRequestException)
+                if (exception is ValidationBadRequestException validationException)
                 {
-                    if (badRequestException.ModelState != null)
+                    if (validationException.ModelState != null)
                     {
                         problemDetails = _factory.CreateValidationProblemDetails(
                               httpContext: context,
-                              modelStateDictionary: badRequestException.ModelState,
+                              modelStateDictionary: validationException.ModelState,
                               statusCode: context.Response.StatusCode,
                               detail: exception?.Message);
                         result = JsonSerializer.Serialize((ValidationProblemDetails)problemDetails);

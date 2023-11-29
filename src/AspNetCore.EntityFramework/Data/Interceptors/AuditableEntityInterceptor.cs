@@ -1,4 +1,4 @@
-﻿using AspNetCore.EntityFramework.Entities.Common;
+﻿using AspNetCore.EntityFramework.Common;
 using AspNetCore.EntityFramework.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
