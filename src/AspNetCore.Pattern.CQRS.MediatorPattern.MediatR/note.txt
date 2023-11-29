@@ -1,0 +1,14 @@
+CQRS (hay Command Query Responsibility Segregation) là một design pattern phân tách các hoạt động read và write dữ liệu.
+Trong đó chia việc tương tác với dữ liệu thành 2 thành phần Command và Query. 
+Hai thành phần này tách biệt và độc lập với nhau.
+
+Command được hiểu là Database Command, nó dùng để thay đổi trạng thái của hệ thống nhưng không trả về data, 
+chảng hạn như bạn thực hiện Insert/Update hoặc Delete dữ liệu.
+
+Query ở đây là khi bạn trả về data mà không thay đổi trạng thái của hệ thống.
+
+Mediator Pattern là một design pattern giúp giảm đáng kể sự kết hợp giữa các thành phần khác nhau của ứng dụng bằng cách làm cho chúng giao tiếp gián tiếp.
+Là một behavioral pattern , Mediator pattern rất phù hợp để triểm khai CQRS.
+
+Để triển khai pattern này, ta sẽ sử dụng thư viện MediatR, 
+và việc bây giờ cần làm là cài đặt thư viện này và triển khai.
