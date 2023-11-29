@@ -1,4 +1,6 @@
+using AspNetCore.Api.Controllers;
 using AspNetCore.Api.Models;
+using AspNetCore.Api.Settings;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -65,6 +67,13 @@ namespace AspNetCore.Api
             //    //var factory = services.GetService<IUrlHelperFactory>();
             //    //return factory?.GetUrlHelper(actionContextAccessor.ActionContext);
             //});
+
+            // IConfiguration
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.Configure<PositionOptions>(builder.Configuration.GetSection(PositionOptions.Position));
+
+            var JWTSettings = builder.Configuration.GetSection("JWTSettings").Get<JWTSettings>();
+            builder.Services.AddSingleton(JWTSettings);
 
             var app = builder.Build();
 

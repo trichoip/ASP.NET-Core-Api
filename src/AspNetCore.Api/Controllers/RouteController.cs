@@ -46,7 +46,7 @@ namespace AspNetCore.Api.Controllers
         //[Route("{EmployeeId:int:min(100):max(1000)}")]
         //[Route("{EmployeeId:int:range(100,1000)}")]
         //[Route("{EmployeeName:alpha:minlength(5)}")]
-        //[Route("{EmployeeName:regex(a(b|c))}")]
+        //[Route("{EmployeeName:regex(list(b|c))}")]
         public IActionResult ActionName()
         {
             return Ok();
