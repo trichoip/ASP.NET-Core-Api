@@ -1,5 +1,0 @@
-﻿dotnet ef dbcontext scaffold "server=localhost;user=root;password=;database=DbContextPomelo" "Pomelo.EntityFrameworkCore.MySql" --output-dir Pomelo
-
-dotnet ef dbcontext scaffold "server=localhost;user=root;password=;database=DbContextMySql" "MySql.EntityFrameworkCore" --output-dir MySql
-
-"server=localhost;port=3306;user=root;password=;database=database"
