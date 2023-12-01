@@ -1,6 +1,6 @@
 ﻿dotnet tool list -g
 
-
+dotnet tool install -g Microsoft.dotnet-httprepl
 
 httprepl https://localhost:{PORT}
 
