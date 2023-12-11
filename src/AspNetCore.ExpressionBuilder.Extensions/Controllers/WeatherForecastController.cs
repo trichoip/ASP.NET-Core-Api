@@ -1,31 +1,61 @@
+using AspNetCore.ExpressionBuilder.Extensions.Data;
+using AspNetCore.ExpressionBuilder.Extensions.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.ExpressionBuilder.Extensions.Controllers;
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly ApplicationDbContext _context;
 
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ApplicationDbContext context)
     {
-        _logger = logger;
+        _context = context;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    // lưu ý: or là false , and là true
+    // Or trước sai thì mới chạy điều kiện sau
+    // vì or thì điều kiện đầu sai thì nó mới chạy điều kiện thứ 2
+    // và điều kiện thứ 2 là false thì chạy điều kiện thứ 3, cho tới khi nào true thì dừng
+
+    // còn And thì trước đúng thì mới chạy điều kiện sau
+
+    [HttpGet]
+    public IActionResult PredicateBuilderDemo()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+
+        var predicate = PredicateBuilder.False<WeatherForecast>();
+        predicate = predicate.Or(x => x.TemperatureC >= 20);
+        predicate = predicate.Or(x => x.TemperatureF <= 10);
+
+        var predicateAnd = PredicateBuilder.True<WeatherForecast>();
+        predicateAnd = predicateAnd.And(x => x.Id >= 20);
+        predicateAnd = predicateAnd.And(x => x.Id < 5);
+
+        predicate = predicate.And(predicateAnd);
+
+        var entity = _context.WeatherForecasts.Where(predicate);
+
+        return Ok(entity.ToQueryString());
+    }
+
+    [HttpGet]
+    public IActionResult ExpressionExtensions()
+    {
+        var predicate = PredicateBuilder.False<WeatherForecast>();
+        predicate = predicate.OrElse(x => x.TemperatureC >= 20);
+        predicate = predicate.OrElse(x => x.TemperatureF <= 10);
+
+        var predicateAnd = PredicateBuilder.True<WeatherForecast>();
+        predicateAnd = predicateAnd.AndAlso(x => x.Id >= 20);
+        predicateAnd = predicateAnd.AndAlso(x => x.Id < 5);
+
+        predicate = predicate.AndAlso(predicateAnd);
+
+        var entity = _context.WeatherForecasts.Where(predicate);
+
+        return Ok(entity.ToQueryString());
     }
 }
