@@ -69,7 +69,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Pattern.Reposito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.TaskScheduler.Hangfire", "src\AspNetCore.TaskScheduler.Hangfire\AspNetCore.TaskScheduler.Hangfire.csproj", "{7152D1B7-DCEC-41E0-ADBC-7AD38DB07963}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.ExpressionBuilder.Extensions", "src\AspNetCore.ExpressionBuilder.Extensions\AspNetCore.ExpressionBuilder.Extensions.csproj", "{60EDD0B4-D570-433B-8B05-E1EA83F7CAC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.ExpressionBuilder.Extensions", "src\AspNetCore.ExpressionBuilder.Extensions\AspNetCore.ExpressionBuilder.Extensions.csproj", "{60EDD0B4-D570-433B-8B05-E1EA83F7CAC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.ExpressionBuilder.SystemLinqDynamicCore", "src\AspNetCore.ExpressionBuilder.SystemLinqDynamicCore\AspNetCore.ExpressionBuilder.SystemLinqDynamicCore.csproj", "{FC6E4503-7133-42F1-A3E3-85C27EF64830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.RealTime.SignalR", "src\AspNetCore.RealTime.SignalR\AspNetCore.RealTime.SignalR.csproj", "{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +217,14 @@ Global
 		{60EDD0B4-D570-433B-8B05-E1EA83F7CAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60EDD0B4-D570-433B-8B05-E1EA83F7CAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60EDD0B4-D570-433B-8B05-E1EA83F7CAC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC6E4503-7133-42F1-A3E3-85C27EF64830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6E4503-7133-42F1-A3E3-85C27EF64830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6E4503-7133-42F1-A3E3-85C27EF64830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6E4503-7133-42F1-A3E3-85C27EF64830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
