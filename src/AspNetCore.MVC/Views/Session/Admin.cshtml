@@ -1,7 +1,0 @@
-﻿@using Microsoft.AspNetCore.Http;
-<div>
-    <h1> email @Context.Session.GetString("Email") || role @Context.Session.GetString("Role")</h1>
-    <a asp-action="Logout">logout</a>
-    <hr />
-    @Context.Session.GetString("Email")
-</div>
