@@ -7,28 +7,27 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Features.Players.Queries.GetAllPlayers
+namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Features.Players.Queries.GetAllPlayers;
+
+public record GetAllPlayersQuery : IRequest<Result<List<GetAllPlayersDto>>>;
+
+internal class GetAllPlayersQueryHandler : IRequestHandler<GetAllPlayersQuery, Result<List<GetAllPlayersDto>>>
 {
-    public record GetAllPlayersQuery : IRequest<Result<List<GetAllPlayersDto>>>;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    internal class GetAllPlayersQueryHandler : IRequestHandler<GetAllPlayersQuery, Result<List<GetAllPlayersDto>>>
+    public GetAllPlayersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
 
-        public GetAllPlayersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
+    public async Task<Result<List<GetAllPlayersDto>>> Handle(GetAllPlayersQuery query, CancellationToken cancellationToken)
+    {
+        var players = await _unitOfWork.Repository<Player>().Entities
+               .ProjectTo<GetAllPlayersDto>(_mapper.ConfigurationProvider)
+               .ToListAsync(cancellationToken);
 
-        public async Task<Result<List<GetAllPlayersDto>>> Handle(GetAllPlayersQuery query, CancellationToken cancellationToken)
-        {
-            var players = await _unitOfWork.Repository<Player>().Entities
-                   .ProjectTo<GetAllPlayersDto>(_mapper.ConfigurationProvider)
-                   .ToListAsync(cancellationToken);
-
-            return await Result<List<GetAllPlayersDto>>.SuccessAsync(players);
-        }
+        return await Result<List<GetAllPlayersDto>>.SuccessAsync(players);
     }
 }

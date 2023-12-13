@@ -1,0 +1,19 @@
+﻿@using AspNetCore.Client.MVC.Controllers;
+@model FileUploadController
+<div>
+    <a href="/account/index">account index</a><br />
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form method="post" enctype="multipart/form-data">
+        <label asp-for="FileUploads"></label><br />
+        <input asp-for="FileUploads" /><br />
+        <span asp-validation-for="FileUploads" class="text-danger"></span><br />
+        <button class="btn btn-primary" asp-action="Upload" type="submit">Upload</button>
+    </form>
+
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

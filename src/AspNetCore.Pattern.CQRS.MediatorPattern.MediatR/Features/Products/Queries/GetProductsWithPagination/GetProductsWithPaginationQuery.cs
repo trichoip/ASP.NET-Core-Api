@@ -1,4 +1,4 @@
-﻿using AspNetCore.Helpers.Helpers;
+﻿using AspNetCore.Api.Helpers.Helpers;
 using AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.Contracts.Products;
 using AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.Entities;
 using AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.Repositories.Interfaces;

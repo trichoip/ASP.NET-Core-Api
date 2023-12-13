@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.TaskScheduler.Hangfire.Controllers
+namespace AspNetCore.TaskScheduler.Hangfire.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class QuartzController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class QuartzController : ControllerBase
+    [HttpGet]
+    public IActionResult Quartz()
     {
-        [HttpGet]
-        public IActionResult Quartz()
-        {
-            return Ok("running task in program.cs");
-        }
+        return Ok("running task in program.cs");
     }
 }

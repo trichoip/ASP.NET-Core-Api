@@ -1,19 +1,18 @@
 ﻿using AspNetCore.CleanArchitecture.Project.Demo.Domain.Common.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Domain.Common
+namespace AspNetCore.CleanArchitecture.Project.Demo.Domain.Common;
+
+public abstract class BaseEntity : IEntity
 {
-    public abstract class BaseEntity : IEntity
-    {
-        private readonly List<BaseEvent> _domainEvents = new();
+    private readonly List<BaseEvent> _domainEvents = new();
 
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [NotMapped]
-        public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
+    [NotMapped]
+    public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-        public void AddDomainEvent(BaseEvent domainEvent) => _domainEvents.Add(domainEvent);
-        public void RemoveDomainEvent(BaseEvent domainEvent) => _domainEvents.Remove(domainEvent);
-        public void ClearDomainEvents() => _domainEvents.Clear();
-    }
+    public void AddDomainEvent(BaseEvent domainEvent) => _domainEvents.Add(domainEvent);
+    public void RemoveDomainEvent(BaseEvent domainEvent) => _domainEvents.Remove(domainEvent);
+    public void ClearDomainEvents() => _domainEvents.Clear();
 }

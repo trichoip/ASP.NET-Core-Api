@@ -1,0 +1,943 @@
+﻿@using AspNetCore.Client.MVC.Movies;
+@using AspNetCore.Client.MVC.Controllers;
+@model TagHelperController
+@*nhận lib trong viewimport, nen không cần import vào*@
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers*@
+<div>
+    <a href="/account/index">account index</a> <br />
+    <hr />
+    <div>
+        <h1>Tag Helper</h1>
+        <form method="post">
+            <div asp-validation-summary="All"></div>
+            @*click vao lable thi se tu dong click vao the html co id giong voi label*@
+            @*asp-for="Id"  => id la model (Account) => asp-for="Id" = asp-for="@Model.Id"*@
+            <label asp-for="Account.Id">label => asp-for Account.Id</label> <br />
+            <label for="Account_Id">label => for Account_Id</label> <br />
+            @*
+            hủy tag helper thì thêm dấu ! vào thẻ html
+            Bằng cách sử dụng ký tự ! trước mỗi phần tử HTML, bạn sẽ có thể vô hiệu hóa tag helper cho phần tử đó:
+            *@
+            <!label for="Account_Balance" asp-for="Account.Id">label => !asp-for Account.Id</!label> <br />
+
+            @*string*@
+            <input placeholder="string" asp-for="Account.Name" />  <br />
+            <input placeholder="string" type="text" id="Account_Name" name="Account.Name" value=""> <br />
+
+            @*long*@
+            <input placeholder="long" asp-for="Account.Id" />  <br />
+            <input placeholder="long" type="number" data-val="true" data-val-required="The Id field is required.123" id="Account_Id" name="Account.Id" value=""><br />
+
+            @*double*@
+            <input placeholder="double" asp-for="Account.Balance" />  <br />
+            <input placeholder="double" type="text" data-val="true" data-val-number="The field Balance must be a number." id="Account_Balance" name="Account.Balance" value=""> <br />
+
+            @*DateTime*@
+            <input placeholder="DateTime" asp-for="Account.BirthDate" />  <br />
+            <input placeholder="DateTime" type="datetime-local" id="Account_BirthDate" name="Account.BirthDate" value=""><br />
+
+            <span asp-validation-for="Account.Id"></span>    <br />
+            <span class="field-validation-valid" data-valmsg-for="Account.Id" data-valmsg-replace="true"></span> <br />
+
+            <button type="submit">submit</button>
+        </form>
+    </div>
+    <hr />
+    <div>
+        <h1>Tag Helper validation</h1>
+        <form method="post">
+            <div asp-validation-summary="None"></div>
+            <hr />
+            <div asp-validation-summary="All"></div>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <hr />
+            <input placeholder="Account.Name" asp-for="Account.Name" />
+            <span asp-validation-for="Account.Name"></span>
+            <hr />
+            <input class="input-validation-error" placeholder="accountpro.Name" type="text" id="accountpro_Name" name="accountpro.Name" data-val="true" data-val-required="The name accountpro field is required.123" />
+            <span class="field-validation-error" data-valmsg-for="accountpro.Name" data-valmsg-replace="true"></span>
+            <hr />
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </form>
+
+    </div>
+    <hr />
+    <div>
+        <h1>Form Tag Helper</h1>
+        <form asp-controller="taghelper" asp-action="tag">
+
+            + asp-controller: Chỉ ra tên Controller sử dụng <br />
+            + asp-action: Chỉ ra tên action method sử dụng <br />
+            + asp-area: Chỉ ra tên Area sử dụng <br />
+            + asp-route-xxx: Chỉ ra tên tham số xxx của action method <br />
+            + asp-xxx: Chỉ ra tên thuộc tính xxx của model <br />
+
+            + < form action="/taghelper/tag" method="post"> <br />
+            +  asp-controller mặc định là method post <br />
+            + nếu có asp-controller và có asp-action thì khi submit sẽ gọi đến controller và action đó => /controller/action <br />
+            + nếu có asp-controller và không có asp-action thì khi submit sẽ gọi đến controller đó và action là name của page hiện tại => /controller/page-name-hientai <br />
+            vd: <br />
+            - trong folder TagHelper và page Tag.cshtml => < form asp-controller="taghelper">  =>  /taghelper/Tag <br />
+            - trong folder TagHelper và page Tag.cshtml => < form asp-controller="account">  =>  /account/Tag <br />
+            - trong folder Account và page List.cshtml => < form asp-controller="taghelper">  =>  /taghelper/List <br />
+            + nếu không có asp-controller mà có asp-action thì khi submit sẽ gọi đến controller là name folder chứa file hiện tại và action => /folder-name-hientai/action <br />
+            - trong folder TagHelper và page Tag.cshtml => < form asp-action="tag">  =>  /taghelper/tag <br />
+            - trong folder TagHelper và page Tag.cshtml => < form asp-action="account">  =>  /TagHelper/account <br />
+            - trong folder Account và page List.cshtml => < form asp-action="tag">  =>  /Account/tag <br />
+
+            <input name="trichoip" value="" />
+            <input type="submit" value="form" class="btn btn-primary" />
+        </form>
+    </div>
+
+    <hr />
+    <div>
+        <h1>Label Tag Helper</h1>
+        <label asp-for="@Model.Account.Avatar"></label>
+        <label asp-for="Account.Avatar"></label>
+        <label for="Account_Avatar">Avatar</label>
+    </div>
+
+    <hr />
+    <div>
+        <h1>Input tag helper</h1>
+        <input asp-for="Movie.isActive" />
+        <input type="checkbox" data-val="true" data-val-required="The isActive field is required." id="isActive" name="isActive" value="true" /><br />
+
+        <input type=”text” asp-for="Movie.Email" />
+        <input type="text" id="Email" name="Email" value="" /><br />
+
+        <input asp-for="Movie.Address.nameAddress" />
+        <input type="text" id="Movie_Address_nameAddress" name="Movie.Address.nameAddress" value="" /><br />
+
+        <input asp-for="Movie.colors[0]" />
+        <input type="text" id="Movie_colors_0_" name="Movie.colors[0]" value="red" /><br />
+
+        <input type="hidden" asp-for="Account.Id" />   <br />
+
+    </div>
+
+    <hr />
+    <div>
+        <h1>asp-format</h1>
+        <input asp-for="Movie.Price" asp-format="{0:N2}" />
+    </div>
+
+    <hr />
+    <div>
+        <h1>Anchor Tag Helper</h1>
+        <a asp-route-id="2" asp-route-trichoip="tripro">Sản phẩm 2</a>
+        <br />
+        - asp-page nó có check được page truyền vào có tồn tại không nếu truyền không đúng hoặc không tòn tại thì nó tạo href=""  <br />
+        -  muốn truyền vào page trong thư mục hiện tại thì truyền => asp-page="./page" hoặc asp-page="page" <br />
+        - muốn truyền vào page trong thư mục khác thì truyền =>  asp-page="/folder/page"  <br />
+        - trong razor page thì dùng asp-page còn mvc là dùng asp-controller và asp-action  <br />
+        - nếu trong razor page mà dùng asp-controller=Movies và asp-action=get  thì nó sẽ tạo ra  < a href="/SampleMethod/OnName?action=get&amp;controller=Movies">back to lít</a> <br />
+        - nếu trong mvc mà dùng asp-page=Movies thì nó sẽ tạo ra < a href="/TagHelper/Tag?page=%2Fmovies%2Fcreate">back to lít</a> <br />
+        - nhưng trong mvc không có dùng được asp-page mà dùng  asp-controller và asp-action  <br />
+
+        + nếu có asp-controller và có asp-action thì khi submit sẽ gọi đến controller và action đó => /controller/action <br />
+        + nếu có asp-controller và không có asp-action thì khi submit sẽ gọi đến controller đó và action là name của page hiện tại => /controller/page-name-hientai <br />
+        + nếu không có asp-controller mà có asp-action thì khi submit sẽ gọi đến controller là name folder chứa file hiện tại và action => /folder-name-hientai/action <br />
+        Ví dụ mvc <a asp-action="list" asp-controller="account" asp-route-id="1">account/details</a>
+        <br /><br />
+        Ví dụ asp-page <!a asp-page="./tag" asp-route-id="1">tag</a> => <a href="taghelper/tag/1">Sản phẩm 2</a>
+    </div>
+
+    <hr />
+    <div>
+
+        <h1>Select Tag Helper </h1>
+        <h5>asp-for trong select giúp selected item trong select nếu có giá trị value bằng nhau, nếu không bằng nhau thì nó sẽ lấy selectedValue trong => new SelectList(Movies, "ID", "Address.nameAddress", (selectedValue) "2");</h5>
+        <select asp-for="Movie.ID" asp-items="ViewBag.SelectListTag"></select>
+        <select asp-for="Movie.ID" asp-items="ViewBag.SelectListTag2"></select>
+
+        <select name="Movie.ID">
+            @foreach (var item in ViewBag.SelectListTag)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+
+        <select asp-items="ViewBag.SelectList">
+            <option value="">--none--</option>
+        </select>
+
+        <select asp-for="Movie.EnumCountry" asp-items="Html.GetEnumSelectList<CountryEnum>()">
+            <option value="">--none--</option>
+        </select>
+
+    </div>
+
+    <hr />
+    <div>
+        <h1>Html Helper</h1>
+        <h5>Html Helper giúp mình check null của model hoặc các properties trong model</h5>
+        @Html.DisplayNameFor(model => model.Movies[0].Address)<br />
+        @*Account.Id  null*@
+        @Html.DisplayFor(model => model.Account.Id) <br />
+        @Html.DisplayFor(model => model.Movie.ID)<br />
+
+        @foreach (var item in Model.Movies)
+        {
+            @Html.DisplayFor(modelItem => item.Address.nameAddress) <br />
+        }
+        @Html.DropDownList("SelectedOption", ViewBag.SelectList as SelectList)
+        <select name="SelectedOption">
+            @foreach (var item in ViewBag.SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+
+        @Html.Label("UserName")
+        <label for="UserName">UserName</label>
+        <br />
+        @Html.TextBox("UserName", "trichoip", new { @class = "text-primary", @trichoip = "123" })
+        <input class="text-primary" id="UserName" name="UserName" trichoip="123" type="text" value="trichoip">
+        <br />
+        @Html.Label("inputcontroller", "ĐÂY LÀ LABEL", new { @class = "text-danger" })
+        <label class="text-danger" for="inputcontroller">ĐÂY LÀ LABEL</label>
+        <br />
+        @Html.Raw("sas")  => "sas"
+        <br />
+        trong razorpage không có sử dụng được @@Html.ActionLink mà chỉ dùng trong mvc
+        @Html.ActionLink("link", "Index", "Home", new { id = 1, name = "trichoip" }, new { @class = "text-primary" })
+        <a class="text-primary" href="/Home/Index/1?name=trichoip">link</a>
+
+        <br />
+        @Html.CheckBox("checkboxname", true, new { @class = "text-danger", @id = "123", @trichoip = "trichoip", @value = "haha" })
+        <input checked="checked" class="text-danger" id="123" name="checkboxname" trichoip="trichoip" type="checkbox" value="haha">
+        nếu không có @@value thì nó sẽ trả về true
+        <input checked="checked" class="text-danger" id="123" name="checkboxname" trichoip="trichoip" type="checkbox" value="true">
+        <br />
+        @Html.CheckBox("Movie.isActive", @Model.Movie.isActive, new { @class = "text-danger", @id = "123", @trichoip = "CheckBox", @value = @Model.Movie.isActive })
+        <input class="text-danger" id="123" name="Movie.isActive" trichoip="CheckBox" type="checkbox" value="False">
+        <br />
+        checkboxfor tu tao ra id va name, checked nhung co map value cho nên phai gan value
+        @Html.CheckBoxFor(model => model.Movie.isActive, new { @class = "text-danger", @id = "123", @trichoip = "trichoip1234", @value = @Model.Movie.isActive })
+        <input checked="checked" class="text-danger" id="123" name="Movie.isActive" trichoip="trichoip1234" type="checkbox" value="False">
+
+        <br />
+
+        @Html.Editor("Movie.ID")
+        @Html.Editor("Movie.Price")
+        @Html.Editor("Movie.isActive")
+        @Html.Editor("Movie.ReleaseDate")
+        @Html.EditorFor(model => model.Movie.ID)
+        @Html.EditorFor(model => model.Movie.Price)
+        @Html.EditorFor(model => model.Movie.isActive)
+        @Html.EditorFor(model => model.Movie.ReleaseDate)
+
+        @Html.TextBox("Movie.Name", "trichoip")
+        @Html.TextBoxFor(model => model.Movie.ID)
+
+        @Html.TextArea("Movie.Name", "trichoip")
+        @Html.TextAreaFor(model => model.Movie.Email)
+
+        @Html.RadioButton("Movie.Name", "trichoip", true)
+        @Html.RadioButtonFor(model => model.Movie.Email, true)
+
+        @Html.Password("Movie.Name", "trichoip")
+        @Html.PasswordFor(model => model.Movie.Email)
+
+        @Html.Hidden("Movie.Name", "trichoip")
+        @Html.HiddenFor(model => model.Movie.Email)
+
+        @Html.ListBox("Movie.Email", new SelectList(Model.Movies, "ID", "Title", "2"))
+        @Html.ListBoxFor(model => model.Movie.Email, new SelectList(Model.Movies, "ID", "Title", "2"))
+
+        @Html.DropDownList("Movie.ID", new SelectList(Model.Movies, "ID", "Title", "4"), "Select...")
+        @Html.DropDownListFor(model => model.Movie.ID, new SelectList(Model.Movies, "ID", "Title", "4"), "Select...")
+
+        @Html.Display("Movie.ID")
+        @Html.DisplayFor(model => model.Movie.ID)
+
+        @Html.Label("Movie.Name", "trichoip")
+        @Html.LabelFor(model => model.Movie.Email, "trichoip")
+
+        @Html.ValidationMessage("Movie.Name", "trichoip")
+        @Html.ValidationMessageFor(model => model.Movie.Email, "trichoip")
+        @Html.ValidationSummary("Movie.Name", "trichoip")
+        @Html.ValidationSummary(true, "Movie.Name", "trichoip")
+
+        @Html.DisplayName("Movie.Name")
+        @Html.DisplayNameFor(model => model.Movie.Email)
+
+        @using (Html.BeginRouteForm("default123", new { id = 1, trichoip = "hahaha" }, FormMethod.Get, true, new { @class = "my-form", style = "color: red;" }))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit">Submit</button>
+        }
+
+        @using (Html.BeginForm("Create", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit">Submit 2</button>
+        }
+
+        @Html.ValueFor(model => model.Movie.ID, "sasa")
+        @Html.Value("Movie.ID", "trichoip")
+
+        @Html.DropDownListFor(model => model.Movie.EnumCountry, Html.GetEnumSelectList<CountryEnum>(), "Select Gender")
+        @Html.DropDownListFor(model => model.Movie.EnumCountry, Html.GetEnumSelectList(typeof(CountryEnum)), "Select Gender")
+
+        @* @Html.ValidationMessage(string.Empty) *@
+
+    </div>
+
+    <hr />
+    <div>
+        <h1>From</h1>
+        mvc
+        <form asp-controller="Demo" asp-action="Register" method="post">
+            <!-- Input and Submit elements -->
+        </form>
+        <form method="post" action="/Demo/Register">
+            <!-- Input and Submit elements -->
+        </form>
+
+        <form method="post">
+            <button asp-controller="account" asp-action="list">asp-controller</button>
+            <input type="image" src="..." alt="Or Click Me" asp-controller="Home" asp-action="Index">
+        </form>
+        <form method="post">
+            <button formaction="/account/list">Click Me</button>
+            <input type="image" src="..." alt="Or Click Me" formaction="/Home/Index">
+        </form>
+
+        razor page
+        <form method="post">
+            <!button asp-page="About">Click Me</!button>
+            <!input type="image" src="..." alt="Or Click Me" asp-page="About">
+        </form>
+        <form method="post">
+            <button formaction="/About">Click Me</button>
+            <input type="image" src="..." alt="Or Click Me" formaction="/About">
+        </form>
+
+        round
+        <form method="post">
+            <button asp-route="Custom">asp-route</button>
+            <input type="image" src="..." alt="Or Click Me" asp-route="Custom">
+        </form>
+        <form method="post">
+            <button formaction="/Home/Test">Click Me</button>
+            <input type="image" src="..." alt="Or Click Me" formaction="/Home/Test">
+        </form>
+
+        <form method="post">
+            <button asp-route="Feature">asp-route feature 1</button>
+        </form>
+
+        <form asp-route="Feature" method="post">
+            <button type="submit">asp-route feature 2</button>
+        </form>
+
+    </div>
+
+    <hr />
+    <div>
+        <h1></h1>
+
+    </div>
+
+    <hr />
+    <div>
+        <h1> dl dt dd</h1>
+        <dl class="row">
+            <dt class="col-sm-2">
+                CategoryName
+            </dt>
+            <dd class="col-sm-10">
+                Presentation bouquets
+            </dd>
+            <dt class="col-sm-2">
+                CategoryDescription
+            </dt>
+            <dd class="col-sm-10">
+                These bouquets are often long-stemmed and held upright, such as when presenting flowers to a performer or as a gift to someone.
+            </dd>
+        </dl>
+    </div>
+
+    <hr />
+    <div>
+        <hr />
+        <h1>Tag Helper properties</h1>
+        <h5>Html Helper giúp mình check null của model hoặc các properties trong model</h5>
+        <h5>những asp- nào mà lấy name thì nó sẽ check null giúp mình ví dụ (asp-for, )</h5>
+        <h5>còn những asp- nào mà lấy giá trị thì sẽ không check null ví dụ (asp-route-,asp-route-...,  )</h5>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+            }
+        </style>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ATTRIBUTE</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Compare</td>
+                    <td>Chỉ ra field khác cần so sánh giá trị với field này</td>
+                </tr>
+                <tr>
+                    <td>MaxLength</td>
+                    <td>Chỉ ra số ký tự dài nhất có thể được chấp nhận</td>
+                </tr>
+                <tr>
+                    <td>MinLength</td>
+                    <td>Chỉ ra số ký tự ít nhất có thể được chấp nhận</td>
+                </tr>
+                <tr>
+                    <td>Range</td>
+                    <td>Chỉ ra miền giá trị được chấp nhận</td>
+                </tr>
+                <tr>
+                    <td>RegularExpression</td>
+                    <td>Giá trị phải tuân theo regular expression</td>
+                </tr>
+                <tr>
+                    <td>Remote</td>
+                    <td>Bật tính năng validation phía client đến 1 server remote, ví dụ kiểm tra giá trị username có tồn tại hay không.</td>
+                </tr>
+                <tr>
+                    <td>Required</td>
+                    <td>Giá trị bắt buộc phải nhập. Chú ý là các kiểu DateTime hay kiểu số mặc định sẽ có cái này, bạn cần sử dụng nullable để bỏ nó đi</td>
+                </tr>
+                <tr>
+                    <td>StringLength</td>
+                    <td>Chỉ ra độ dài tối đa của chuỗi được chấp nhận</td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>NET TYPE</th>
+                    <th>INPUT TYPE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Bool</td>
+                    <td>type=”checkbox”</td>
+                </tr>
+                <tr>
+                    <td>String</td>
+                    <td>type=”text”</td>
+                </tr>
+                <tr>
+                    <td>DateTime</td>
+                    <td>type=”datetime-local”</td>
+                </tr>
+                <tr>
+                    <td>Byte, int, Single, Double</td>
+                    <td>type=”number”</td>
+                </tr>
+                <tr>
+                    <td>decimal, double, float</td>
+                    <td>type=”text”</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ATTRIBUTE</th>
+                    <th>&nbsp;INPUT TYPE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>[EmailAddress]</td>
+                    <td>type=”email”</td>
+                </tr>
+                <tr>
+                    <td>[Url]</td>
+                    <td>type=”url”</td>
+                </tr>
+                <tr>
+                    <td>[HiddenInput]</td>
+                    <td>type=”hidden”</td>
+                </tr>
+                <tr>
+                    <td>[Phone]</td>
+                    <td>type=”tel”</td>
+                </tr>
+                <tr>
+                    <td>[DataType(DataType.Password)]</td>
+                    <td>type=”password”</td>
+                </tr>
+                <tr>
+                    <td>[DataType(DataType.Date)]</td>
+                    <td>type=”date”</td>
+                </tr>
+                <tr>
+                    <td>[DataType(DataType.Time)]</td>
+                    <td>type=”time”</td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>TAG HELPER</th>
+                    <th>Tạo ra</th>
+                    <th>Thuộc tính</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Form Tag Helper</td>
+                    <td>&lt;form&gt;</td>
+                    <td>asp-action, asp-all-route-data, asp-area, asp-controller, asp-fragment, asp-host, asp-page, asp-page-handler,asp-protocol,asp-route, asp-route-</td>
+                </tr>
+                <tr>
+                    <td>Anchor&nbsp;Tag Helpers</td>
+                    <td>&lt;a&gt;</td>
+                    <td>asp-action, asp-all-route-data, asp-area, asp-controller, asp-Fragment, asp-host, asp-page, asp-page-handler, asp-Protocol, asp-route, asp-route-</td>
+                </tr>
+                <tr>
+                    <td>Cache Tag Helper</td>
+                    <td>&lt;cache&gt;</td>
+                    <td>enabled1,expires-after2,expires-on3,expires-sliding4,priority5,vary-by6</td>
+                </tr>
+                <tr>
+                    <td>Environment Tag Helper</td>
+                    <td>&lt;environment&gt;</td>
+                    <td>names, include, exclude</td>
+                </tr>
+                <tr>
+                    <td>Image Tag Helper</td>
+                    <td>&lt;img&gt;</td>
+                    <td>append-version</td>
+                </tr>
+                <tr>
+                    <td>Input Tag Helper</td>
+                    <td>&lt;input&gt;</td>
+                    <td>asp-for</td>
+                </tr>
+                <tr>
+                    <td>Label Tag Helper</td>
+                    <td>&lt;label&gt;</td>
+                    <td>asp-for</td>
+                </tr>
+                <tr>
+                    <td>Link Tag Helper</td>
+                    <td>&lt;link&gt;</td>
+                    <td>href-include, href-exclude, fallback-href, fallback-href-include, fallback-href-exclude, fallback-test-class, fallback-test-value, fallback-test-property, fallback-test-value, append-version</td>
+                </tr>
+                <tr>
+                    <td>Options Tag Helper</td>
+                    <td>&lt;select&gt;</td>
+                    <td>asp-for, asp-items</td>
+                </tr>
+                <tr>
+                    <td>Partial Tag Helper</td>
+                    <td>&lt;partial&gt;</td>
+                    <td>name,model,for,view-data</td>
+                </tr>
+                <tr>
+                    <td>Script Tag Helper</td>
+                    <td>&lt;script&gt;</td>
+                    <td>
+                        src-include, src-exclude, fallback-src, fallback-src-include, fallback-src-exclude<br>
+                        fallback-test, append-version
+                    </td>
+                </tr>
+                <tr>
+                    <td>Select Tag Helper</td>
+                    <td>&lt;select&gt;</td>
+                    <td>for, items</td>
+                </tr>
+                <tr>
+                    <td>Textarea Tag Helper</td>
+                    <td>&lt;textarea&gt;</td>
+                    <td>for</td>
+                </tr>
+                <tr>
+                    <td>Validation Message Tag Helper</td>
+                    <td>&lt;span&gt;</td>
+                    <td>validation-for</td>
+                </tr>
+                <tr>
+                    <td>Validation Summary Tag Helper</td>
+                    <td>&lt;div&gt;</td>
+                    <td>validation-summary</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered">
+            <tbody>
+                <tr class="bg-danger text-white">
+                    <th>Tag</th>
+                    <th>Sử dụng</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a id="Anchor" name="Anchor"></a>
+                        <strong class="text-danger">Anchor</strong>
+                    </td>
+                    <td>
+                        <p>
+                            <strong>Anchor Tag Helper</strong> cải tiến
+                            thẻ <strong>&lt;a&gt;</strong>,
+                            bằng cách thêm vào các thuộc tính,
+                            các thuộc tính này bắt đầu bằng tiền tố
+                            <strong>asp-</strong>. Từ các thuộc
+                            tính <strong>asp-</strong>, nó sinh ra giá trị
+                            cho thuộc tính <strong>href</strong>,
+                            một số thuộc tính đó là:
+                        </p>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item p-1"><code>asp-controller</code> Controller (MVC) để phát sinh href của thẻ</li>
+                            <li class="list-group-item p-1"><code>asp-action</code> Action của controller</li>
+                            <li class="list-group-item p-1"><code>asp-route-{value}</code> tham số của Route, ví dụ asp-route-id ...</li>
+                            <li class="list-group-item p-1"><code>asp-route</code> Route để phát sinh href</li>
+                            <li class="list-group-item p-1"><code>asp-all-route-data</code> thuộc tính gán giá trị bằng đối tượng kiểu <span>Dictionary&lt;string, string&gt;</span> để phát sinh phần query của url</li>
+                            <li class="list-group-item p-1"><code>asp-fragment</code> phần fragment của URL</li>
+                            <li class="list-group-item p-1"><code>asp-area</code> tên Area (Xem <a href="https://xuanthulab.net/asp-net-razor-gioi-thieu-razor-page-va-route-trong-razor-page.html#routing" target="_blank">Area trong ASP.NET Core Razor</a>)</li>
+                            <li class="list-group-item p-1"><code>asp-page</code> tên trang Razor</li>
+                            <li class="list-group-item p-1">
+                                <code>asp-page-handler</code> thiết lập
+                                handler của trang Razor
+                            </li>
+                        </ul>
+                        <pre class="prettyprint lang-cs hljs language-csharp">&lt;a asp-page=<span class="hljs-string">"ViewProduct"</span> asp-route-id=<span class="hljs-string">"2"</span>&gt;Sản phẩm khác&lt;/a&gt;
+<span class="hljs-comment">// Kết quả: &lt;a href="/ViewProduct/2/" &gt;Sản phẩm khác&lt;/a&gt;</span></pre>
+                    </td>
+                </tr>
+
+                <tr class="alert-success">
+                    <td>
+                        <a id="Form" name="Form"></a>
+                        <strong class="text-danger">Form</strong>
+                    </td>
+                    <td>
+                        <p>Cải tiến thẻ <code>&lt;form&gt;</code> với các thuộc tính thêm vào để phát sinh giá trị cho thuộc tính <strong>action</strong></p>
+
+                        <table class="table table-sm table-borderless">
+
+                            <tbody>
+                                <tr>
+                                    <td><code>asp-controller</code></td>
+                                    <td>Tên của controller</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-action</code></td>
+                                    <td>Actionn trong controller</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-area</code></td>
+                                    <td>Tên Area</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-page</code></td>
+                                    <td>Tên trang Razor</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-page-handler</code></td>
+                                    <td>Tên handler của Razor (OnGet, OnPost ..)</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-route</code></td>
+                                    <td>Tên route</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-route-{value}</code></td>
+                                    <td>Giá trị thành phần route</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-all-route-data</code></td>
+                                    <td>Giá trị xây dựng query action</td>
+                                </tr>
+
+                                <tr>
+                                    <td><code>asp-fragment</code></td>
+                                    <td>fragment của action form</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Bạn có thể sử dụng Input, Button để tạo ActionForm với các thuộc tính trên.</p>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <a id="Image" name="Image"></a>
+                        <strong class="text-danger">Image</strong>
+                    </td>
+                    <td>
+                        <p>
+                            Làm việc trên thẻ <code>&lt;img&gt;</code> với thuộc tính <code>asp-append-version="true"</code> để thêm query <code>v=xxxx</code> vào địa chỉ ảnh.
+                        </p>
+                        <p>
+                            Chú ý thuộc tính src phải trỏ đến một file tĩnh, ví dụ <code>src="~/images/1.png"</code>,
+                            nếu vậy nếu
+                            <code>asp-append-version="true"</code>
+                            thì mỗi phiên bản hình ảnh sẽ cache địa chỉ (phát sinh query v=xxx)
+                        </p>
+
+                    </td>
+                </tr>
+
+                <tr class="alert-success">
+                    <td>
+                        <a id="Input" name="Input"></a>
+                        <strong class="text-danger">Input</strong>
+                    </td>
+                    <td>
+                        <p>
+                            Làm việc trên thẻ <code>&lt;input&gt;</code> với thuộc tính <code>asp-for="@@data"</code>
+                        </p>
+                        <p>
+                            <strong>@@data</strong> là biểu thức, chỉ ra tên
+                            dữ liệu.
+
+                        </p>
+                        <p>
+                            qua đó nó  sinh ra phần tử
+                            HTML &lt;input&gt; với các thuộc tính sinh  ra là
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>type</strong>
+                                phần tử sinh ra phụ thuộc vào kiểu data, ví dụ như data là bool thì input có thuộc tính type="checkbox". Ngoài ra kiểu cũng xác định bởi các thuộc tính bổ sung như: [EmailAddress], [DataType(DataType.Time)] ...
+                            </li>
+                            <li>
+                                Phát sinh id dựa vào biểu thức asp-for
+                            </li>
+
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a id="Label" name="Label"></a>
+                        <code>Label</code>
+                    </td>
+                    <td>
+                        Làm việc trên thẻ <code>&lt;label&gt;</code> với thuộc tính <code>asp-for="@@data"</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a id="Link" name="Link"></a>
+                        <code>Link</code>
+                    </td>
+                    <td>
+                        Làm việc trên thẻ <code>&lt;link&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a id="Select" name="Select"></a>
+                        <code>Select</code>
+                    </td>
+                    <td>
+                        Làm việc trên thẻ <code>&lt;select&gt;</code>, ví dụ:
+<pre class="prettyprint lang-cs hljs language-csharp">&lt;<span class="hljs-keyword">select</span> asp-<span class="hljs-keyword">for</span>=<span class="hljs-string">"Country"</span> asp-items=<span class="hljs-string">"Model.Countries"</span>&gt;&lt;/<span class="hljs-keyword">select</span>&gt;</pre>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a id="Textarea" name="Textarea"></a>
+                        <code>Textarea</code>
+                    </td>
+                    <td>
+                        Làm việc trên thẻ <code>&lt;textarea&gt;</code> với thuộc tính asp-for="s"
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Phương thức</th>
+                    <th>Diễn giải</th>
+                </tr>
+                <tr>
+                    <td><code>Raw(string)</code></td>
+                    <td>
+                        Giữ nguyên thẻ HTML (không thực hiện encoding), vì mặc định khi xuất một giá trị
+                        (<code>@@value</code>) thì nó sẽ encoding rồi xuất
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="nowrap">Value(expression, format)</code></td>
+                    <td>
+                        Xuất giá trị tên <code>expression</code> (tên liên quan tới model)
+                        với chuỗi định dạng <code><a href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting?redirectedfrom=MSDN" target="_blank">format</a></code>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><code class="nowrap">Encode(value)</code></td>
+                    <td>Thực hiện Encode chuỗi value.</td>
+                </tr>
+                <tr>
+                    <td><code>ActionLink</code></td>
+                    <td>Tạo thẻ <code>&lt;a&gt;</code> cho các action của controller.</td>
+                </tr>
+                <tr>
+                    <td><code>AntiForgeryToken</code></td>
+                    <td>
+                        Tạo phần tử ẩn, nếu trong Form - khi form submit thì nó được kiểm tra,
+                        để đảm bảo form được gửi đến từ mã Html do ứng dụng phát sinh
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>BeginForm</code></td>
+                    <td>
+                        Dựng HTML Form trong MVC
+<pre class="prettyprint lang-cs hljs language-csharp">@@using (Html.BeginForm(FormMethod.Post))
+                            {
+                        <span class="hljs-comment">// Các phầ tử</span>
+                            }
+</pre>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>BeginRouteForm</code></td>
+                    <td>Dựng HTML Form trong MVC, action theo Route</td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>CheckBox</code><br>
+                        <code>CheckBoxFor</code>
+                    </td>
+                    <td><code>CheckBox(expression, isChecked, htmlAttributes)</code>, Tạo phần tử Html &lt;input&gt; kiểu checkbox, expression chuỗi biểu thức phần tử Model</td>
+                </tr>
+                <tr>
+                    <td><code>Display(expression)</code><br><code>DislayFor</code></td>
+                    <td>Dựng HTML cho phần tử Model expression</td>
+                </tr>
+                <tr>
+                    <td><code>DisplayName(expression)</code><br>DisplayNameFor</td>
+                    <td>Lấy tên expression, tên thiết lập bằng [Display]</td>
+                </tr>
+                <tr>
+                    <td><code>DropDownList</code><br><code>DropDownListFor</code></td>
+                    <td>
+                        <code>DropDownList(expression, selectList, optionLabel, htmlAttributes)</code>
+                        tạo phầ tử Select
+<pre class="prettyprint lang-cs hljs language-csharp">@@Html.DropDownList(<span class="hljs-string">"thanhpho"</span>,
+                        <span class="hljs-keyword">new</span> SelectList(<span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] {<span class="hljs-string">"Hà Nội"</span>, <span class="hljs-string">"Sài Gòn"</span>}));
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>Editor(expression)</code><br><code>EditorFor</code></td>
+                    <td>
+                        Tạo control (phần tử input) cho expression (kiểu quy định type của input)
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>Hidden(expression)</code><br>HiddenFor</td>
+                    <td>
+                        Tạo input có kiểu hidden
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>Label(expression)</code><br><code>LabelFor</code></td>
+                    <td>
+                        Tạo phần tử <code>&lt;label&gt;</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>ListBox</code><br><code>ListBoxFor</code></td>
+                    <td>
+                        Tạo html select - dùng giống DropDownList
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>PartialAsync</code></td>
+                    <td>
+                        Dựng Html từ Partial, xem
+                        <a href="https://xuanthulab.net/asp-net-razor-su-dung-partial-page-partial-view-de-chia-nho-layout-trang-razor.html" target="_blank">partial page, partial view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>RenderPartialAsync</code></td>
+                    <td>
+                        Dựng Html từ Partial, xem
+                        <a href="https://xuanthulab.net/asp-net-razor-su-dung-partial-page-partial-view-de-chia-nho-layout-trang-razor.html" target="_blank">partial page, partial view</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>Password</code><br><code>PasswordFor</code></td>
+                    <td>
+                        Tạo &lt;input&gt; nhập password
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>RadioButton(expression, value)</code><br><code>RadioButtonFor</code></td>
+                    <td>
+                        Tạo &lt;input&gt; kiểu radiobutton
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>TextArea</code><br><code>TextAreaFor</code></td>
+                    <td>
+                        <code>TextArea(expression, value, rows, columns, htmlAttributes)</code>
+                        Tạo &lt;textarea&gt;
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>TextBox</code><br><code>TextBoxFor</code></td>
+                    <td>
+                        <code>TextBox(expression, value, format, htmlAttributes)</code>
+                        Tạo &lt;input&gt; kiểu text
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>ValidationMessage</code></td>
+                    <td>
+                        <code>ValidationMessage (expression, message, htmlAttributes, tag)</code>
+                        Trả về HTML thông báo lỗi kiểm tra Model
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>ValidationSummary</code></td>
+                    <td>
+                        Trả về HTML phần tử ul, các thông báo lỗi kiểm tra Model
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>*@
+</div>

@@ -1,15 +1,14 @@
 ﻿using System.Linq.Expressions;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Specifications
+namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Specifications;
+
+public interface ISpecifications<T>
 {
-    public interface ISpecifications<T>
-    {
-        Expression<Func<T, bool>> Criteria { get; }
-        List<Expression<Func<T, object>>> Includes { get; }
-        Expression<Func<T, object>> OrderBy { get; }
-        Expression<Func<T, object>> OrderByDescending { get; }
-        int Take { get; }
-        int Skip { get; }
-        bool isPagingEnabled { get; }
-    }
+    Expression<Func<T, bool>> Criteria { get; }
+    List<Expression<Func<T, object>>> Includes { get; }
+    Expression<Func<T, object>> OrderBy { get; }
+    Expression<Func<T, object>> OrderByDescending { get; }
+    int Take { get; }
+    int Skip { get; }
+    bool isPagingEnabled { get; }
 }

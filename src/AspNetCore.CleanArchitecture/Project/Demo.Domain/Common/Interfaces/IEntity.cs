@@ -1,7 +1,6 @@
-﻿namespace AspNetCore.CleanArchitecture.Project.Demo.Domain.Common.Interfaces
+﻿namespace AspNetCore.CleanArchitecture.Project.Demo.Domain.Common.Interfaces;
+
+public interface IEntity
 {
-    public interface IEntity
-    {
-        public int Id { get; set; }
-    }
+    public int Id { get; set; }
 }

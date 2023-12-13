@@ -5,39 +5,39 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api", "src\AspNetCore.Api\AspNetCore.Api.csproj", "{D9D84AFD-8DE7-419F-BBAC-FAB7D5E680B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Swagger", "src\AspNetCore.Swagger\AspNetCore.Swagger.csproj", "{3150EA00-661C-4734-86B8-600DAD7039C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.Swagger", "src\AspNetCore.Api.Swagger\AspNetCore.Api.Swagger.csproj", "{3150EA00-661C-4734-86B8-600DAD7039C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.MinimalApi", "src\AspNetCore.MinimalApi\AspNetCore.MinimalApi.csproj", "{ADEA019D-0245-421D-8EA6-EBA8D1DFCDBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.MinimalApi", "src\AspNetCore.Api.MinimalApi\AspNetCore.Api.MinimalApi.csproj", "{ADEA019D-0245-421D-8EA6-EBA8D1DFCDBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Docker", "src\AspNetCore.Docker\AspNetCore.Docker.csproj", "{D3E184DB-3829-4D49-BFA2-9137558A7C16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.Docker", "src\AspNetCore.Api.Docker\AspNetCore.Api.Docker.csproj", "{D3E184DB-3829-4D49-BFA2-9137558A7C16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Email", "src\AspNetCore.Email\AspNetCore.Email.csproj", "{8599F3A9-E3D1-4411-B687-2E6EC134C4A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.Email", "src\AspNetCore.Api.Email\AspNetCore.Api.Email.csproj", "{8599F3A9-E3D1-4411-B687-2E6EC134C4A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.FluentValidations", "src\AspNetCore.FluentValidations\AspNetCore.FluentValidations.csproj", "{6906BF21-0CC2-46CB-A6C7-302361A2293B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.FluentValidations", "src\AspNetCore.Api.FluentValidations\AspNetCore.Api.FluentValidations.csproj", "{6906BF21-0CC2-46CB-A6C7-302361A2293B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.EntityFramework", "src\AspNetCore.EntityFramework\AspNetCore.EntityFramework.csproj", "{698962F0-5A0D-460A-A4E7-90421EB3AEC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Database.EntityFramework", "src\AspNetCore.Database.EntityFramework\AspNetCore.Database.EntityFramework.csproj", "{698962F0-5A0D-460A-A4E7-90421EB3AEC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.OData", "src\AspNetCore.OData\AspNetCore.OData.csproj", "{8E6711C2-877B-47C7-8787-FD2932478087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Client.OData", "src\AspNetCore.Client.OData\AspNetCore.Client.OData.csproj", "{8E6711C2-877B-47C7-8787-FD2932478087}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Identity", "src\AspNetCore.Identity\AspNetCore.Identity.csproj", "{1B42FD74-6C23-4773-8136-0C097C90CE0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Authentication.Identity", "src\AspNetCore.Authentication.Identity\AspNetCore.Authentication.Identity.csproj", "{1B42FD74-6C23-4773-8136-0C097C90CE0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.HandleError", "src\AspNetCore.HandleError\AspNetCore.HandleError.csproj", "{5A411DE6-DC66-4FB0-92F2-127B85C6CA0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.HandleError", "src\AspNetCore.Api.HandleError\AspNetCore.Api.HandleError.csproj", "{5A411DE6-DC66-4FB0-92F2-127B85C6CA0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.HttpClient", "src\AspNetCore.HttpClient\AspNetCore.HttpClient.csproj", "{ACFE91A1-F424-4780-B47B-DAD568601081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Client.HttpClient", "src\AspNetCore.Client.HttpClient\AspNetCore.Client.HttpClient.csproj", "{ACFE91A1-F424-4780-B47B-DAD568601081}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Cache", "src\AspNetCore.Cache\AspNetCore.Cache.csproj", "{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.Cache", "src\AspNetCore.Api.Cache\AspNetCore.Api.Cache.csproj", "{7D47FDD4-F5AF-47E0-82BF-504169CDA2AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.FakeData", "src\AspNetCore.FakeData\AspNetCore.FakeData.csproj", "{C42C811B-06D1-4ECB-98E0-117A7F938190}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.FakeData", "src\AspNetCore.Api.FakeData\AspNetCore.Api.FakeData.csproj", "{C42C811B-06D1-4ECB-98E0-117A7F938190}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Extensions", "src\AspNetCore.Extensions\AspNetCore.Extensions.csproj", "{BE3F0575-AE82-41A3-B3BB-74894D01CE32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.Extensions", "src\AspNetCore.Api.Extensions\AspNetCore.Api.Extensions.csproj", "{BE3F0575-AE82-41A3-B3BB-74894D01CE32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.IdentityWeb", "src\AspNetCore.IdentityWeb\AspNetCore.IdentityWeb.csproj", "{9B43FDCE-4475-41D8-9843-04EEE4AAD440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Authentication.IdentityWeb", "src\AspNetCore.Authentication.IdentityWeb\AspNetCore.Authentication.IdentityWeb.csproj", "{9B43FDCE-4475-41D8-9843-04EEE4AAD440}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.MVC", "src\AspNetCore.MVC\AspNetCore.MVC.csproj", "{681693CB-1668-4EAE-95C0-FDB980B2F4AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Client.MVC", "src\AspNetCore.Client.MVC\AspNetCore.Client.MVC.csproj", "{681693CB-1668-4EAE-95C0-FDB980B2F4AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.CleanArchitecture", "src\AspNetCore.CleanArchitecture\AspNetCore.CleanArchitecture.csproj", "{9890143A-D9DF-45BE-ADBF-AFE623FB5C3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Helpers", "src\AspNetCore.Helpers\AspNetCore.Helpers.csproj", "{FA06DAFE-BA94-4D25-A25B-FAB6D5C2054E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Api.Helpers", "src\AspNetCore.Api.Helpers\AspNetCore.Api.Helpers.csproj", "{FA06DAFE-BA94-4D25-A25B-FAB6D5C2054E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.ExpressionBuilder.LinqKit", "src\AspNetCore.ExpressionBuilder.LinqKit\AspNetCore.ExpressionBuilder.LinqKit.csproj", "{CDB16241-725C-4105-9880-7FD6DD3E317F}"
 EndProject
@@ -59,9 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.File.CSV", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.File.Excel", "src\AspNetCore.File.Excel\AspNetCore.File.Excel.csproj", "{679EDE1D-3C62-4ECD-A7F1-469908391EC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.MappingObject.AutoMapper", "src\AspNetCore.MappingObject.AutoMapper\AspNetCore.MappingObject.AutoMapper.csproj", "{7018D203-0297-4F96-A4E0-5B9A218CB43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.ObjectMapping.AutoMapper", "src\AspNetCore.ObjectMapping.AutoMapper\AspNetCore.ObjectMapping.AutoMapper.csproj", "{7018D203-0297-4F96-A4E0-5B9A218CB43B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.MappingObject.Mapster", "src\AspNetCore.MappingObject.Mapster\AspNetCore.MappingObject.Mapster.csproj", "{3F81A7EB-50DE-4EB0-85BC-0A36A58B48E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.ObjectMapping.Mapster", "src\AspNetCore.ObjectMapping.Mapster\AspNetCore.ObjectMapping.Mapster.csproj", "{3F81A7EB-50DE-4EB0-85BC-0A36A58B48E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Pattern.CQRS.MediatorPattern.MediatR", "src\AspNetCore.Pattern.CQRS.MediatorPattern.MediatR\AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.csproj", "{4957F1A7-C7C4-4CC6-B403-16EE3D1ABA44}"
 EndProject
@@ -71,9 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.TaskScheduler.Ha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.ExpressionBuilder.Extensions", "src\AspNetCore.ExpressionBuilder.Extensions\AspNetCore.ExpressionBuilder.Extensions.csproj", "{60EDD0B4-D570-433B-8B05-E1EA83F7CAC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.ExpressionBuilder.SystemLinqDynamicCore", "src\AspNetCore.ExpressionBuilder.SystemLinqDynamicCore\AspNetCore.ExpressionBuilder.SystemLinqDynamicCore.csproj", "{FC6E4503-7133-42F1-A3E3-85C27EF64830}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.ExpressionBuilder.SystemLinqDynamicCore", "src\AspNetCore.ExpressionBuilder.SystemLinqDynamicCore\AspNetCore.ExpressionBuilder.SystemLinqDynamicCore.csproj", "{FC6E4503-7133-42F1-A3E3-85C27EF64830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.RealTime.SignalR", "src\AspNetCore.RealTime.SignalR\AspNetCore.RealTime.SignalR.csproj", "{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.RealTime.SignalR", "src\AspNetCore.RealTime.SignalR\AspNetCore.RealTime.SignalR.csproj", "{C495AAB0-C2BF-49C3-A623-CC9C52B486D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,49 +5,48 @@ using AutoMapper;
 
 using MediatR;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Features.Players.Commands.UpdatePlayer
+namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Features.Players.Commands.UpdatePlayer;
+
+public record UpdatePlayerCommand : IRequest<Result<int>>
 {
-    public record UpdatePlayerCommand : IRequest<Result<int>>
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int ShirtNo { get; set; }
+    public string PhotoUrl { get; set; }
+    public DateTime? BirthDate { get; set; }
+}
+
+internal class UpdatePlayerCommandHandler : IRequestHandler<UpdatePlayerCommand, Result<int>>
+{
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public UpdatePlayerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int ShirtNo { get; set; }
-        public string PhotoUrl { get; set; }
-        public DateTime? BirthDate { get; set; }
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    internal class UpdatePlayerCommandHandler : IRequestHandler<UpdatePlayerCommand, Result<int>>
+    public async Task<Result<int>> Handle(UpdatePlayerCommand command, CancellationToken cancellationToken)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public UpdatePlayerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        var player = await _unitOfWork.Repository<Player>().GetByIdAsync(command.Id);
+        if (player != null)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            player.Name = command.Name;
+            player.ShirtNo = command.ShirtNo;
+            player.PhotoUrl = command.PhotoUrl;
+            player.BirthDate = command.BirthDate;
+
+            await _unitOfWork.Repository<Player>().UpdateAsync(player);
+            player.AddDomainEvent(new PlayerUpdatedEvent(player));
+
+            await _unitOfWork.Save(cancellationToken);
+
+            return await Result<int>.SuccessAsync(player.Id, "Player Updated.");
         }
-
-        public async Task<Result<int>> Handle(UpdatePlayerCommand command, CancellationToken cancellationToken)
+        else
         {
-            var player = await _unitOfWork.Repository<Player>().GetByIdAsync(command.Id);
-            if (player != null)
-            {
-                player.Name = command.Name;
-                player.ShirtNo = command.ShirtNo;
-                player.PhotoUrl = command.PhotoUrl;
-                player.BirthDate = command.BirthDate;
-
-                await _unitOfWork.Repository<Player>().UpdateAsync(player);
-                player.AddDomainEvent(new PlayerUpdatedEvent(player));
-
-                await _unitOfWork.Save(cancellationToken);
-
-                return await Result<int>.SuccessAsync(player.Id, "Player Updated.");
-            }
-            else
-            {
-                return await Result<int>.FailureAsync("Player Not Found.");
-            }
+            return await Result<int>.FailureAsync("Player Not Found.");
         }
     }
 }

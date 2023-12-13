@@ -1,8 +1,7 @@
-﻿namespace AspNetCore.TaskScheduler.Hangfire.Entities
+﻿namespace AspNetCore.TaskScheduler.Hangfire.Entities;
+
+public class Person
 {
-    public class Person
-    {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-    }
+    public int Id { get; set; }
+    public string? Name { get; set; }
 }

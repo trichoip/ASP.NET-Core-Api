@@ -1,9 +1,8 @@
-﻿namespace AspNetCore.Database.Sqlite.Models
+﻿namespace AspNetCore.Database.Sqlite.Models;
+
+public class TodoItem
 {
-    public class TodoItem
-    {
-        public long Id { get; set; }
-        public string? Name { get; set; }
-        public bool IsComplete { get; set; }
-    }
+    public long Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsComplete { get; set; }
 }

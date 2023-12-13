@@ -1,4 +1,4 @@
-﻿using AspNetCore.Helpers.Helpers;
+﻿using AspNetCore.Api.Helpers.Helpers;
 using AspNetCore.Pattern.RepositoryPattern.Data;
 using AspNetCore.Pattern.RepositoryPattern.Repositories.Interfaces;
 using AutoMapper;

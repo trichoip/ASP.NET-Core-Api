@@ -1,11 +1,10 @@
-﻿namespace AspNetCore.Api.Models
+﻿namespace AspNetCore.Api.Models;
+
+public class TodoItem
 {
-    public class TodoItem
-    {
-        public long Id { get; set; }
-        public string? Name { get; set; }
-        public bool IsComplete { get; set; }
-        public string? Secret { get; set; }
-        public byte[] Image { get; set; }
-    }
+    public long Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsComplete { get; set; }
+    public string? Secret { get; set; }
+    public byte[] Image { get; set; }
 }

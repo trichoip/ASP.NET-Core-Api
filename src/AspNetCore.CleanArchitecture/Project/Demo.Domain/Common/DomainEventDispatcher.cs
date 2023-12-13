@@ -1,29 +1,28 @@
 ﻿using AspNetCore.CleanArchitecture.Project.Demo.Domain.Common.Interfaces;
 using MediatR;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Domain.Common
+namespace AspNetCore.CleanArchitecture.Project.Demo.Domain.Common;
+
+public class DomainEventDispatcher : IDomainEventDispatcher
 {
-    public class DomainEventDispatcher : IDomainEventDispatcher
+    private readonly IMediator _mediator;
+
+    public DomainEventDispatcher(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public DomainEventDispatcher(IMediator mediator)
+    public async Task DispatchAndClearEvents(IEnumerable<BaseEntity> entitiesWithEvents)
+    {
+        foreach (var entity in entitiesWithEvents)
         {
-            _mediator = mediator;
-        }
+            var events = entity.DomainEvents.ToArray();
 
-        public async Task DispatchAndClearEvents(IEnumerable<BaseEntity> entitiesWithEvents)
-        {
-            foreach (var entity in entitiesWithEvents)
+            entity.ClearDomainEvents();
+
+            foreach (var domainEvent in events)
             {
-                var events = entity.DomainEvents.ToArray();
-
-                entity.ClearDomainEvents();
-
-                foreach (var domainEvent in events)
-                {
-                    await _mediator.Publish(domainEvent).ConfigureAwait(false);
-                }
+                await _mediator.Publish(domainEvent).ConfigureAwait(false);
             }
         }
     }

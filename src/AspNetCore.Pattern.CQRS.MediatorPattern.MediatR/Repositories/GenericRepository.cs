@@ -1,4 +1,4 @@
-﻿using AspNetCore.Helpers.Helpers;
+﻿using AspNetCore.Api.Helpers.Helpers;
 using AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.Data;
 using AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.Repositories.Interfaces;
 using Mapster;

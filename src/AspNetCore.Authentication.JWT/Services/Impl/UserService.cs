@@ -1,25 +1,23 @@
-﻿using AspNetCore.Authentication.JWT.Services;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
-namespace AspNetCore.Authentication.JWT.Services.Impl
+namespace AspNetCore.Authentication.JWT.Services.Impl;
+
+public class UserService : IUserService
 {
-    public class UserService : IUserService
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public UserService(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public UserService(IHttpContextAccessor httpContextAccessor)
+    public string GetMyName()
+    {
+        var result = string.Empty;
+        if (_httpContextAccessor.HttpContext is not null)
         {
-            _httpContextAccessor = httpContextAccessor;
+            result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
         }
-
-        public string GetMyName()
-        {
-            var result = string.Empty;
-            if (_httpContextAccessor.HttpContext is not null)
-            {
-                result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
-            }
-            return result;
-        }
+        return result;
     }
 }

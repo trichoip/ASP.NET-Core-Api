@@ -1,17 +1,16 @@
 ﻿using AspNetCore.Api.Filters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.Api.Controllers
-{
-    [MyApiController]
-    public class CustomRouteController : ControllerBase
-    {
+namespace AspNetCore.Api.Controllers;
 
-        [HttpGet]
-        [MyApiController]
-        public IActionResult Custom()
-        {
-            return Ok();
-        }
+[MyApiController]
+public class CustomRouteController : ControllerBase
+{
+
+    [HttpGet]
+    [MyApiController]
+    public IActionResult Custom()
+    {
+        return Ok();
     }
 }

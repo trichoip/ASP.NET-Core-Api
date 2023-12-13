@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div>
+        <div>
+            <div class="Client Streaming">
+                <div>
+                    <label for="broadcast">Message</label>
+                    <input type="text" id="broadcast" name="broadcast" />
+                </div>
+                <button id="btn-broadcast">Broadcast</button>
+            </div>
+
+            <div class="Server Streaming">
+                <div>
+                    <label for="number-of-jobs">Number of Jobs</label>
+                    <input type="text" id="number-of-jobs" name="number-of-jobs" />
+                </div>
+                <button id="btn-trigger-stream">Trigger Server Stream</button>
+            </div>
+        </div>
+
+        <div>
+            <p>SignalR Messages:</p>
+            <pre id="signalr-message-panel"></pre>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/signalrServer")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        // Receive Message
+        connection.on("ReceiveMessage", (message) => {
+            $('#signalr-message-panel').prepend($('<div />').text(message));
+        });
+
+        // Client Streaming
+        $('#btn-broadcast').click(function () {
+            var message = $('#broadcast').val();
+
+            var messages = message.split(';');
+
+            var subject = new signalR.Subject();
+            connection.send("BroadcastStream", subject).catch(err => console.error(err.toString()));
+            for (var i = 0; i < messages.length; i++) {
+                subject.next(messages[i]);
+            }
+
+            subject.complete();
+
+        });
+
+        // Server Streaming
+        $('#btn-trigger-stream').click(function () {
+            var numberOfJobs = parseInt($('#number-of-jobs').val(), 10);
+
+            connection.stream("TriggerStream", numberOfJobs)
+                .subscribe({
+                    next: (message) => $('#signalr-message-panel').prepend($('<div />').text(message))
+                });
+        });
+
+        // Start Connection
+        async function start() {
+            try {
+                await connection.start();
+                console.log('connected');
+            } catch (err) {
+                console.log(err);
+                setTimeout(() => start(), 5000);
+            }
+        };
+
+        connection.onclose(async () => {
+            await start();
+        });
+
+        start();
+
+    </script>
+</body>
+</html>

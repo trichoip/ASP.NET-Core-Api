@@ -1,0 +1,68 @@
+﻿@using AspNetCore.Client.MVC.Controllers;
+@using AspNetCore.Client.MVC.Models
+@model ValidationController
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/account/index">account index</a>
+    <hr />
+    <a asp-action="ModelStateRedirect">Model State Redirect</a>
+    <hr />
+    <form method="post">
+        <div asp-validation-summary="None"></div>
+        <div asp-validation-summary="All"></div>
+        <hr />
+        <div asp-validation-summary="ModelOnly"></div>
+        <hr />
+        <input placeholder="Account.Name" asp-for="Account.Name" />
+        <span asp-validation-for="Account.Name"></span>
+        <input type="submit" value="Create" />
+    </form>
+
+    <hr />
+
+    <h4>Movie</h4>
+    <hr />
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="Movie.Title" class="control-label"></label>
+            <input asp-for="Movie.Title" class="form-control" />
+            <span asp-validation-for="Movie.Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Movie.ReleaseDate" class="control-label"></label>
+            <input asp-for="Movie.ReleaseDate" class="form-control" />
+            <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Movie.Genre" class="control-label"></label>
+            <input asp-for="Movie.Genre" class="form-control" />
+            <span asp-validation-for="Movie.Genre" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Movie.Price" class="control-label"></label>
+            <input asp-for="Movie.Price" class="form-control" />
+            <span asp-validation-for="Movie.Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+</body>
+
+</html>

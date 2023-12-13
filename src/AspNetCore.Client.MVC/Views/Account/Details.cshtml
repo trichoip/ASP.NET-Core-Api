@@ -1,0 +1,51 @@
+﻿@using AspNetCore.Client.MVC.Models;
+@model Account
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div><a href="/account/list">back</a></div>
+    @if (Model == null)
+    {
+        <div>Account is not found</div>
+    }
+    else
+    {
+        <h1>Account details</h1>
+        <p>Account id : @Model.Id</p>
+        <p>Account Name : @Model.Name</p>
+        <p>Account dob: @Model.BirthDate</p>
+        <p>Account email: @Model.Email</p>
+
+        <p>DrivingLicense id: @(Model.DrivingLicense?.Id.ToString() ?? "N/A")</p>
+        <p>DrivingLicense name: @(Model.DrivingLicense?.Name ?? "N/A")</p>
+        <p>DrivingLicense status: @(Model.DrivingLicense?.Status ?? "N/A")</p>
+
+        foreach (var car in Model.Cars)
+        {
+            <div>car id: @car.Id</div>
+            <div>model id: @car.Model.Id</div>
+            <div>model name: @car.Model.Name</div>
+            <div>Brand id: @car.Model.Brand.Id</div>
+            <div>Brand Name: @car.Model.Brand.Name</div>
+
+            <div> car image: </div>
+
+            foreach (var cImage in car.CarImages)
+            {
+                <div><img src="@cImage.Image" style="height: 100px;width: 100px;" alt=""> </div>
+            }
+        }
+    }
+
+</body>
+
+</html>

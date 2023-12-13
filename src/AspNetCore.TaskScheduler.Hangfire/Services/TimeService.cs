@@ -1,24 +1,23 @@
-﻿namespace AspNetCore.TaskScheduler.Hangfire.Services
+﻿namespace AspNetCore.TaskScheduler.Hangfire.Services;
+
+public interface ITimeService
 {
-    public interface ITimeService
-    {
-        void PrintNow();
+    void PrintNow();
 
+}
+
+public class TimeService : ITimeService
+{
+    private readonly ILogger<TimeService> logger;
+
+    public TimeService(ILogger<TimeService> logger)
+    {
+        this.logger = logger;
     }
 
-    public class TimeService : ITimeService
+    public void PrintNow()
     {
-        private readonly ILogger<TimeService> logger;
-
-        public TimeService(ILogger<TimeService> logger)
-        {
-            this.logger = logger;
-        }
-
-        public void PrintNow()
-        {
-            logger.LogInformation($"HangfireCron: {DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt")}");
-        }
-
+        logger.LogInformation($"HangfireCron: {DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt")}");
     }
+
 }

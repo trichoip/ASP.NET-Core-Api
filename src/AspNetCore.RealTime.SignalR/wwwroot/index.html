@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div>
+        <div>
+            <div class="All">
+                <div>
+                    <label for="broadcast">Message</label>
+                    <input type="text" id="broadcast" name="broadcast" />
+                </div>
+                <button id="btn-broadcast">Broadcast</button>
+            </div>
+
+            <div class="Others">
+                <div>
+                    <label for="others-message">Message</label>
+                    <input type="text" id="others-message" name="others-message" />
+                </div>
+                <button id="btn-others-message">Send to Others</button>
+            </div>
+
+            <div class="Caller">
+                <div>
+                    <label for="self-message">Message</label>
+                    <input type="text" id="self-message" name="self-message" />
+                </div>
+                <button id="btn-self-message">Send to Self</button>
+            </div>
+
+            <div class="Client(connectionId)">
+                <div>
+                    <label for="individual-message">Message</label>
+                    <input type="text" id="individual-message" name="individual-message" />
+                </div>
+                <div>
+                    <label for="connection-for-message">User connection id:</label>
+                    <input type="text" id="connection-for-message" name="connection-for-message" />
+                </div>
+                <button id="btn-individual-message">Send to Specific User</button>
+            </div>
+
+            <div class="Clients(connectionIds)">
+                <div>
+                    <label for="multiple-individual-message">Message</label>
+                    <input type="text" id="multiple-individual-message" name="multiple-individual-message" />
+                </div>
+                <div>
+                    <label for="multiple-connection-for-message">User connection id:</label>
+                    <input type="text" id="multiple-connection-for-message" name="multiple-connection-for-message" />
+                </div>
+                <button id="btn-multiple-individual-message">Send to Specific User</button>
+            </div>
+
+            <div class="SendToGroup">
+                <div>
+                    <label for="group-message">Message</label>
+                    <input type="text" id="group-message" name="group-message" />
+                </div>
+                <div>
+                    <label for="group-for-message">Group Name</label>
+                    <input type="text" id="group-for-message" name="group-for-message" />
+                </div>
+                <button id="btn-group-message">Send to Group</button>
+            </div>
+
+            <div class="AddUserToGroup">
+                <div>
+                    <label for="group-to-add">Group Name</label>
+                    <input type="text" id="group-to-add" name="group-to-add" />
+                </div>
+                <button id="btn-group-add">Add User to Group</button>
+            </div>
+
+            <div class="RemoveUserFromGroup">
+                <div>
+                    <label for="group-to-remove">Group Name</label>
+                    <input type="text" id="group-to-remove" name="group-to-remove" />
+                </div>
+                <button id="btn-group-remove">Remove User from Group</button>
+            </div>
+
+        </div>
+
+        <div>
+            <p>SignalR Messages:</p>
+            <pre id="signalr-message-panel"></pre>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr-protocol-msgpack@8.0.0/dist/browser/signalr-protocol-msgpack.min.js"></script>
+    <script>
+
+        const options = {
+            transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling,
+            headers: { "Key": "value" },
+            accessTokenFactory: null,
+            logMessageContent: true,
+            skipNegotiation: false,
+            withCredentials: true,
+            timeout: 100000
+        };
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/signalrServer", options)
+            .configureLogging(signalR.LogLevel.Debug)
+            .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
+            .build();
+
+        connection.serverTimeoutInMilliseconds = 30000;
+        connection.keepAliveIntervalInMilliseconds = 15000;
+
+        // Receive Message
+        connection.on("ReceiveMessage", (message) => {
+            $('#signalr-message-panel').prepend($('<div />').text(message));
+        });
+
+        // All
+        $('#btn-broadcast').click(function () {
+            var message = $('#broadcast').val();
+            connection.invoke("BroadcastMessage", message).catch(err => console.error(err.toString()));
+        });
+
+        // Others
+        $('#btn-others-message').click(function () {
+            var message = $('#others-message').val();
+            connection.invoke("SendToOthers", message).catch(err => console.error(err.toString()));
+        });
+
+        // Caller
+        $('#btn-self-message').click(function () {
+            var message = $('#self-message').val();
+            connection.invoke("SendToCaller", message).catch(err => console.error(err.toString()));
+        });
+
+        // Client(connectionId)
+        $('#btn-individual-message').click(function () {
+            var message = $('#individual-message').val();
+            var connectionId = $('#connection-for-message').val();
+            connection.invoke("SendToIndividual", connectionId, message).catch(err => console.error(err.toString()));
+        });
+
+        // Clients(connectionIds)
+        $('#btn-multiple-individual-message').click(function () {
+            var message = $('#multiple-individual-message').val();
+            var connectionId = $('#multiple-connection-for-message').val();
+            connection.invoke("SendToMultipleIndividual", connectionId, message).catch(err => console.error(err.toString()));
+        });
+
+        // SendToGroup
+        $('#btn-group-message').click(function () {
+            var message = $('#group-message').val();
+            var group = $('#group-for-message').val();
+            connection.invoke("SendToGroup", group, message).catch(err => console.error(err.toString()));
+        });
+
+        // AddUserToGroup
+        $('#btn-group-add').click(function () {
+            var group = $('#group-to-add').val();
+            connection.invoke("AddUserToGroup", group).catch(err => console.error(err.toString()));
+        });
+
+        // RemoveUserFromGroup
+        $('#btn-group-remove').click(function () {
+            var group = $('#group-to-remove').val();
+            connection.invoke("RemoveUserFromGroup", group).catch(err => console.error(err.toString()));
+        });
+
+        // Start Connection
+        async function start() {
+            try {
+                await connection.start();
+                console.log('connected');
+            } catch (err) {
+                console.log(err);
+                setTimeout(() => start(), 5000);
+            }
+        };
+
+        connection.onclose(async () => {
+            await start();
+        });
+
+        start();
+
+    </script>
+</body>
+</html>

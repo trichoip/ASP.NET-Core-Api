@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form id="message-form">
+            <input type="text" id="message-box" />
+        </form>
+        <hr />
+        <ul id="messages"></ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        const messageForm = document.getElementById('message-form');
+        const messageBox = document.getElementById('message-box');
+        const messages = document.getElementById('messages');
+
+        const options = {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets,
+            accessTokenFactory: getToken
+        };
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHubV2", options)
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.on('newMessage', (sender, messageText) => {
+            console.log(`${sender}:${messageText}`);
+
+            const newMessage = document.createElement('li');
+            newMessage.appendChild(document.createTextNode(`${sender}:${messageText}`));
+            messages.appendChild(newMessage);
+        });
+
+        connection.start()
+            .then(() => console.log('connected!'))
+            .catch(console.error);
+
+        messageForm.addEventListener('submit', ev => {
+            ev.preventDefault();
+            const message = messageBox.value;
+            connection.invoke('SendMessage', message);
+            messageBox.value = '';
+        });
+
+        async function getToken() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            const password = urlParams.get('password');
+
+            try {
+                const response = await fetch('/api/token', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username ?? 'admin',
+                        password: password ?? 'admin'
+                    })
+                });
+
+                const data = await response.json();
+                return data; // This will return the response data
+
+            } catch (error) {
+                console.error('Unable to add item.', error);
+                throw error; // Rethrow the error if you want to handle it outside
+            }
+        }
+    </script>
+
+</body>
+</html>

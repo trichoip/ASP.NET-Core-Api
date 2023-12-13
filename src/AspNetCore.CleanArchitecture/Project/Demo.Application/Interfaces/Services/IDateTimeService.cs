@@ -1,7 +1,6 @@
-﻿namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Interfaces.Services
+﻿namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Interfaces.Services;
+
+public interface IDateTimeService
 {
-    public interface IDateTimeService
-    {
-        DateTime NowUtc { get; }
-    }
+    DateTime NowUtc { get; }
 }

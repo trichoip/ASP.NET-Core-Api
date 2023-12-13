@@ -1,4 +1,4 @@
-﻿using AspNetCore.Helpers.Helpers;
+﻿using AspNetCore.Api.Helpers.Helpers;
 using AutoMapper;
 using System.Linq.Expressions;
 

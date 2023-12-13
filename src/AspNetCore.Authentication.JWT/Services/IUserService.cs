@@ -1,7 +1,6 @@
-﻿namespace AspNetCore.Authentication.JWT.Services
+﻿namespace AspNetCore.Authentication.JWT.Services;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        string GetMyName();
-    }
+    string GetMyName();
 }

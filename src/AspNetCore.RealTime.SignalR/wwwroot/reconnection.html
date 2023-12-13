@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>reconnection</title>
+</head>
+<body>
+    <h1>xem log</h1>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHubV2")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.onclose(reconnect);
+        startConnection();
+
+        function startConnection() {
+            console.log('connecting...');
+            connection.start()
+                .then(() => console.log('connected!'))
+                .catch(reconnect);
+        }
+
+        function reconnect() {
+            console.log('reconnecting...');
+            setTimeout(startConnection, 2000);
+        }
+    </script>
+</body>
+</html>

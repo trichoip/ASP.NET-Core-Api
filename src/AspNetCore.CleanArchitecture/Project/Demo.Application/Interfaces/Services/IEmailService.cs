@@ -1,9 +1,8 @@
 ﻿using AspNetCore.CleanArchitecture.Project.Demo.Application.DTOs.Email;
 
-namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Interfaces.Services
+namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Interfaces.Services;
+
+public interface IEmailService
 {
-    public interface IEmailService
-    {
-        Task SendAsync(EmailRequestDto request);
-    }
+    Task SendAsync(EmailRequestDto request);
 }

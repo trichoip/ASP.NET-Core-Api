@@ -1,0 +1,135 @@
+﻿<a href="/account/index">account index</a>
+<hr />
+
+Khi đã cấu hình route thì không thể truy cập thông qua controller và action nữa, mà phải truy cập thông qua route
+<br>
+
+<a asp-controller="Route" asp-action="Index">All Route</a>
+<a href="/Route/Index">All Route</a>
+<br>
+
+<a asp-controller="Speaker" asp-action="Evaluations">Speaker Evaluations</a>
+<a asp-route="speakerevals">Speaker speakerevals</a>
+<a href="/Speaker/Evaluations">Speaker Evaluations</a>
+
+<br />
+<a asp-controller="Route" asp-action="Detail" asp-route-id="11">SpeakerId: 11</a>
+<a href="/Speaker/11">SpeakerId: 11</a>
+<br />
+
+@{
+    var parms = new Dictionary<string, string>
+            {
+                { "speakerId", "13" },
+                { "currentYear", "true" }
+            };
+}
+
+<a asp-route="speakerevalscurrent" asp-all-route-data="parms">Speaker Evaluations</a>
+<a href="/Speaker/EvaluationsCurrent?speakerId=11&currentYear=true">Speaker Evaluations</a>
+<br />
+
+<a asp-controller="Speaker" asp-action="Evaluations" asp-fragment="SpeakerEvaluations">Speaker Evaluations</a>
+<a href="/Speaker/Evaluations#SpeakerEvaluations">Speaker Evaluations</a>
+<br />
+<a asp-protocol="https" asp-controller="Home" asp-action="About">About</a>
+<a href="https://localhost:5000/Home/About">asp-protocol</a>
+<br />
+<a asp-protocol="https" asp-host="microsoft.com" asp-controller="Home" asp-action="About">asp-host</a>
+<a href="https://microsoft.com/Home/About">asp-host</a>
+<br />
+
+<!a asp-page="/Attendee">All Attendees</!a>
+<a href="/Attendee">All Attendees</a>
+<!a asp-page="/Attendee" asp-route-attendeeid="10">View Attendee</!a>
+<a href="/Attendee?attendeeid=10">View Attendee</a>
+<!a asp-page="/Attendee" asp-page-handler="Profile" asp-route-attendeeid="12">Attendee Profile</!a>
+<a href="/Attendee?attendeeid=12&handler=Profile">Attendee Profile</a>
+
+<br />
+
+<br />
+
+<a id="section1">Go to Section 1</a>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<a asp-fragment="section1">Go to Section 1</a>
+<a href="/Route#section1">Go to Section 1111</a>
+<a asp-controller="Speaker" asp-action="Evaluations" asp-fragment="section1">Speaker Evaluations</a>

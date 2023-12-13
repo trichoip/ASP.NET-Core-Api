@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AspNetCore.Helpers\AspNetCore.Helpers.csproj" />
+		<ProjectReference Include="..\AspNetCore.Api.Helpers\AspNetCore.Api.Helpers.csproj" />
 	</ItemGroup>
 
 </Project>

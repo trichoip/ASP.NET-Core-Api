@@ -1,0 +1,73 @@
+@using AspNetCore.Client.MVC.Models
+@model List<Car>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <a href="/account/list">back</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>brand</th>
+                <th>image</th>
+                <th>feature</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model)
+            {
+                <tr>
+                    <td><a href="/car/detail/@car.Id">@car.Id</a></td>
+                    <td>@car.Model.Brand.Name</td>
+                    <td>
+                        @foreach (var cImage in car.CarImages)
+                        {
+                            <img src="@cImage.Image" alt="" width="50px" height="50px">
+                        }
+                    </td>
+
+                    <td>
+                        @foreach (var cf in car.CarFeatures)
+                        {
+                            <img src="@cf.Feature.Icon" alt="" width="50px" height="50px">
+                        }
+                    </td>
+                    <td><a href="/car/delete/@car.Id">delete</a></td>
+                    <td><a href="/car/edit/@car.Id">edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class='page-item @(ViewBag.Page == 1 ? "disabled" : "" )'>
+                <a class="page-link" href="/car/list?page=@(ViewBag.Page - 1)" tabindex="-1">Previous</a>
+            </li>
+            @for (int i = 1; i <= ViewBag.TotalPage; i++)
+            {
+                <li class='page-item @(ViewBag.Page == i ? "active" : "")'>
+                    <a class="page-link" href="/car/list?page=@i">@i</a>
+                </li>
+            }
+            <li class='page-item @(ViewBag.Page == ViewBag.TotalPage ? "disabled" : "" )'>
+                <a class="page-link" href="/car/list?page=@(ViewBag.Page + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</body>
+
+</html>

@@ -1,15 +1,14 @@
-﻿namespace AspNetCore.Database.Mysql.Models
+﻿namespace AspNetCore.Database.Mysql.Models;
+
+public class Character
 {
-    public class Character
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string? Name { get; set; }
+    public string? Name { get; set; }
 
-        public Backpack Backpack { get; set; }
+    public Backpack Backpack { get; set; }
 
-        public List<Weapon> Weapons { get; set; }
+    public List<Weapon> Weapons { get; set; }
 
-        public List<Faction> Factions { get; set; }
-    }
+    public List<Faction> Factions { get; set; }
 }

@@ -1,9 +1,8 @@
-﻿namespace AspNetCore.Api.ViewModel
+﻿namespace AspNetCore.Api.ViewModel;
+
+public class TodoItemDTO
 {
-    public class TodoItemDTO
-    {
-        public long Id { get; set; }
-        public string? Name { get; set; }
-        public bool IsComplete { get; set; }
-    }
+    public long Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsComplete { get; set; }
 }

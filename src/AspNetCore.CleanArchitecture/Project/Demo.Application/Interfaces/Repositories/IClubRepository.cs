@@ -1,6 +1,5 @@
-﻿namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Interfaces.Repositories
+﻿namespace AspNetCore.CleanArchitecture.Project.Demo.Application.Interfaces.Repositories;
+
+public interface IClubRepository
 {
-    public interface IClubRepository
-    {
-    }
 }

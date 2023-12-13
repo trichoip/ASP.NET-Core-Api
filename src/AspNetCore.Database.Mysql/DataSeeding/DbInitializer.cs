@@ -1,56 +1,55 @@
 ﻿using AspNetCore.Database.Mysql.Data;
 using AspNetCore.Database.Mysql.Models;
 
-namespace AspNetCore.Database.Mysql.DataSeeding
+namespace AspNetCore.Database.Mysql.DataSeeding;
+
+public class DbInitializer
 {
-    public class DbInitializer
+    public static void Initialize(DataContext context)
     {
-        public static void Initialize(DataContext context)
+
+        var Backpack = new Backpack
         {
+            Description = "Test Backpack"
+        };
 
-            var Backpack = new Backpack
+        var Factions = new List<Faction>
+        {
+            new Faction
             {
-                Description = "Test Backpack"
-            };
-
-            var Factions = new List<Faction>
+                Name = "Test Faction 1"
+            },
+            new Faction
             {
-                new Faction
-                {
-                    Name = "Test Faction 1"
-                },
-                new Faction
-                {
-                    Name = "Test Faction 2"
-                }
-            };
-
-            var Weapons = new List<Weapon>
-            {
-                new Weapon
-                {
-                    Name = "Test Weapon 1"
-                },
-                new Weapon
-                {
-                    Name = "Test Weapon 2"
-                }
-            };
-
-            if (!context.Characters.Any())
-            {
-                context.Characters.Add(new Character
-                {
-                    Name = "Test Character",
-                    Backpack = Backpack,
-                    Factions = Factions,
-                    Weapons = Weapons
-
-                });
-
-                context.SaveChanges();
+                Name = "Test Faction 2"
             }
+        };
 
+        var Weapons = new List<Weapon>
+        {
+            new Weapon
+            {
+                Name = "Test Weapon 1"
+            },
+            new Weapon
+            {
+                Name = "Test Weapon 2"
+            }
+        };
+
+        if (!context.Characters.Any())
+        {
+            context.Characters.Add(new Character
+            {
+                Name = "Test Character",
+                Backpack = Backpack,
+                Factions = Factions,
+                Weapons = Weapons
+
+            });
+
+            context.SaveChanges();
         }
+
     }
 }

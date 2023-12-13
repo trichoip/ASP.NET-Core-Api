@@ -1,20 +1,19 @@
 ﻿using Quartz;
 
-namespace AspNetCore.TaskScheduler.Hangfire.Infrastructure.Jobs
+namespace AspNetCore.TaskScheduler.Hangfire.Infrastructure.Jobs;
+
+public class LoggingBackgroundJob : IJob
 {
-    public class LoggingBackgroundJob : IJob
+    private readonly ILogger<LoggingBackgroundJob> _logger;
+
+    public LoggingBackgroundJob(ILogger<LoggingBackgroundJob> logger)
     {
-        private readonly ILogger<LoggingBackgroundJob> _logger;
+        _logger = logger;
+    }
+    public Task Execute(IJobExecutionContext context)
+    {
+        _logger.LogInformation($"Quartz: {DateTime.UtcNow}");
 
-        public LoggingBackgroundJob(ILogger<LoggingBackgroundJob> logger)
-        {
-            _logger = logger;
-        }
-        public Task Execute(IJobExecutionContext context)
-        {
-            _logger.LogInformation($"Quartz: {DateTime.UtcNow}");
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

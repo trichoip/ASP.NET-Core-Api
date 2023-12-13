@@ -1,8 +1,7 @@
-﻿namespace AspNetCore.Authentication.Cookie.ViewModel
+﻿namespace AspNetCore.Authentication.Cookie.ViewModel;
+
+public class LoginModel
 {
-    public class LoginModel
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-    }
+    public string UserName { get; set; }
+    public string Password { get; set; }
 }

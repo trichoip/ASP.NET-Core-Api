@@ -1,4 +1,4 @@
-﻿using AspNetCore.Helpers.Helpers;
+﻿using AspNetCore.Api.Helpers.Helpers;
 using System.Linq.Expressions;
 
 namespace AspNetCore.Pattern.CQRS.MediatorPattern.MediatR.Repositories.Interfaces;

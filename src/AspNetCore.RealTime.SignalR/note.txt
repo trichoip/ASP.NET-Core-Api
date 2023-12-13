@@ -1,0 +1,20 @@
+What is streaming used for?
+
+So, why would you even need to use streaming? A more specific question is why would you use streaming in SignalR? After all, it’s not gRPC, where streaming is perhaps the only way to deal with live-processed collections. In SignalR, you can just send an individual item of such a collection as soon as it becomes available. You already have a persistent connection open. Well, there are many real-life scenarios where streaming would still be useful, even in SignalR.
+
+Let’s first have a look at one of the best-known use of streaming, which is the transfer of video data.
+When you watch a video in your browser, your browser doesn’t wait to download it. If it had to wait for the download to finish, you would have spent a long time waiting before you were able to watch a movie. High-quality movies are gigabytes in size. So, even with a fast internet connection, it would still take a noticeable amount of time to download.
+
+So, instead of downloading the entire video all at once, the app that you use to watch the video on downloads it in small chunks. And, as a viewer, you won’t even notice, as long as the download is happening quicker than the playback. You won’t really care about the part of the video an hour from now. You just need enough data from the video to cover the next minute or so. So the experience of watching the video is completely seamless.
+
+There is also a scenario where there is never such a thing as a complete video. For example, with close-circuit television (CCTV) cameras, the video feed is continuous. So it is with any type of live
+streaming. The recipients of the data just carry on receiving chunks of data while the camera is filming. In this scenario, streaming is literally the only thing you can do.
+
+- translate:
+Vậy tại sao bạn lại cần sử dụng tính năng phát trực tuyến? Một câu hỏi cụ thể hơn là tại sao bạn lại sử dụng tính năng phát trực tuyến trong SignalR? Xét cho cùng, đó không phải là gRPC, nơi phát trực tuyến có lẽ là cách duy nhất để xử lý các bộ sưu tập được xử lý trực tiếp. Trong SignalR, bạn chỉ có thể gửi từng mục riêng lẻ của bộ sưu tập đó ngay khi có sẵn. Bạn đã mở một kết nối liên tục. Chà, có nhiều tình huống thực tế mà việc phát trực tuyến vẫn hữu ích, ngay cả trong SignalR.
+
+Trước tiên chúng ta hãy xem xét một trong những cách sử dụng phát trực tuyến nổi tiếng nhất, đó là truyền dữ liệu video. Khi bạn xem video trên trình duyệt của mình, trình duyệt của bạn sẽ không chờ để tải xuống video đó. Nếu phải đợi quá trình tải xuống hoàn tất, bạn sẽ phải chờ rất lâu mới có thể xem phim. Phim chất lượng cao có kích thước hàng gigabyte. Vì vậy, ngay cả khi có kết nối Internet nhanh, việc tải xuống vẫn sẽ mất một khoảng thời gian đáng kể.
+
+Vì vậy, thay vì tải xuống toàn bộ video cùng một lúc, ứng dụng bạn sử dụng để xem video sẽ tải xuống từng phần nhỏ. Và với tư cách là người xem, bạn thậm chí sẽ không nhận thấy, miễn là quá trình tải xuống diễn ra nhanh hơn quá trình phát lại. Bạn sẽ không thực sự quan tâm đến phần video sau một giờ nữa. Bạn chỉ cần có đủ dữ liệu từ video để xem trong khoảng thời gian tiếp theo. Vì vậy trải nghiệm xem video là hoàn toàn liền mạch.
+
+Cũng có trường hợp không bao giờ có được một video hoàn chỉnh. Ví dụ: với camera truyền hình mạch gần (CCTV), nguồn cấp dữ liệu video liên tục. Bất kỳ hình thức phát trực tiếp nào cũng vậy. Người nhận dữ liệu chỉ tiếp tục nhận các khối dữ liệu trong khi máy ảnh đang quay phim. Trong trường hợp này, phát trực tuyến thực sự là điều duy nhất bạn có thể làm.
