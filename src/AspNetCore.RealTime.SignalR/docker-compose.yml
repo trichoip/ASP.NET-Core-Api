@@ -1,0 +1,41 @@
+# docker compose down
+# docker-compose up -d
+# docker run -p 6000:6379 -d redis
+services:
+  app:
+    build:
+      context: .
+    image: signalr-app
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      # - REDIS_URL=host.docker.internal:6000
+      - REDIS_URL=redis:6379
+
+  app2:
+    build:
+      context: .
+    image: signalr-app
+    restart: always
+    ports:
+      - 8082:80
+    environment:
+      # - REDIS_URL=host.docker.internal:6000
+      - REDIS_URL=redis:6379
+
+  app3:
+    build:
+      context: .
+    image: signalr-app
+    restart: always
+    ports:
+      - 8083:80
+    environment:
+      # - REDIS_URL=host.docker.internal:6000
+      - REDIS_URL=redis:6379
+
+  redis:
+    image: redis
+    ports:
+      - 6000:6379

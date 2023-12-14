@@ -13,7 +13,15 @@ namespace AspNetCore.RealTime.SignalR.Controllers;
 public class ClientController : ControllerBase
 {
     static readonly HttpClient httpClient = new HttpClient();
-    static readonly string baseUrl = "https://localhost:7271";
+    private readonly string baseUrl;
+
+    public ClientController(IHttpContextAccessor httpContextAccessor)
+    {
+        var scheme = httpContextAccessor.HttpContext?.Request.Scheme;
+        var port = httpContextAccessor.HttpContext?.Connection.LocalPort;
+        baseUrl = $"{scheme}://localhost:{port}";
+        Console.WriteLine($"baseUrl: {baseUrl}");
+    }
 
     [HttpGet]
     public async Task<IActionResult> Get(string username, string password)

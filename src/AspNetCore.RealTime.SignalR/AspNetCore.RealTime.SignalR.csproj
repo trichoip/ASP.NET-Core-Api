@@ -4,14 +4,17 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>481e583f-512e-4813-9a0f-08ac3bbce70c</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
+
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
 
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.14" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="7.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="7.0.14" />
 
 	</ItemGroup>
 

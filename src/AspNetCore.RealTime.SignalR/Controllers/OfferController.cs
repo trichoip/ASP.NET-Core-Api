@@ -10,9 +10,14 @@ namespace AspNetCore.RealTime.SignalR.Controllers;
 public class OfferController : ControllerBase
 {
     private IHubContext<OfferHub, IOfferHubClient> messageHub;
-    public OfferController(IHubContext<OfferHub, IOfferHubClient> _messageHub)
+    private readonly IHubContext<SignalrServer> hubContext;
+
+    public OfferController(
+        IHubContext<OfferHub, IOfferHubClient> messageHub,
+        IHubContext<SignalrServer> hubContext)
     {
-        messageHub = _messageHub;
+        this.messageHub = messageHub;
+        this.hubContext = hubContext;
     }
 
     [HttpPost]

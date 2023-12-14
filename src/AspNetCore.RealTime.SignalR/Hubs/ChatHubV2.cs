@@ -43,4 +43,11 @@ public class ChatHubV2 : Hub
     {
         await Clients.All.SendAsync("newMessage", Context.User.Identity.Name, message);
     }
+
+    [HubMethodName("direct-message")]
+    public async Task SendToUser(string userId, string message)
+    {
+        // để sử dụng Clients.User trong SignalR, người dùng cần được xác thực.
+        await Clients.User(userId).SendAsync("newMessage", Context.User.Identity.Name, $"{Context.User.Identity.Name} send {message} to {userId}");
+    }
 }

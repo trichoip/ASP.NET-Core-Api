@@ -9,6 +9,9 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var redisUrl = Environment.GetEnvironmentVariable("REDIS_URL") ?? "localhost:6000";
+Console.WriteLine(redisUrl);
+
 builder.Services.AddSignalR(hubOptions =>
 {
     hubOptions.EnableDetailedErrors = true;
@@ -26,6 +29,7 @@ builder.Services.AddSignalR(hubOptions =>
     }
 
 })
+//.AddStackExchangeRedis(redisUrl) // chay docker compose
 .AddJsonProtocol(options =>
 {
     options.PayloadSerializerOptions.PropertyNamingPolicy = null;
@@ -60,6 +64,7 @@ builder.Services.AddSignalR(hubOptions =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<PresenceTracker>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -90,11 +95,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -103,6 +105,10 @@ app.UseAuthorization();
 
 app.UseStaticFiles();
 app.MapControllers();
+app.UseCors(_ => _.AllowAnyHeader()
+                  .SetIsOriginAllowed(origin => true)
+                  .AllowAnyMethod()
+                  .AllowCredentials()); // nếu skipNegotiation là false thì phải có AllowCredentials còn true thì không cần
 
 app.MapHub<SignalrServer>("/signalrServer", options =>
 {

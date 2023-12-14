@@ -7,7 +7,9 @@
 <body>
     <div>
         <form id="message-form">
-            <input type="text" id="message-box" />
+            <input type="text" id="user" placeholder="userId" /><br>
+            <input type="text" id="message-box" placeholder="messages" />
+            <input type="submit" value="Send" />
         </form>
         <hr />
         <ul id="messages"></ul>
@@ -19,6 +21,7 @@
         const messageForm = document.getElementById('message-form');
         const messageBox = document.getElementById('message-box');
         const messages = document.getElementById('messages');
+        const user = document.getElementById('user');
 
         const options = {
             skipNegotiation: true,
@@ -47,6 +50,7 @@
             ev.preventDefault();
             const message = messageBox.value;
             connection.invoke('SendMessage', message);
+            connection.invoke('direct-message', user.value, message);
             messageBox.value = '';
         });
 
