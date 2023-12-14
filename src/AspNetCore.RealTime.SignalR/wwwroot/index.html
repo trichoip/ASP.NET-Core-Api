@@ -114,6 +114,8 @@
             .withUrl("/signalrServer", options)
             .configureLogging(signalR.LogLevel.Debug)
             .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
+            .withAutomaticReconnect([0, 2000, 10000, 30000])
+            //.withAutomaticReconnect()
             .build();
 
         connection.serverTimeoutInMilliseconds = 30000;

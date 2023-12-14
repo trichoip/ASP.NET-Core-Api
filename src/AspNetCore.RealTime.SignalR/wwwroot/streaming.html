@@ -69,7 +69,9 @@
 
             connection.stream("TriggerStream", numberOfJobs)
                 .subscribe({
-                    next: (message) => $('#signalr-message-panel').prepend($('<div />').text(message))
+                    next: (message) => $('#signalr-message-panel').prepend($('<div />').text(message)),
+                    complete: () => $('#signalr-message-panel').prepend($('<div />').text("Stream completed")),
+                    error: (err) => $('#signalr-message-panel').prepend($('<div />').text(err)),
                 });
         });
 

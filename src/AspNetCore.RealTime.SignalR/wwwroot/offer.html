@@ -3,8 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="Client(connectionId)">
+        <div>
+            <label for="connection-for-message">User connection id:</label>
+            <input type="text" id="connection-for-message" name="connection-for-message" />
+        </div>
+        <button id="btn-individual-message">Send to Specific User</button>
+        <button id="btn-others-server">Send to others-server</button>
+    </div>
+
     <h2>Data loaded from the Web API:</h2>
     <div>
         <ul id="messagesList"></ul>
@@ -14,7 +27,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
 
     <script>
-        var connection = new signalR.HubConnectionBuilder().withUrl("/offers").build();
+        var connection = new signalR
+            .HubConnectionBuilder()
+            .configureLogging(signalR.LogLevel.Information)
+            .withUrl("/offers")
+            .build();
+
+        connection.start().then(function () {
+            console.log('Connection started.......!')
+
+            var li = document.createElement("li");
+            document.getElementById("messagesList").appendChild(li);
+            li.textContent = connection.connection.connectionId;
+
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
 
         connection.on("SendOffersToUser", function (messages) {
             messages.forEach(message => {
@@ -24,10 +52,41 @@
             });
         });
 
-        connection.start().then(function () {
-            console.log('Connection started.......!')
-        }).catch(function (err) {
-            return console.error(err.toString());
+        connection.on("GetMessage", async () => {
+            var userInput = prompt("Nhập vào thông báo của bạn:");
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(userInput);
+                }, 100);
+            });
+            return promise;
+        });
+
+        $('#btn-individual-message').click(function () {
+            var connectionId = $('#connection-for-message').val();
+            connection.invoke("WaitForMessage", connectionId)
+                .then(function (result) {
+                    console.log("Giá trị trả về từ server: " + result);
+
+                    var li = document.createElement("li");
+                    document.getElementById("messagesList").appendChild(li);
+                    li.textContent = `${connectionId} : ${result}`;
+
+                }).catch(err => console.error(err.toString()));
+        });
+
+        $('#btn-others-server').click(function () {
+            var connectionId = $('#connection-for-message').val();
+            // ServerReturn: run offer2.html
+            connection.invoke("ServerReturn", connectionId)
+                .then(function (result) {
+                    console.log("Giá trị trả về từ server: " + result);
+
+                    var li = document.createElement("li");
+                    document.getElementById("messagesList").appendChild(li);
+                    li.textContent = `${connectionId} : ${result}`;
+
+                }).catch(err => console.error(err.toString()));
         });
 
     </script>

@@ -89,6 +89,57 @@ public class ClientController : ControllerBase
     }
 
     [HttpGet]
+    public async Task<IActionResult> InvokeServerReturn()
+    {
+        var hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{baseUrl}/signalrServer")
+            .ConfigureLogging(logging =>
+            {
+                logging.SetMinimumLevel(LogLevel.Information);
+                logging.AddConsole();
+            })
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<string>("GetMessage", message => Console.WriteLine($"SignalR Hub Message: {message}"));
+
+        await hubConnection.StartAsync();
+        Console.WriteLine("\nConnected!");
+
+        var message = await hubConnection.InvokeAsync<string>("InvokeReturn", "message ne");
+
+        return Ok(message);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ClientReturn()
+    {
+        var hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{baseUrl}/signalrServer")
+            .ConfigureLogging(logging =>
+            {
+                logging.SetMinimumLevel(LogLevel.Information);
+                logging.AddConsole();
+            })
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On("GetMessage", async () =>
+        {
+            Console.WriteLine("Enter message:");
+            var message = await Console.In.ReadLineAsync();
+            return message;
+        });
+
+        await hubConnection.StartAsync();
+        Console.WriteLine("\nConnected!");
+
+        var message = await hubConnection.InvokeAsync<string>("WaitForMessage", hubConnection.ConnectionId);
+
+        return Ok(message);
+    }
+
+    [HttpGet]
     public async Task<IActionResult> ClientStreaming([FromQuery] string[] messages)
     {
         var hubConnection = new HubConnectionBuilder()

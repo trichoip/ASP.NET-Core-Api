@@ -89,6 +89,19 @@ public class SignalrServer : Hub
         }
     }
 
+    public async Task<string> WaitForMessage(string connectionId)
+    {
+        var message = await Clients.Client(connectionId).InvokeAsync<string>("GetMessage", CancellationToken.None);
+        //var message = await Clients.Caller.InvokeAsync<string>("GetMessage", CancellationToken.None);
+        return message;
+    }
+
+    public async Task<string> InvokeReturn(string message)
+    {
+        await Clients.All.SendAsync("GetMessage", GetMessageToSend(message));
+        return message;
+    }
+
     private string GetMessageToSend(string originalMessage)
     {
         return $"User connection id: {Context.ConnectionId}. Message: {originalMessage}";
