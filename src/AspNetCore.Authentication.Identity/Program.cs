@@ -79,12 +79,24 @@ public class Program
         #region Token life time (token comfirm email,.. )
         builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
        {
-           // Token life time (token comfirm email,.. )
-           // nếu token đã dùng thì nó expire luôn
+           // chỉ áp dụng cho TokenOptions.DefaultProvider
+           // PasswordResetTokenProvider, ChangeEmailTokenProvider, EmailConfirmationTokenProvider đều là TokenOptions.DefaultProvider
+           // Token life time (token comfirm email,resetpassword,change mail )
            // _userManager.GeneratePasswordResetTokenAsync(user);
            // _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
            // _userManager.ConfirmEmailAsync(user, code);
+
+           // lưu ý:
+           // check token là check theo security stamp của user, nếu security stamp của user thay đổi thì token sẽ invalid
+           // security stamp sẽ thay đổi khi user đổi password, đổi email, đổi phone, đổi username, đổi security stamp
+           // vì trong tất cả hàm thay đổi thông tin user đều có gọi hàm UpdateSecurityStampAsync(user); để thay đổi security stamp
+           // TokenLifespan là thời hạn của token, nếu hết thời hạn thì token sẽ invalid
+           // xem code f12 vào AddDefaultTokenProviders() để xem chi tiết hơn
            options.TokenLifespan = TimeSpan.FromDays(2);
+
+           // TokenOptions.DefaultEmailProvider và TokenOptions.DefaultPhoneProvider giống nhau đều gennerate là otp 6 số
+           // TokenOptions.DefaultEmailProvider và TokenOptions.DefaultPhoneProvider không có cấu hình TokenLifespan
+           // GenerateChangePhoneNumberTokenAsync , VerifyChangePhoneNumberTokenAsync thì dùng TokenOptions.DefaultPhoneProvider
        });
         #endregion
 

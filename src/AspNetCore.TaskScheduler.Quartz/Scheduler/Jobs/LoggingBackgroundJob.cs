@@ -1,6 +1,6 @@
 ﻿using Quartz;
 
-namespace AspNetCore.TaskScheduler.Hangfire.Infrastructure.Jobs;
+namespace AspNetCore.TaskScheduler.Quartz.Scheduler.Jobs;
 
 public class LoggingBackgroundJob : IJob
 {

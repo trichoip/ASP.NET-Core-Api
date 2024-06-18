@@ -1,5 +1,4 @@
 using AspNetCore.TaskScheduler.Hangfire.Data;
-using AspNetCore.TaskScheduler.Hangfire.Infrastructure;
 using AspNetCore.TaskScheduler.Hangfire.Services;
 using Hangfire;
 using Hangfire.Dashboard.BasicAuthorization;
@@ -7,9 +6,6 @@ using Hangfire.MySql;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Quartz
-builder.Services.AddInfrastructure();
 
 #region Config
 builder.Services.AddDbContext<DataContext>(

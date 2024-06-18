@@ -87,7 +87,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.SMS.HttpSms", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.SMS.SmsGateway", "src\AspNetCore.SMS.SmsGateway\AspNetCore.SMS.SmsGateway.csproj", "{28A0C487-7EF5-45BB-A4C0-5550AB27B8E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.SMS.Smschef", "src\AspNetCore.SMS.Smschef\AspNetCore.SMS.Smschef.csproj", "{ACA8F828-01DB-41DB-AEAB-4C85867CEBB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.SMS.Smschef", "src\AspNetCore.SMS.Smschef\AspNetCore.SMS.Smschef.csproj", "{ACA8F828-01DB-41DB-AEAB-4C85867CEBB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.SMS.Zalo", "src\AspNetCore.SMS.Zalo\AspNetCore.SMS.Zalo.csproj", "{EEE3B19E-37D0-46AE-B6A2-01165E62EDC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.StorageFile.AWS", "src\AspNetCore.StorageFile.AWS\AspNetCore.StorageFile.AWS.csproj", "{B3E9934B-141F-4B27-AACE-ABF57C89A5CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -267,6 +271,14 @@ Global
 		{ACA8F828-01DB-41DB-AEAB-4C85867CEBB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACA8F828-01DB-41DB-AEAB-4C85867CEBB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACA8F828-01DB-41DB-AEAB-4C85867CEBB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE3B19E-37D0-46AE-B6A2-01165E62EDC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE3B19E-37D0-46AE-B6A2-01165E62EDC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE3B19E-37D0-46AE-B6A2-01165E62EDC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE3B19E-37D0-46AE-B6A2-01165E62EDC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E9934B-141F-4B27-AACE-ABF57C89A5CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E9934B-141F-4B27-AACE-ABF57C89A5CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E9934B-141F-4B27-AACE-ABF57C89A5CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E9934B-141F-4B27-AACE-ABF57C89A5CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

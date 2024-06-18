@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Text.Json.Serialization;
 
 namespace AspNetCore.Api;
@@ -74,6 +75,16 @@ public class Program
 
         var JWTSettings = builder.Configuration.GetSection("JWTSettings").Get<JWTSettings>();
         builder.Services.AddSingleton(JWTSettings);
+
+        Console.WriteLine("==================================================================================");
+        foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
+            Console.WriteLine("  {0} = {1}", de.Key, de.Value);
+        Console.WriteLine("==================================================================================");
+        foreach (var c in builder.Configuration.AsEnumerable())
+        {
+            Console.WriteLine(c.Key + " = " + c.Value);
+        }
+        Console.WriteLine("==================================================================================");
 
         var app = builder.Build();
 
